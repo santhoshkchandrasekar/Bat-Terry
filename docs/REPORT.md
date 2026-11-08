@@ -131,8 +131,8 @@ Three decisions follow from the rules rather than the forecast:
 | Parks | 100% | 100% | 100% | 100% | 100% | | 100% |
 | Inspectional Services | 100% | 100% | 100% | 100% | 100% | | 100% |
 
-The snowstorm and heat wave are sized from real spikes in the data, such as the January 2022 blizzard. The plan holds
-through both shocks and across its planning range. At +20% it breaks in Public Works (58%) and Transportation (17%),
+The snowstorm is sized from a real spike in the data, the January 2022 blizzard; the heat wave is a stress test, since
+the data holds no heat-wave spike to copy. The plan holds through both shocks and across its planning range. At +20% it breaks in Public Works (58%) and Transportation (17%),
 and the year's cost rises to $20.43M. The aggressive plan is the insurance: 90% or better everywhere even at +20%, for
 $0.68M more payroll and $0.63M more expected cost, and it becomes the cheaper plan if demand really does run 20% high
 ($18.16M against $20.43M). Choosing between them is a policy call.
@@ -222,7 +222,41 @@ day for the whole site and 60 model rounds per visitor; over a limit, the page a
 `gpt-6.1-sol` at low reasoning effort; the notebook's evaluations use `gpt-4o-mini`, and `gpt-4o` generated the held-out
 test messages.
 
-## 10. Limitations
+## 10. Assumptions
+
+**Given by the brief.** The request data is real; these planning figures are the brief's, used as stated.
+
+| Department | Capacity per crew | Annual cost per crew | Crews in January 2025 |
+|---|---|---|---|
+| Public Works | 12 requests a day | $130,000 | 50 |
+| Transportation | 15 requests a day | $110,000 | 18 |
+| Parks | 6 requests a day | $120,000 | 10 |
+| Inspectional Services | 4 requests a day | $140,000 | 16 |
+
+- A crew works 21 days a month, closing up to its daily capacity each day.
+- A new crew needs one month of hiring and training before it starts.
+- Releasing a crew needs one month of notice and costs 25% of its annual cost.
+- Parks may hire seasonal crews from April to October at 1.3 times the monthly cost, with no training delay and no
+  release cost.
+- Each overdue request costs $20; a request still open 30 days after its target costs $100 more.
+- No requests are waiting at the start of 2025.
+
+**Our own assumptions**, and where each is tested or discussed:
+
+| Assumption | Why | Where |
+|---|---|---|
+| 2025's requests follow 2024's mix and timing, scaled to the forecast; each keeps its real target date | The most recent full year is the best template for which requests arrive when | Notebook §3 |
+| Crews work Monday to Friday and close the earliest-due request first | A simple, defensible dispatch rule that favors on-time service | Notebook §3 |
+| Requests with no target date (about 16% in 2024) use crew capacity but never count as late; they are scheduled as if due in 30 days | They take work but have no deadline to miss | Notebook §10 |
+| Forecast error is a whole-year level shift with a spread of 8%, planned for at demand ×0.86, ×1.00 and ×1.14 (weights 1/6, 2/3, 1/6) | The backtest error was mostly a level shift; the pooled 6.7% is inflated for having only four departments | Notebook §2, §4 |
+| Requests still open on 31 December are charged the crew cost to close them plus the overdue fees they are projected to incur early in 2026 | Otherwise long-target departments look perfect while work piles up | Notebook §3 |
+| A crew who works from month M is signed by the last day of month M-2 and paid during training | Follows the brief's one-month hiring and training rule | Notebook §6, §10 |
+| Snowstorm: Public Works demand ×1.55 in February. Heat wave: Parks and Inspectional Services ×1.20 in July | The snowstorm is sized from the January 2022 blizzard; the heat wave is a stress test, because the data holds no heat-wave spike to copy | Notebook §4.3 |
+| Payroll is cash; overdue and backlog costs are the brief's price for repeat calls, rework and lost trust, not budget lines | Keeps the investment case honest | Notebook §4.6 |
+| On-time rates are what crew capacity allows; delays from inspection or legal process are not modeled | The brief's lever is crew numbers; process delays are reported separately | Notebook §3, §5 |
+| The intake assistant chooses among request types used at least 25 times in 2023 and 2024 (124 types, 99.9% of requests) | Rare types are too thin to describe or test | Notebook §7 |
+
+## 11. Limitations
 
 - On-time rates are outputs of the crew model under the brief's assumed capacities, not predictions of real-world rates.
   The model is harsher than 2024's record for Public Works and Transportation at January crew levels (56% on time for
@@ -233,7 +267,7 @@ test messages.
 - The crew model counts only lateness caused by too few crews. Process delays, which dominate Inspectional Services,
   are reported separately.
 
-## 11. Team and AI use
+## 12. Team and AI use
 
 | Member | Role | Contribution |
 |---|---|---|
@@ -249,10 +283,6 @@ Sonilo.
 
 ## Where to find more
 
-| Document | What it holds |
-|---|---|
-| `notebooks/Boston311_Terry.ipynb` | The full analysis, every cell run |
-| `docs/analysis_report.md` | The staffing analysis by department, generated by the notebook |
-| `docs/DECISIONS.md` | Every design decision, with the alternatives we rejected and why |
-| `docs/USER_GUIDE.md` | How to use the site |
-| `README.md` | Setup, repository layout and how to run everything |
+The full analysis is in `notebooks/Boston311_Terry.ipynb`, every cell run. The staffing analysis by department, generated
+by the notebook, is in `docs/analysis_report.md`. Every design decision, with the alternatives we rejected, is in
+`docs/DECISIONS.md`; how to use the site is in `docs/USER_GUIDE.md`; setup and how to run everything are in `README.md`.
