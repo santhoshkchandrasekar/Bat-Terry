@@ -27,10 +27,10 @@ html.ld-tab #landing .ld-link::after { display: none; }
 
 /* the stage */
 #ld-stage { position: absolute; left: 0; right: 0; top: calc(var(--ld-t, 22px) + 60px); bottom: 0; z-index: 4; overflow: hidden auto; pointer-events: none; visibility: hidden;
-  padding: 0 var(--ld-edge); scrollbar-width: none; overscroll-behavior: contain; display: flex; flex-direction: column; justify-content: center; }
+  padding: 0 var(--ld-edge); scrollbar-width: none; overscroll-behavior: contain; display: flex; flex-direction: column; justify-content: flex-start; }
 #ld-stage::-webkit-scrollbar { display: none; }
 html.ld-tab #ld-stage { pointer-events: auto; visibility: visible; }
-#ld-stage .tz-tb { display: none; width: 100%; max-width: 1360px; margin: 0 auto; padding: 2vh 0 9vh; }
+#ld-stage .tz-tb { display: none; width: 100%; max-width: 1360px; margin: auto; padding: 2vh 0 9vh; }
 #ld-stage .tz-tb.tz-cur { display: block; }
 #ld-stage .tz-rv { opacity: 0; transform: translateY(22px); transition: opacity .8s var(--ease-out), transform 1s var(--ease-out); transition-delay: calc(var(--d, 0) * 110ms + 120ms); }
 #ld-stage .tz-tb.tz-on .tz-rv { opacity: 1; transform: none; }
@@ -89,23 +89,63 @@ html.ld-tab #ld-stage .tz-back { opacity: 1; }
 .tz-src a { color: var(--l-paper2); }
 
 /* ---- Who built me */
-.tz-crew { display: grid; grid-template-columns: repeat(3, minmax(0, 300px)); justify-content: center; gap: clamp(20px, 3vw, 48px); margin-top: clamp(34px, 6vh, 64px); perspective: 1400px; }
-.tz-badge { position: relative; padding: 40px 28px 34px; text-align: center; border-radius: 20px; background: linear-gradient(180deg, rgba(255,244,230,.07), rgba(255,244,230,.02)); border: 1px solid rgba(245,236,223,.12);
+.tz-crew { display: grid; grid-template-columns: 300px 300px; column-gap: 56px; row-gap: 0; justify-content: center; margin-top: clamp(26px, 4.5vh, 50px); perspective: 1400px; }
+.tz-crew .tz-lead { grid-column: 1 / -1; justify-self: center; width: 330px; border-color: rgba(248,207,159,.38);
+  background: linear-gradient(180deg, rgba(255,232,200,.1), rgba(255,244,230,.03)); }
+.tz-tie { grid-column: 1 / -1; display: block; width: 100%; height: clamp(26px, 4vh, 40px); overflow: visible; }
+.tz-tie path { fill: none; stroke: rgba(248,207,159,.5); stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+.tz-badge { position: relative; padding: 30px 26px 26px; text-align: center; border-radius: 20px; background: linear-gradient(180deg, rgba(255,244,230,.07), rgba(255,244,230,.02)); border: 1px solid rgba(245,236,223,.12);
   transition: border-color .4s var(--ease), background .4s var(--ease); }
 #ld-stage .tz-tb-who .tz-badge.tz-rv { transform: translateY(36px) rotateX(16deg); }
 #ld-stage .tz-tb-who.tz-on .tz-badge.tz-rv { transform: none; }
 .tz-badge:hover { border-color: rgba(248,207,159,.4); background: linear-gradient(180deg, rgba(255,244,230,.1), rgba(255,244,230,.03)); }
-.tz-em { width: 84px; height: 84px; fill: none; stroke: var(--l-amber-hi); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.tz-role { margin-top: 22px; font: 400 32px/1.1 var(--display); color: #fff; }
+.tz-em { width: 68px; height: 68px; fill: none; stroke: var(--l-amber-hi); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.tz-role { margin-top: 16px; font: 400 30px/1.1 var(--display); color: #fff; }
 .tz-nm { margin-top: 8px; font: 500 15px var(--ui); color: var(--l-paper2); }
 .tz-nm a { color: var(--l-amber-hi); text-decoration: none; }
 .tz-sc { margin-top: 14px; font: italic 400 16px/1.4 var(--display); color: var(--l-tone); }
 .tz-built { margin-top: clamp(30px, 5vh, 54px) !important; font: 400 13px var(--ui); color: var(--l-paper3); }
 
+.tz-links { display: flex; justify-content: center; align-items: center; gap: 26px; margin-top: clamp(24px, 4vh, 40px); }
+.tz-play { display: inline-flex; align-items: center; gap: 12px; padding: 7px 18px 7px 7px; border-radius: 999px; cursor: pointer;
+  border: 1px solid rgba(248,207,159,.42); background: rgba(255,232,200,.07); color: #fff; font: 500 14px var(--ui); transition: background .3s var(--ease), border-color .3s var(--ease); }
+.tz-play i { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--l-amber-hi); }
+.tz-play i svg { width: 18px; height: 18px; fill: #1c1314; }
+.tz-play span { font-weight: 400; color: var(--l-paper3); font-variant-numeric: tabular-nums; }
+.tz-play:hover { background: rgba(255,232,200,.14); border-color: rgba(248,207,159,.7); }
+.tz-gh { display: inline-flex; align-items: center; gap: 6px; font: 500 14px var(--ui); color: var(--l-paper2); text-decoration: none; transition: color .3s; }
+.tz-gh svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.tz-gh:hover { color: #fff; }
+#ld-stage .tz-tb-who .tz-built { margin-top: 18px !important; }
+.tz-film { position: fixed; inset: 0; z-index: 2147483000; display: grid; place-items: center; background: rgba(8,5,6,.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  opacity: 0; transition: opacity .35s var(--ease); }
+.tz-film.on { opacity: 1; }
+.tz-film[hidden] { display: none; }
+.tz-film video { display: block; width: min(92vw, calc(84vh * 16 / 9)); aspect-ratio: 16 / 9; border-radius: 14px; background: #000; box-shadow: 0 30px 90px rgba(0,0,0,.6);
+  transform: scale(.97); transition: transform .45s var(--ease-out); }
+.tz-film.on video { transform: none; }
+.tz-film-x { position: absolute; top: 18px; right: 20px; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; cursor: pointer;
+  border: 1px solid rgba(245,236,223,.25); background: rgba(255,244,230,.06); color: #fff; }
+.tz-film-x svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.tz-film-x:hover { background: rgba(255,244,230,.14); }
+@media (max-height: 820px) and (min-width: 1001px) {
+  #ld-stage .tz-tb-who h2 { font-size: clamp(34px, 3.4vw, 50px); }
+  .tz-crew { margin-top: 18px; }
+  .tz-badge { padding: 20px 22px 18px; }
+  .tz-em { width: 50px; height: 50px; }
+  .tz-role { margin-top: 10px; font-size: 26px; }
+  .tz-sc { margin-top: 8px; }
+  .tz-tie { height: 22px; }
+  .tz-built { margin-top: 18px !important; }
+  .tz-links { margin-top: 18px; }
+  #ld-stage .tz-tb-who .tz-built { margin-top: 12px !important; }
+}
 @media (max-width: 1000px) {
   #ld-stage { justify-content: flex-start; }
   #ld-stage .tz-split { grid-template-columns: 1fr; }
-  .tz-crew { grid-template-columns: 1fr; max-width: 360px; margin-left: auto; margin-right: auto; }
+  .tz-crew { grid-template-columns: 1fr; max-width: 360px; row-gap: 18px; margin-left: auto; margin-right: auto; }
+  .tz-crew .tz-lead { width: auto; justify-self: stretch; }
+  .tz-tie { display: none; }
   .tz-nums { flex-wrap: wrap; }
 }
 @media (prefers-reduced-motion: reduce) {

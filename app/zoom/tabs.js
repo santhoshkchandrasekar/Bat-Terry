@@ -7,10 +7,11 @@
   const doc = document, html = doc.documentElement, root = doc.getElementById("landing");
   if (!root) return;
   const TEAM = [
-    { role: "Wing Lead", name: "Name", link: "#", scope: "GenAI system, product and design" },
-    { role: "Sonar Bridge", name: "Name", link: "#", scope: "Data, forecast and crew simulator" },
-    { role: "Night Watch", name: "Name", link: "#", scope: "Quality, deployment and the map" },
+    { role: "Wing Lead", name: "Santhoshkumar Chandrasekar", link: "https://iamsanthosh.com", scope: "GenAI system, data, simulator and design", lead: true },
+    { role: "Sonar Bridge", name: "Harrish Ebi Francis P", link: "https://www.linkedin.com/in/harrishebifrancis", scope: "Reproducibility check of the data and forecast" },
+    { role: "Night Watch", name: "Pradyuman Turlapati", link: "https://www.linkedin.com/in/pradyturlapati", scope: "Testing, QA and deployment" },
   ];
+  const REPO = "https://github.com/santhoshkchandrasekar/Bat-Terry";
   // 2024 requests by month, the four departments (data/processed/monthly_demand_2022_2024.csv)
   const M24 = { PWDx: [13582, 11550, 13092, 13998, 13333, 12917, 13915, 16398, 15912, 11639, 10172, 11102], BTDT: [5620, 5954, 7209, 7008, 7511, 7176, 6678, 6719, 7633, 7675, 6606, 5658],
     PARK: [928, 794, 1291, 1519, 2029, 2881, 2640, 2143, 1587, 1153, 935, 836], ISD: [1491, 1285, 1342, 1415, 1555, 1779, 1796, 2077, 1809, 1610, 1215, 1250] };
@@ -80,10 +81,11 @@
   // ---- Who built me: three badges
   const who = `
   <h2 class="tz-rv tz-c" style="--d:0">Three roles. <em>One bat.</em></h2>
-  <div class="tz-crew">${TEAM.map((m, i) => `<article class="tz-badge tz-rv" style="--d:${1 + i}">
+  <div class="tz-crew">${TEAM.map((m, i) => `${i === 1 ? `<svg class="tz-tie tz-rv" style="--d:2" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><path d="M50 0V18M22.9 40V18H77.1V40"/></svg>` : ""}<article class="tz-badge tz-rv${m.lead ? " tz-lead" : ""}" style="--d:${i ? 2 + i : 1}">
       <svg class="tz-em" viewBox="0 0 100 100" aria-hidden="true">${I[["wing", "sonar", "moon"][i]]}</svg>
       <div class="tz-role">${m.role}</div><div class="tz-nm">${m.link && m.link !== "#" ? `<a href="${m.link}" target="_blank" rel="noopener">${m.name}</a>` : m.name}</div><div class="tz-sc">${m.scope}</div></article>`).join("")}</div>
-  <p class="tz-built tz-rv tz-c" style="--d:5">IE 5374 Applied Generative AI · Northeastern University · 2026</p>`;
+  <div class="tz-links tz-rv" style="--d:5"><button class="tz-play" type="button"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 7.2v9.6l7.6-4.8z"/></svg></i>Watch the demo<span>3:00</span></button><a class="tz-gh" href="${REPO}" target="_blank" rel="noopener">Code on GitHub<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16L16 8M9.5 8H16v6.5"/></svg></a></div>
+  <p class="tz-built tz-rv tz-c" style="--d:6">IE 5374 Applied Generative AI · Northeastern University · 2026</p>`;
 
   // ---- mount
   const veil = doc.createElement("i"); veil.className = "ld-veil"; veil.setAttribute("aria-hidden", "true");
@@ -120,7 +122,7 @@
     else enter();
   }
   function hide() {
-    if (!cur) return; const s = stage.querySelector(`.tz-tb[data-tab="${cur}"]`); cur = null;
+    if (!cur) return; closeFilm(); const s = stage.querySelector(`.tz-tb[data-tab="${cur}"]`); cur = null;
     links.forEach(l => l.setAttribute("aria-selected", "false"));
     s.classList.add("tz-off"); s.classList.remove("tz-on");
     swapT = setTimeout(() => { s.classList.remove("tz-cur", "tz-off"); }, 320);
@@ -132,12 +134,28 @@
     if (l) { e.stopPropagation(); e.preventDefault(); const k = KEYS[l.dataset.sheet]; if (k === cur) hide(); else show(k); return; }
     if (e.target.closest && e.target.closest("#ld-stage .tz-back")) { e.stopPropagation(); hide(); }
   }, true);
+  // the demo film: a player over everything; Escape, the close button or a click outside closes it (and pauses it)
+  let film = null;
+  function openFilm() {
+    if (!film) {
+      film = doc.createElement("div"); film.className = "tz-film"; film.setAttribute("role", "dialog"); film.setAttribute("aria-modal", "true"); film.setAttribute("aria-label", "Bat-Terry demo video");
+      film.innerHTML = `<button class="tz-film-x" type="button" aria-label="Close the video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button><video controls playsinline preload="metadata" poster="assets/demo/demo-poster.jpg"><source src="assets/demo/demo.mp4" type="video/mp4"><track kind="captions" src="assets/demo/demo.vtt" srclang="en" label="English"></video>`;
+      film.addEventListener("click", e => { if (e.target === film || e.target.closest(".tz-film-x")) closeFilm(); });
+      doc.body.appendChild(film);
+    }
+    film.hidden = false; void film.offsetWidth; film.classList.add("on");
+    const v = film.querySelector("video"); try { v.currentTime = 0; } catch (e) {} const p = v.play(); if (p && p.catch) p.catch(() => {});
+    film.querySelector(".tz-film-x").focus({ preventScroll: true });
+  }
+  function closeFilm() { if (!film || film.hidden) return; film.querySelector("video").pause(); film.classList.remove("on"); setTimeout(() => { if (!film.classList.contains("on")) film.hidden = true; }, 350); const b = stage.querySelector(".tz-play"); if (b) b.focus({ preventScroll: true }); }
+  const filmOpen = () => film && !film.hidden && film.classList.contains("on");
+  stage.addEventListener("click", e => { if (e.target.closest && e.target.closest(".tz-play")) openFilm(); });
   root.querySelector(".ld-brand").addEventListener("click", () => hide());
-  addEventListener("keydown", e => { if (e.key === "Escape" && cur) { e.stopPropagation(); hide(); } }, true);
+  addEventListener("keydown", e => { if (e.key !== "Escape") return; if (filmOpen()) { e.stopPropagation(); closeFilm(); return; } if (cur) { e.stopPropagation(); hide(); } }, true);
   addEventListener("resize", () => { if (cur) placeInd(links.find(l => KEYS[l.dataset.sheet] === cur)); });
   // while a tab is open the page must not scroll under it (a document scroll would carry the landing into the planner):
   // the stage scrolls itself when it has more to show, and nothing else moves
-  const hold = e => { if (!cur) return; const inStage = stage.contains(e.target) && stage.scrollHeight > stage.clientHeight + 2; e.stopImmediatePropagation(); if (!inStage && e.cancelable) e.preventDefault(); };
+  const hold = e => { if (!cur || filmOpen()) return; const inStage = stage.contains(e.target) && stage.scrollHeight > stage.clientHeight + 2; e.stopImmediatePropagation(); if (!inStage && e.cancelable) e.preventDefault(); };
   addEventListener("wheel", hold, { capture: true, passive: false });
   addEventListener("touchmove", hold, { capture: true, passive: false });
   window.TerryTabs = { show, hide, cur: () => cur };

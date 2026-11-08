@@ -11,7 +11,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 APP = HERE.parent / "app"
 SITE = HERE / "site"
-WEB = {".webp", ".jpg", ".jpeg", ".png", ".svg", ".woff2"}
+WEB = {".webp", ".jpg", ".jpeg", ".png", ".svg", ".woff2", ".mp4", ".vtt"}
 
 if SITE.exists():
     shutil.rmtree(SITE)
@@ -23,6 +23,7 @@ assert m, "opening.js tag not found"
 html = html.replace(m.group(0), '<script src="host.js"></script>\n' + m.group(0), 1)
 # a standard document skeleton around the page (the page itself starts at its <title>)
 icons = re.findall(r'<link rel="(?:icon|apple-touch-icon)"[^>]*>\n?', html)   # the tab icon belongs in <head>
+icons += re.findall(r'<meta (?:name="description"|property="og:[^"]+"|name="twitter:[^"]+")[^>]*>\n?', html)   # and so do the link-preview tags
 for t in icons: html = html.replace(t, "", 1)
 html = ('<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">'
         + "".join(t.strip() for t in icons) + '</head><body>' + html + '</body></html>')

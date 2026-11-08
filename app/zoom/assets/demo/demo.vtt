@@ -1,0 +1,208 @@
+WEBVTT
+
+00:00:00.250 --> 00:00:02.550
+Last year, Boston 311 took
+
+00:00:02.550 --> 00:00:04.100
+300,000 requests.
+
+00:00:04.850 --> 00:00:07.500
+In Transportation, half of them ran late.
+
+00:00:08.050 --> 00:00:09.900
+So picture New Year's Eve, 2025.
+
+00:00:10.950 --> 00:00:12.300
+Did your crews miss again?
+
+00:00:13.600 --> 00:00:15.100
+This is Bat-Terry.
+
+00:00:15.500 --> 00:00:16.650
+Give Terry a goal,
+
+00:00:16.700 --> 00:00:18.600
+he flips it into how it would fail.
+
+00:00:18.850 --> 00:00:20.100
+It finds your way out.
+
+00:00:20.450 --> 00:00:22.400
+Here's one such goal.
+
+00:00:23.000 --> 00:00:25.200
+Every department closes 95%
+
+00:00:25.200 --> 00:00:27.400
+of its requests on time, all year.
+
+00:00:29.200 --> 00:00:30.800
+Terry flips it into a failure,
+
+00:00:30.800 --> 00:00:32.400
+then listens for predators.
+
+00:00:32.700 --> 00:00:35.200
+That is, specific ways this goal could fail.
+
+00:00:35.650 --> 00:00:36.850
+Each one checked against
+
+00:00:36.850 --> 00:00:38.600
+Boston's 2024 records.
+
+00:00:39.100 --> 00:00:41.000
+Some are confirmed, some rejected.
+
+00:00:43.400 --> 00:00:44.950
+Terry finds the cheapest escape.
+
+00:00:45.450 --> 00:00:47.000
+Public Works falls short,
+
+00:00:47.050 --> 00:00:49.500
+so Terry signs four crews by the end of June,
+
+00:00:49.800 --> 00:00:51.000
+working from August.
+
+00:00:51.450 --> 00:00:55.500
+$260,000 in payroll for 96% on time.
+
+00:00:57.050 --> 00:00:59.100
+And you can ask what-ifs in plain words.
+
+00:00:59.600 --> 00:01:00.900
+A windstorm in June?
+
+00:01:01.100 --> 00:01:02.300
+Terry answers live,
+
+00:01:02.350 --> 00:01:04.100
+and every number comes from the engine.
+
+00:01:06.950 --> 00:01:09.400
+Residents report problems in their own words,
+
+00:01:09.450 --> 00:01:10.900
+even in Spanish.
+
+00:01:11.250 --> 00:01:12.850
+Terry asks which Centre Street,
+
+00:01:13.150 --> 00:01:14.900
+then routes it to Pothole Repair.
+
+00:01:15.550 --> 00:01:17.400
+On 200 unseen messages,
+
+00:01:17.500 --> 00:01:20.600
+it was right 82.5% of the time.
+
+00:01:21.150 --> 00:01:22.750
+Under Terry is a real plan.
+
+00:01:23.150 --> 00:01:25.100
+We tested four forecasts on 2024,
+
+00:01:25.850 --> 00:01:27.300
+kept the most accurate,
+
+00:01:27.350 --> 00:01:31.000
+and planned for demand 14% above or below it.
+
+00:01:32.150 --> 00:01:35.100
+The plan costs 15.62 million dollars,
+
+00:01:35.550 --> 00:01:38.950
+6.19 million less than keeping January's crews.
+
+00:01:40.350 --> 00:01:41.900
+The biggest decision:
+
+00:01:42.100 --> 00:01:44.800
+Transportation signs six crews by New Year's Eve.
+
+00:01:47.650 --> 00:01:50.200
+Three years of 311 records become a forecast
+
+00:01:50.200 --> 00:01:53.500
+and a crew simulator that runs in your browser.
+
+00:01:53.800 --> 00:01:56.300
+Your goal goes through one Netlify function,
+
+00:01:56.350 --> 00:02:00.200
+which guards the key to GPT-6.1 Sol.
+
+00:02:00.500 --> 00:02:02.500
+The model calls our engine as a tool
+
+00:02:02.550 --> 00:02:03.900
+and writes one sentence,
+
+00:02:04.500 --> 00:02:06.500
+and a guardrail checks every number.
+
+00:02:06.800 --> 00:02:08.600
+We tested it against a broken model
+
+00:02:08.600 --> 00:02:10.600
+and 200 random actions.
+
+00:02:11.100 --> 00:02:12.000
+And then comes the map,
+
+00:02:12.100 --> 00:02:13.900
+which we call the Echolocation,
+
+00:02:14.100 --> 00:02:15.550
+which shows quiet neighborhoods
+
+00:02:15.600 --> 00:02:17.300
+are not the slow ones.
+
+00:02:19.300 --> 00:02:20.900
+So what makes Bat-Terry different?
+
+00:02:21.400 --> 00:02:22.600
+Most tools plan forward.
+
+00:02:23.200 --> 00:02:26.000
+Terry starts from the day the goal fails, and works back.
+
+00:02:27.150 --> 00:02:29.600
+Every risk it raises is tested on 2024,
+
+00:02:30.100 --> 00:02:32.000
+so nothing rests on a hunch.
+
+00:02:32.950 --> 00:02:34.100
+The math is ours.
+
+00:02:34.650 --> 00:02:36.300
+The model only explains it,
+
+00:02:36.350 --> 00:02:38.200
+and a guardrail checks every figure.
+
+00:02:38.750 --> 00:02:40.900
+A resident's message, in their own words,
+
+00:02:40.950 --> 00:02:43.000
+lands with the crew that fixes it.
+
+00:02:44.600 --> 00:02:46.900
+And if a goal can't be met in time,
+
+00:02:47.200 --> 00:02:49.600
+Terry says so, instead of pretending.
+
+00:02:50.050 --> 00:02:51.200
+That's Bat-Terry.
+
+00:02:51.400 --> 00:02:53.100
+Every plan tested against failure,
+
+00:02:53.150 --> 00:02:55.000
+before Boston has to live with it.

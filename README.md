@@ -9,8 +9,8 @@ it (*predators*), tests each one against two years of real 311 records, and find
 that one mechanism. A 311 intake assistant routes residents' plain-language messages, in English or Spanish, to the
 city's real request types.
 
-**Live site:** _add the Netlify link here_ ·
-**Demo video:** _add the link here once recorded_ ·
+**Live site:** https://bat-terry.netlify.app ·
+**Demo video:** on the site (Who built me, Watch the demo), file `app/zoom/assets/demo/demo.mp4` ·
 **Notebook:** `notebooks/Boston311_Terry.ipynb` (every cell run, all outputs visible) ·
 **Report:** `docs/analysis_report.md` ·
 **How the page behaves, and how we tested it:** `docs/STATES.md`
@@ -205,21 +205,30 @@ Full assumptions and limitations are in §10 of the notebook.
 * **Images.** The hero photos (Boston at dusk and at night), the projector photos and the hilltop footer photos are
   AI-generated images we made with ChatGPT.
 * **Coding assistant.** We used an AI coding assistant to help us write better code and to build the front end.
+* **Demo video.** The same coding assistant helped edit the demo video and code its animations. The narration is our own
+  voice. The background music was generated with Sonilo.
 
 We reviewed and are responsible for everything submitted, per Northeastern's Academic Integrity and Use of AI policy.
 
 ## Contributions
 
-> **Team: fill in the Owner column before submitting.** The brief requires each member's contributions.
+**Team:** Santhoshkumar Chandrasekar (Wing Lead), Harrish Ebi Francis P (Sonar Bridge), Pradyuman Turlapati (Night Watch).
 
-| Work package | What it covers | Owner(s) |
+| Work package | What it covers | Owner |
 |---|---|---|
 | Concept and product direction | Goal inversion ("Terry"), predators, modes, the page | Santhoshkumar Chandrasekar |
-| Data pipeline and forecast | `src/01` to `05`, the backtest, the silence signal | |
-| Simulator and optimizer | `src/sim.py`, `src/optimize.py`, `src/06_full_plan.py`, sensitivity | |
-| Terry GenAI layer | `terry/`, `app/live/terry.js`, `flyover.js`, guardrails, the flip evaluation | |
-| Intake assistant and test sets | `terry/intake.py`, test generation, labeling, evaluation | |
-| Page, notebook, report, video | `app/zoom/`, `notebooks/`, `docs/analysis_report.md`, the demo video | |
+| Data pipeline and forecast | `src/01` to `05`, the backtest, the silence signal | Santhoshkumar Chandrasekar |
+| Simulator and optimizer | `src/sim.py`, `src/optimize.py`, `src/06_full_plan.py`, sensitivity | Santhoshkumar Chandrasekar |
+| Terry GenAI layer | `terry/`, `app/live/terry.js`, `flyover.js`, guardrails, the flip evaluation | Santhoshkumar Chandrasekar |
+| Intake assistant and test sets | `terry/intake.py`, test generation, labeling, evaluation | Santhoshkumar Chandrasekar |
+| Page, notebook, report, video | `app/zoom/`, `notebooks/`, `docs/analysis_report.md`, the demo video | Santhoshkumar Chandrasekar |
+
+**Verification**
+
+| Check | What it covers | Owner |
+|---|---|---|
+| Reproducibility | A clean run of the notebook on a second machine, the headline numbers checked: `docs/reproduce.md` | Harrish Ebi Francis P |
+| QA and deployment | The test suites and the live site on other devices and browsers: `docs/qa_report.md` | Pradyuman Turlapati |
 
 ## Data
 

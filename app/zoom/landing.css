@@ -79,6 +79,15 @@ html.op-run .ld-terry-top { opacity: 0; }
 :root[data-theme="night"] #landing .ld-see .yr { color: var(--l-amber-hi); }
 #landing .ld-see:hover .rule, #landing .ld-see:focus-visible .rule { width: 84px; }
 #landing .ld-see:hover { color: #fff; }
+/* the first action: a quiet glass pill, warm white when you reach for it */
+#landing .ld-see { gap: 12px; margin-top: 30px; padding: 12px 20px 12px 22px; border-radius: 999px; letter-spacing: .16em; text-shadow: none;
+  background: rgba(255,246,234,.09); border: 1px solid rgba(255,246,234,.4); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(10,5,6,.22); transition: background .35s var(--ease), border-color .35s var(--ease), color .35s var(--ease), box-shadow .35s var(--ease); }
+#landing .ld-see .rule { display: none; }
+#landing .ld-see::after { content: ""; width: 7px; height: 7px; margin-left: 2px; border: solid currentColor; border-width: 1.6px 1.6px 0 0; transform: rotate(45deg); transition: transform .35s var(--ease); }
+#landing .ld-see:hover, #landing .ld-see:focus-visible { background: rgba(255,246,234,.94); border-color: rgba(255,246,234,.94); color: #1c1314; box-shadow: 0 12px 34px rgba(10,5,6,.3); }
+#landing .ld-see:hover .yr, #landing .ld-see:focus-visible .yr { color: #1c1314; }
+#landing .ld-see:hover::after, #landing .ld-see:focus-visible::after { transform: translateX(3px) rotate(45deg); }
 
 /* Terry's fact: only for whoever goes to him */
 #landing .ld-hit { position: absolute; z-index: 3; width: 230px; height: 120px; margin: -60px 0 0 -115px; border: 0; border-radius: 50%; background: transparent; cursor: pointer; }
