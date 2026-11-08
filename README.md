@@ -10,7 +10,7 @@ that one mechanism. A 311 intake assistant routes residents' plain-language mess
 city's real request types.
 
 **Live site:** https://bat-terry.netlify.app ·
-**Demo video:** on the site (Who built me, Watch the demo), file `app/zoom/assets/demo/demo.mp4` ·
+**Demo video:** https://youtu.be/U-ltQXELWZ0 (3:00, captions on CC; also on the site under Who built me) ·
 **Notebook:** `notebooks/Boston311_Terry.ipynb` (every cell run, all outputs visible) ·
 **Report:** `docs/analysis_report.md` ·
 **How the page behaves, and how we tested it:** `docs/STATES.md`
