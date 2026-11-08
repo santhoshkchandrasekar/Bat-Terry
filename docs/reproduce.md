@@ -4,7 +4,7 @@ Checked by Harrish Ebi Francis P on 8 November 2026.
 
 ## My setup
 - Computer and OS: MacBook Air 15-inch (M4, 2025, 16 GB), macOS 27.0 (26A428)
-- Python: <3.13.x> (Homebrew), in a virtual environment
+- Python: <3.13.18> (Homebrew), in a virtual environment
 - Node: v24.11.1
 
 ## What I ran
@@ -19,7 +19,7 @@ Cloned santhoshkchandrasekar/Bat-Terry in VS Code (Git: Clone), then in the VS C
 
 Changes from the README commands: I used a virtual environment, and Python 3.13 instead of my default Python 3.15 (see Problems and fixes). No OpenAI key was set, so the AI cells showed their saved results.
 
-Time for the full run: the notebook itself executes in about 13 seconds (12.8 s, measured with `time` on a second run, using the committed notebook after restoring it). Setup took longer: installing Python 3.13 and the packages took roughly <X> minutes.
+Time for the full run: the notebook itself executes in about 13 seconds (12.8 s, measured with `time` on a second run, using the committed notebook after restoring it). Setup took longer: installing Python 3.13 and the packages took roughly 3 minutes.
 
 ## Results
 | Number | README says | My run | Match? |
