@@ -164,3 +164,6 @@ html.tz-wk .tz-chart rect { transform: none; transition: none; }
   #ld-stage .tz-rv, #landing .ld-photo, #landing .ld-sky, #landing .ld-eve, .tz-node, .tz-chart rect { transition: none !important; }
   .tz-orbit { animation: none; }
 }
+
+/* while the video or the 2025 plan is open the page itself cannot scroll, whatever the browser does with the event */
+html:has(.tz-film.on), html:has(.tz-film.on) body, html:has(#landing .ld-plan.open), html:has(#landing .ld-plan.open) body { overflow: hidden !important; overscroll-behavior: none; }

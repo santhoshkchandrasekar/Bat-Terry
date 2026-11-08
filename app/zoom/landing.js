@@ -508,7 +508,7 @@
   /* the input that drives it. Down: the camera pulls back until the planner is in place, then the page scrolls. Up at the very top of
      the planner: the camera goes back in to the landing. */
   const DIST = () => Math.max(900, innerHeight * 1.5);   // how much scrolling the whole move takes
-  const busy = () => plan.classList.contains("open") || (O && O.active) || html.classList.contains("ld-tab");   // a tab page is open (tabs.js)
+  const busy = () => plan.classList.contains("open") || (O && O.active) || html.classList.contains("ld-tab") || !!document.querySelector(".tz-film.on");   // a tab page is open (tabs.js)
   const atTop = () => (scrollY || doc.documentElement.scrollTop || 0) <= 0;
   const owns = dy => !busy() && (uT < 1 ? true : (dy < 0 && atTop()));
   const onWheel = e => {

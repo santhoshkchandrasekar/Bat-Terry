@@ -159,7 +159,15 @@
   const planOpen = () => doc.querySelector("#landing .ld-plan.open");
   const locked = () => cur || filmOpen() || planOpen();
   const layer = () => filmOpen() ? null : planOpen() ? planOpen().querySelector(".ld-ledger") : cur ? stage : null;
-  const scroller = t => { const b = layer(); return b && t && b.contains(t) && b.scrollHeight > b.clientHeight + 2 ? b : null; };
+  // the nearest box between the touch and the open layer that can scroll, either way (the plan table also scrolls sideways on phones)
+  const scroller = t => {
+    const b = layer(); if (!b || !t || !b.contains(t)) return null;
+    for (let e = t.nodeType === 1 ? t : t.parentElement; e; e = e.parentElement) {
+      const cs = getComputedStyle(e), y = /auto|scroll/.test(cs.overflowY) && e.scrollHeight > e.clientHeight + 2, x = /auto|scroll/.test(cs.overflowX) && e.scrollWidth > e.clientWidth + 2;
+      if (x || y) return e; if (e === b) break;
+    }
+    return null;
+  };
   const hold = e => { if (!locked()) return; if (cur || filmOpen()) e.stopImmediatePropagation(); if (!scroller(e.target) && e.cancelable) e.preventDefault(); };
   addEventListener("wheel", hold, { capture: true, passive: false });
   addEventListener("touchmove", hold, { capture: true, passive: false });
@@ -167,7 +175,7 @@
   addEventListener("keydown", e => {
     const K = e["key"], step = KSTEP[K]; if (step === undefined || !locked()) return;
     const a = doc.activeElement, tag = (a && a.tagName) || "";
-    if (/^(INPUT|TEXTAREA|SELECT|VIDEO)$/.test(tag) || (a && a.isContentEditable) || (K === " " && /^(BUTTON|A)$/.test(tag))) return;
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(tag) || (a && a.isContentEditable) || (K === " " && /^(BUTTON|A|VIDEO)$/.test(tag))) return;
     e.preventDefault(); e.stopImmediatePropagation();
     const b = layer(); if (!b) return;
     const dy = Math.abs(step) < 1 ? step * b.clientHeight : step; b.scrollBy({ top: K === " " && e.shiftKey ? -dy : dy });
