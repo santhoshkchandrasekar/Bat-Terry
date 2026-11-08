@@ -713,8 +713,8 @@ ex = rows.set_index("id").loc[["def-dusk", "res-pothole", "fu-month", "inj-embed
 display(ex.style.set_properties(**{"text-align": "left", "white-space": "pre-wrap"}))
 """)
 md("""
-**The same 42 questions, live, on the hosted site's model.** The shared site (`deploy/`) answers with gpt-4o-mini through one
-small server function that holds the key and caps spend at $1 a day. Here `deploy/host.js`, the page's own stand-in for
+**The same 42 questions, live, on the hosted site's model.** At the time of this run the shared site (`deploy/`) answered with gpt-4o-mini through one
+small server function that holds the key and caps spend at $1 a day; it now uses gpt-6.1-sol with a $3 daily cap (`deploy/README.md`). Here `deploy/host.js`, the page's own stand-in for
 the page's `sample`, runs the tool loop exactly as in the browser, and its calls go straight to OpenAI. The content column
 uses the rules path's exact phrases, so a correct answer in other words counts as a miss there; the guardrail column is the
 one that matters: every number in every live answer must trace to a tool result or a cited chunk.

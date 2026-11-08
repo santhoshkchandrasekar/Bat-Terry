@@ -12,7 +12,8 @@ city's real request types.
 **Live site:** https://bat-terry.netlify.app ·
 **Demo video:** https://youtu.be/U-ltQXELWZ0 (3:00, captions on CC; also on the site under Who built me) ·
 **Notebook:** `notebooks/Boston311_Terry.ipynb` (every cell run, all outputs visible) ·
-**Report:** `docs/analysis_report.md` ·
+**Project report:** [`docs/REPORT.md`](docs/REPORT.md) ([PDF](docs/Bat-Terry-report.pdf)) ·
+**Staffing analysis:** `docs/analysis_report.md` ·
 **How to use it:** [`docs/USER_GUIDE.md`](docs/USER_GUIDE.md) ·
 **Why we built it this way:** [`docs/DECISIONS.md`](docs/DECISIONS.md) ·
 **How the page behaves, and how we tested it:** `docs/STATES.md`
@@ -63,7 +64,7 @@ retrieval, and every number on screen is computed by the engine either way.
 | Feature | What the model does | What code does, and the guardrails |
 |---|---|---|
 | **Intake assistant** (Python §7, page `intake.js`) | Rewrites a resident's message as the problem to fix (translating Spanish), picks one of the retrieved request types, or asks one follow-up question | Retrieval over the city's 124 real routing targets; the model may only choose from those candidates; emergencies get "call 911" before any model; resident text is wrapped as data, never instructions |
-| **Ping Terry** (page `ask.js`) | Chooses tools, answers in Terry's voice, chooses page actions | Ten tools over the plan; at most 4 tool calls, a hard stop at 6, a 45 s cap; every number must appear in a tool result, a cited glossary chunk or the page state, or it is rewritten once and then removed; actions are cleaned to an allowed set; any failure falls back to the rules answer, labelled |
+| **Ping Terry** (page `ask.js`) | Chooses tools, answers in Terry's voice, chooses page actions | Thirteen tools over the plan (including the page's own state, so it can explain what is on screen); at most 4 tool calls, a hard stop at 6, a 45 s cap; every number must appear in a tool result, a cited glossary chunk or the page state, or it is rewritten once and then removed; actions are cleaned to an allowed set; any failure falls back to the rules answer, labelled |
 | **The flip and the hunt** (Python §6, page `flyover.js`) | Turns a goal into its failure and proposes predators | Predators must be real request types and neighborhoods, then each is tested against 2024 records; event sizes come from real spikes, never from the model |
 | **The report** (Python §9) | Writes the interpretive paragraphs | LangChain chain with a number guardrail and a critic pass |
 
@@ -126,7 +127,7 @@ flowchart LR
 | `src/` | Data pipeline, forecast backtest, simulator, optimizer, full plan, ISD analysis, map data, event analogues |
 | `terry/` | The Python GenAI layer: flip, echolocation, hunt (agent), decision calendar, report chain, intake assistant |
 | `data/tests/` | Intake test sets: seed (50), held-out v1 (200), held-out v2 (120) |
-| `docs/` | The user guide, the design decisions, the analysis report, `STATES.md`, the architecture diagram, the demo script |
+| `docs/` | The project report (and its PDF), the user guide, the design decisions, the analysis report, `STATES.md`, the architecture diagram, the demo script |
 
 ## How to run
 

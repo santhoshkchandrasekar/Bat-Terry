@@ -38,7 +38,7 @@ From top to bottom:
 | **Echolocation** | Who calls 311 less than expected, and who waits longer. Opens a neighborhood map. |
 | **Roost** (left leaf) | The plans Terry has found for you. He keeps up to three. |
 | **Terrytory** (right leaf) | The residents' side: reports, the incoming message stream and alerts. |
-| **Ping Terry** (the dock at the bottom) | Ask Terry anything about the plan, report a street problem, or tell him where to go. |
+| **Ping Terry** (the dock at the bottom) | Ask Terry about the plan or what's on screen, give him a what-if, report a street problem, or tell him what to do. |
 
 On your first visit Terry gives a short guided tour. **Skip** ends it; **Show me around** in the Ping dock replays it.
 
@@ -91,17 +91,66 @@ This is the heart of Bat-Terry.
 Some confirmed predators are about *how* the work is handled, not crew numbers. Terry says so when more crews won't fix
 it.
 
-## 5. Ask Ping Terry
+## 5. What Ping Terry can do
 
-The dock at the bottom of every page. Type and press Enter, or tap one of the suggestions.
+Ping Terry is the dock at the bottom of every page. Type and press Enter, or tap one of its suggestions. The light at the
+top of the dock says **Live** when Terry is answering with the AI model, or **Offline: quick answers** when he is
+answering from built-in rules. Either way the numbers come from the same plan.
 
-- **Questions about the plan:** *Why does Transportation hire in February?* · *What happens if demand is 20% higher?*
-  · *What does Dusk mean?* Terry answers from the plan's own numbers and moves the page to show you.
-- **Report a street problem**, in English or Spanish: *There is a huge pothole on Centre St by the T stop* or *Hay un
-  bache enorme en la calle Centre.* Terry asks a follow-up if needed (*which Centre Street?*), then routes the report to
-  the right city request type and team.
-- **Tell him where to go:** *open Parks in July* · *compare plans* · *go to the predators* · *show me the flyway*.
-- While Terry is thinking, the send button becomes **Stop**.
+**Ask about the plan.** Terry answers in plain words, using the plan's own data, and moves the page to show you.
+
+- *Why does Transportation hire in February?*
+- *How accurate is the forecast for Parks?*
+- *What happens if I add 2 Transportation crews in November?* (Terry reruns the year with the change and compares it with
+  the plan on screen.)
+- *How much of the budget is left in August?*
+- *Which neighborhoods wait longest for pothole repairs?*
+
+Follow-ups work: after a question about Parks in July, *and in December?* carries the department over.
+
+**Ask about what is on screen.** *What am I looking at?* · *Explain this plan* · *Which predator is the most dangerous?*
+Terry reads what the page is showing right now (the goal you chased, its predators, what the projector and the Ledger
+show, BUDGETerry's reading) and explains it.
+
+**Watch him show the answer.** After answering, Terry acts on the page: he zooms the projector to the department or month
+he is talking about, highlights the bar or line in question, opens the explanation of a month's demand, plays the street
+scene for that month, or opens the Echolocation map with the right neighborhoods lit.
+
+**Tell him to do something.** These are understood by rules, so they are instant and never invent anything:
+
+| You type | Terry does |
+|---|---|
+| *switch to night* · *make it day* | Switches Dusk and Night |
+| *show the aggressive plan* | Switches the Ledger's plan |
+| *compare neutral and aggressive* · *compare plans* | Opens a side-by-side comparison |
+| *zoom out* · *zoom to Parks in June* · *open Transportation in March* | Zooms the projector |
+| *play August* · *play Parks in June* | Plays that month |
+| *show me July 15* | Jumps to that day |
+
+**Ask him to take you somewhere.** *go to the predators* · *show me the flyway* · *open the Roost* · *take me to
+Echolocation*. Terry knows ten places: the predators, the flyway, The Flip Side, Echolocation, the Ledger, the Almanac and
+BUDGETerry, the projector, the Roost, Terrytory and the goal box. He scrolls there, opens it and lights it for a moment.
+
+**Give him a what-if or a real alert.** Paste or type an event, for example *Winter storm warning: 12 to 18 inches of snow
+expected from February 3*. Terry reads what kind of event it is and when, sizes it from the closest real spike in
+2022 to 2024 (here, the January 2022 blizzard), runs the plan with and without it, and tells you whether the plan absorbs
+it or what to do.
+
+**Report a street problem**, in English or Spanish: *There is a huge pothole on Centre St by the T stop* or *Hay un
+bache enorme en la calle Centre.* Terry asks a follow-up if needed (*which Centre Street?*), then routes the report to
+the right city request type, department and team.
+
+**Ask what a word means.** *What is Dusk?* · *What is the 30-day cliff?* · *How does the simulator work?* Terry looks it up
+in his own notes (the glossary, the analysis report and the method) and says where the answer came from.
+
+**Good to know**
+
+- Every number Terry writes is checked against the plan's data. A number he can't trace is removed, never guessed.
+- While he is thinking, the send button becomes **Stop**.
+- He stays on topic: questions unrelated to Boston's 311 crews get a short, polite redirect, and he ignores instructions
+  pasted into a message.
+- The short guided tour and Terry's narration during your first chase are written lines, not AI. **Show me around** in
+  the dock replays the tour.
 
 ## 6. Explore the residents' side and the map
 
