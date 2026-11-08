@@ -13,6 +13,8 @@ city's real request types.
 **Demo video:** https://youtu.be/U-ltQXELWZ0 (3:00, captions on CC; also on the site under Who built me) ·
 **Notebook:** `notebooks/Boston311_Terry.ipynb` (every cell run, all outputs visible) ·
 **Report:** `docs/analysis_report.md` ·
+**How to use it:** [`docs/USER_GUIDE.md`](docs/USER_GUIDE.md) ·
+**Why we built it this way:** [`docs/DECISIONS.md`](docs/DECISIONS.md) ·
 **How the page behaves, and how we tested it:** `docs/STATES.md`
 
 ## Headlines
@@ -32,8 +34,8 @@ city's real request types.
 Open it, scroll, name a goal, and press **Chase it**.
 
 * **The landing.** Boston on the last evening of 2024: "2025 starts tomorrow, and its crews are still unplanned." Scrolling
-  pulls the camera back from the skyline into the planner, and scrolling up at the top returns to it. On sharp screens
-  (Macs, phones, Windows at 150% and up) a lighter version of the move plays, so laptop graphics never drop frames.
+  pulls the camera back from the skyline into the planner, and scrolling up at the top returns to it. On very dense
+  screens (225% scaling and up) a lighter version of the move plays, so graphics never drop frames.
 * **The projector.** The 2025 plan plays on a projector screen hanging from a branch, at city, department and month level.
   The legends say what every mark counts (crews on plan, crews needed, the likely range of need) and the month view says
   what one crew box is. **Dusk** and **Night** switch the photographs and the palette together.
@@ -124,7 +126,7 @@ flowchart LR
 | `src/` | Data pipeline, forecast backtest, simulator, optimizer, full plan, ISD analysis, map data, event analogues |
 | `terry/` | The Python GenAI layer: flip, echolocation, hunt (agent), decision calendar, report chain, intake assistant |
 | `data/tests/` | Intake test sets: seed (50), held-out v1 (200), held-out v2 (120) |
-| `docs/` | The analysis report, `STATES.md`, the architecture diagram, the demo script |
+| `docs/` | The user guide, the design decisions, the analysis report, `STATES.md`, the architecture diagram, the demo script |
 
 ## How to run
 
