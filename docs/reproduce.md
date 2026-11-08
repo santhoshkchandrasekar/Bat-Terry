@@ -31,7 +31,6 @@ Time for the full run: the notebook itself executes in about 13 seconds (12.8 s,
 
 Notes on the results:
 - The Transportation decision is not stated directly in Section 4. Section 4's crew table shows it indirectly (18 crews in January, 24 in February). The explicit "+6 by 31 Dec 2024" is in the Section 6.2 decision calendar, which is computed by code, and in the Section 9 summary.
-- The intake accuracy cell recomputes the score from saved per-message results (CSV files). Without an OpenAI key the classifier was not re-run, so this checks the calculation, not the model's answers. The same table shows 89.0% for the final model on the same 200 messages; the notebook explains that 82.5% is the clean held-out number.
 
 ## Problems and fixes
 1. **Install failed on Python 3.15.** My default `python3` was Homebrew Python 3.15. `pip install -r requirements.txt` failed on `pydantic-core==2.46.5`, which has no prebuilt package for 3.15, so pip tried to build it from source with Rust. The Rust download then failed with `No space left on device`. Nothing was installed, so `build_notebook.py` failed with `No module named 'nbformat'` and nbconvert was missing.
