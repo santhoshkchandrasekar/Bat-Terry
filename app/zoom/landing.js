@@ -12,7 +12,7 @@
   // the lighter move (owner 7 Nov, 200% laptop screen): magnifying the whole planner makes the browser redraw it every frame, which
   // laptop graphics at 2x cannot keep up with (unfinished tiles). On sharp screens the planner stays at its own size and fades up
   // under the pulling-back photograph; the leaves and the dock still fly in. ?ldx=lite / ?ldx=full force either for testing.
-  const LITE = LDX.includes("lite") || (!LDX.includes("full") && (window.devicePixelRatio || 1) >= 1.75);   // 150% laptops run the full move smoothly (owner 8 Nov); 200% screens get the lighter one
+  const LITE = LDX.includes("lite") || (!LDX.includes("full") && (window.devicePixelRatio || 1) >= 2.25);   // the full move runs smoothly on the owner's 200% laptop (8 Nov); only denser screens get the lighter one
   const KEY = "terry.entered";
   const entered = () => { try { return sessionStorage.getItem(KEY) === "1"; } catch (e) { return false; } };
   const api = window.TerryLanding = { active: false, T: 2.4 };
