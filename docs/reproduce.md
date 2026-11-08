@@ -4,7 +4,7 @@ Checked by Harrish Ebi Francis P on 8 November 2026.
 
 ## My setup
 - Computer and OS: MacBook Air 15-inch (M4, 2025, 16 GB), macOS 27.0 (26A428)
-- Python: <3.13.18> (Homebrew), in a virtual environment
+- Python: 3.13.18 (Homebrew), in a virtual environment
 - Node: v24.11.1
 
 ## What I ran
