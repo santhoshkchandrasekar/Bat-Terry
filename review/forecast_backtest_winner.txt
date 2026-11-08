@@ -1,0 +1,5 @@
+department       method     mape  annual_err
+      PWDx seasonal_avg 0.107673    0.086657
+      BTDT seasonal_avg 0.073135   -0.075301
+      PARK seasonal_avg 0.140224   -0.063781
+       ISD seasonal_avg 0.078251   -0.026901

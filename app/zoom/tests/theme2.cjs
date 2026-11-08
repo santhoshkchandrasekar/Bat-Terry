@@ -1,0 +1,16 @@
+process.env.PORT = '8819';
+const B = require('../bshoot.cjs');
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const [FROM, AT] = [process.argv[2] || 'day', +(process.argv[3] || 400)];
+(async () => { await new Promise(r => B.srv.listen(B.PORT, r));
+  const b = await B.chromium.launch({ args: B.ARGS }); const ctx = await b.newContext({ viewport: { width: 1440, height: 900 } });
+  await ctx.addInitScript(t => { localStorage.setItem('terry.opening', 'seen'); localStorage.setItem('terry.toured', '1'); localStorage.setItem('terry.seen', '1'); localStorage.setItem('terry.guide', 'off'); localStorage.setItem('terry.theme', t); }, FROM);
+  const p = await ctx.newPage(); await p.route('**/three.min.js', r => r.fulfill({ path: (process.env.THREE_JS || __dirname + '/three.min.js'), contentType: 'text/javascript' }));
+  await p.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
+  await p.goto(`http://localhost:${B.PORT}/?landing=0`); await sleep(3500);
+  const info = await p.evaluate(at => { document.querySelector(`.hero [data-theme-set=${document.documentElement.dataset.theme === 'night' ? 'day' : 'night'}]`).click();
+    const an = document.getAnimations(); an.forEach(a => { a.pause(); a.currentTime = at; });
+    return an.filter(a => a.effect && a.effect.target).map(a => (a.effect.target.id || a.effect.target.className || a.effect.target.tagName).toString().slice(0, 30) + ':' + (a.transitionProperty || a.animationName)).slice(0, 30); }, AT);
+  console.log(info.join(' | '));
+  await p.screenshot({ path: __dirname + `/out/tt-${FROM}-${AT}.png`, timeout: 120000 });
+  await b.close(); B.srv.close(); })();

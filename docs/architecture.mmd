@@ -1,0 +1,27 @@
+flowchart TB
+  subgraph EARS["Ears · intake"]
+    direction LR
+    RAW[("Boston 311 CSVs<br/>2022-2024")] --> LOAD["01 load + 02 aggregate<br/>pandas → parquet"]
+    MSG(["Resident message"]) --> RW["Rewrite<br/>structured output"]
+    RW --> RET["Hybrid retrieval<br/>embeddings + BM25<br/>over 124 types"]
+    RET --> CLS["Classify or ask<br/>structured output"]
+  end
+  subgraph WINGS["Wings · forecast + simulator"]
+    direction LR
+    FC["04 forecast<br/>backtested on 2024"] --> OPT["Optimizer<br/>expected cost over<br/>demand ×0.86 / 1.00 / 1.14"]
+    SIM["Day-level crew simulator<br/>brief's rules, ~15 ms/year"] <--> OPT
+  end
+  subgraph TERRY["Terry · the GenAI layer"]
+    direction LR
+    GOAL(["Manager's goal"]) --> FLIP["Flip<br/>goal → failure + predators<br/>prompt eng. + structured output"]
+    FLIP --> ECHO["Echolocation<br/>confirm / reject vs 2024 data<br/>misses · silence · shocks"]
+    ECHO --> HUNT["Hunt<br/>agent with tool calling"]
+    HUNT --> CAL["Decision calendar"]
+    CAL --> VOICE["Voice · report<br/>LangChain + number check"]
+  end
+  LOAD --> FC
+  LOAD --> ECHO
+  LOAD --> RET
+  HUNT -- "simulate_plan · optimize_plan<br/>do_nothing · break_point" --> SIM
+  CLS -. "new requests feed<br/>predator categories" .-> ECHO
+  VOICE --> OUT[["Notebook · app page · report"]]

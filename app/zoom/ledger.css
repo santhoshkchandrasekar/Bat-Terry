@@ -1,0 +1,103 @@
+/* The 2025 crew plan as an accountant's ledger page (owner 08:19): cream with faint green ruling, a red double margin line, a slight
+ * page edge and shadow; small engraved capital headers; hires as harbour blue rubber stamps, releases red; totals behind a ruled double
+ * line; the plan switch as index tabs on the page's top edge; plan B's differing values stamped in a second colour (brass ink).
+ * No handwriting faces, stains or torn edges. Loaded after roost.css; it only restyles .ledger. Tokens only. */
+.ledger {
+  --lg-paper: var(--paper-warm); --lg-rule: color-mix(in srgb, var(--pine) 16%, transparent); --lg-rule2: color-mix(in srgb, var(--pine) 34%, transparent);
+  --lg-margin: color-mix(in srgb, var(--maple) 55%, transparent); --lg-b: var(--behind-text); --lg-tab: color-mix(in srgb, var(--paper-edge) 70%, var(--lg-paper));
+  margin-top: 64px; padding: 30px 30px 24px 64px; border-radius: 2px; background: var(--lg-paper);
+  box-shadow: 0 0 0 1px var(--paper-edge), 3px 3px 0 -1px var(--lg-paper), 3px 3px 0 0 var(--paper-edge), var(--shadow-soft);
+}
+#terrytory > .ledger { margin-top: var(--rh-5); }
+.rbody.empty .ledger { margin-top: 56px; }
+/* the red double margin line, full height of the page */
+.ledger::before { content: ""; position: absolute; top: 0; bottom: 0; left: 40px; width: 5px; border-left: 1px solid var(--lg-margin); border-right: 1px solid var(--lg-margin); pointer-events: none; }
+:root[data-theme="night"] .ledger { --lg-rule: color-mix(in srgb, var(--pine) 13%, transparent); --lg-rule2: color-mix(in srgb, var(--pine) 26%, transparent); --lg-margin: color-mix(in srgb, var(--maple) 42%, transparent); }
+
+/* index tabs on the top edge */
+.ldg-tabs { position: absolute; left: 56px; bottom: 100%; display: flex; gap: 4px; align-items: flex-end; }
+.ldg-tab { position: relative; display: inline-flex; flex-direction: column; align-items: flex-start; gap: 2px; min-height: 34px; padding: 8px 16px 7px; border: 1px solid var(--paper-edge); border-bottom: 0;
+  border-radius: 6px 6px 0 0; background: var(--lg-tab); color: var(--ink2); cursor: pointer; text-align: left; transform: translateY(3px); transition: transform .18s var(--ease), background-color .18s var(--ease), color .18s var(--ease); }
+.ldg-tab .lt-n { font: 600 11.5px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; font-variant: small-caps; }
+.ldg-tab .lt-r { font: 500 10px/1 var(--ui); letter-spacing: .04em; color: var(--pine); }
+.ldg-tab:hover { color: var(--ink); transform: translateY(1px); }
+.ldg-tab[aria-selected="true"] { z-index: 1; background: var(--lg-paper); color: var(--ink); transform: none; min-height: 40px; box-shadow: 0 -2px 6px -4px rgba(var(--shadow), .35); }
+.ldg-tab[aria-selected="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 3px; background: var(--lg-paper); }
+.ldg-tab:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* engraved capital headers */
+.ledger .ldg-hd h2 { font: 500 26px/1.1 var(--display); letter-spacing: .01em; }
+.ledger .ldg-sub { margin: 6px 0 14px; }
+.ldg-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; margin: 0 0 10px; }
+.ldg-cmp { display: inline-flex; align-items: center; gap: 8px; font: 600 10.5px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--ink2); }
+.ldg-sel { height: 30px; padding: 0 28px 0 10px; border: 1px solid var(--line2); border-radius: 3px; background: var(--lg-paper); color: var(--ink); font: 500 13px var(--ui); letter-spacing: 0; text-transform: none; cursor: pointer; }
+.ldg-sel:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.ldg-key-b { display: inline-flex; align-items: center; gap: 8px; font: 12.5px/1.3 var(--ui); color: var(--ink2); }
+
+.ledger .ldg-t { font-variant-numeric: tabular-nums; }
+.ledger .ldg-t th, .ledger .ldg-t td { border-bottom: 1px solid var(--lg-rule); }
+.ledger .ldg-t thead th { font: 600 10.5px/1 var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--ink2); border-bottom: 1px solid var(--lg-rule2);
+  text-shadow: 0 1px 0 color-mix(in srgb, var(--raised) 70%, transparent); }
+:root[data-theme="night"] .ledger .ldg-t thead th { text-shadow: 0 -1px 0 rgba(0, 0, 0, .5); }
+.ledger .ldg-t thead abbr { text-decoration: none; }
+.ledger .ldg-t thead th.ldg-d { font: 600 10.5px/1 var(--display); }
+.ledger .ldg-t tbody th.ldg-d { font: 400 15px/1.2 var(--display); }
+.ledger .ldg-t td + td.ldg-n, .ledger .ldg-t th + th.ldg-n { border-left: 1px solid var(--lg-rule2); }
+.ledger .ldg-t td.ldg-n { vertical-align: top; }
+.ledger .ldg-t td.ldg-n i { display: block; margin-top: 4px; }
+.ledger .ldg-t td.ldg-n .ldg-to { display: inline; margin: 0; font: 400 12px var(--ui); color: var(--ink3); }
+.ledger .ldg-t td.ldg-n .ldg-to + .ldg-bv { display: inline-block; margin: 0 0 0 1px; }
+
+/* rubber stamps: an inked outline, a hair of tilt, no smudge */
+.ledger .ldg-t td i.ldg-h, .ledger .ldg-t td i.ldg-r, .ledger .ldg-key i.ldg-h, .ledger .ldg-key i.ldg-r, .ledger i.ldg-bv {
+  display: inline-block; margin-top: 4px; padding: 2px 4px 1px; border: 1.25px solid currentColor; border-radius: 2px; font: 700 10.5px/1 var(--ui); font-style: normal;
+  letter-spacing: .02em; transform: rotate(-3deg); opacity: .92; }
+.ledger .ldg-t td i.ldg-r, .ledger .ldg-key i.ldg-r { transform: rotate(2deg); }
+.ledger .ldg-t td i.ldg-h + i, .ledger .ldg-t td i.ldg-r + i { margin-left: 2px; }
+.ledger .ldg-h { color: var(--harbour); } .ledger .ldg-r { color: var(--maple); }
+.ledger i.ldg-bv { color: var(--lg-b); border-radius: 3px; transform: rotate(-2deg); }
+.ledger .ldg-t td.diff { background: color-mix(in srgb, var(--lg-b) 6%, transparent); }
+.ledger .ldg-t td.diff i.ldg-bv { display: block; width: max-content; margin: 4px auto 0; }
+
+/* totals behind a ruled double line */
+.ledger .ldg-t tfoot th, .ledger .ldg-t tfoot td { border-top: 3px double var(--lg-rule2); border-bottom: 0; padding-top: 11px; }
+.ledger .ldg-t tfoot th.ldg-d { font: 600 11px/1.2 var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--ink2); }
+.ledger .ldg-t tfoot td b { font-weight: 600; }
+.ledger .ldg-t tfoot td.ldg-n { font-weight: 600; }
+
+.ledger .ldg-foot { border-top: 1px solid var(--lg-rule); padding-top: 14px; }
+.ledger.is-folded .ldg-tabs { display: none; }
+.ledger.is-folded { margin-top: 28px; }
+@media (prefers-reduced-motion: reduce) { .ldg-tab { transition: none; } }
+@media (max-width: 760px) { .ledger { padding-left: 34px; } .ledger::before { left: 18px; } .ldg-tabs { left: 24px; } .ldg-tab { padding: 7px 10px 6px; } }
+.ledger .ldg-t td.ldg-n i.ldg-bv { display: block; width: max-content; margin: 4px 0 0 auto; }
+.ledger .ldg-t td.ldg-n .ldg-to + i.ldg-bv { display: inline-block; margin: 0 0 0 1px; }
+/* the record column (2023 / 2024, real): set apart from the model's columns by a rule and a quieter ink */
+.ldg-t .ldg-rec { color: var(--ink2); border-left: 1px dashed var(--line2); padding-left: 12px; white-space: nowrap; }
+.ldg-t th.ldg-rec .ldg-yrs { display: block; font-size: .85em; letter-spacing: .04em; color: var(--ink3); }
+.ldg-t .ldg-rec .ldg-sl { font-style: normal; color: var(--ink3); padding: 0 1px; }
+
+/* the record column on one line: 2023 / 2024 (the cell's "i" is a separator, not a hire badge) */
+.ledger .ldg-t td.ldg-rec .ldg-sl { color: var(--ink3); }
+/* a 1024 to 1240 px window: the ledger packs tighter so all sixteen columns fit without a sideways scroll */
+@media (max-width: 1240px) {
+  .ledger { padding-left: 44px; padding-right: 16px; } .ledger::before { left: 22px; }
+  .ledger .ldg-t .ldg-rec { padding-left: 6px; }
+  .ledger .ldg-t th, .ledger .ldg-t td { padding-left: 2px; padding-right: 2px; }
+  .ledger .ldg-t tbody th.ldg-d { font-size: 13.5px; white-space: normal; min-width: 92px; line-height: 1.15; }
+  .ledger .ldg-t tbody th.ldg-d .ldg-ic { display: none; }
+  .ledger .ldg-t td b { font-size: 13.5px; }
+  .ledger .ldg-t .ldg-n { font-size: 12.5px; padding-left: 6px; }
+  .ledger .ldg-t thead th { letter-spacing: .08em; }
+  .ledger .ldg-t td.ldg-rec .ldg-sl { display: block; height: 0; overflow: hidden; }
+  .ledger .ldg-t td i.ldg-h, .ledger .ldg-t td i.ldg-r, .ledger .ldg-t i.ldg-bv { padding-left: 2px; padding-right: 2px; font-size: 10px; letter-spacing: -.01em; }
+  .ledger .ldg-t thead th { letter-spacing: .04em; font-size: 10px; }
+}
+/* comparing two plans: B's on-time stamps sit under A's, like the crew cells and the cost, so the row ends never push the record off the page */
+.ledger.ldg-vs .ldg-t td.ldg-n .ldg-to { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.ledger.ldg-vs .ldg-t td.ldg-n .ldg-to + .ldg-bv { display: block; width: max-content; margin: 4px 0 0 auto; }
+
+/* the Ledger's own section heading (no rule: the heading and the space before it do the separating) */
+.ldg-section { margin: 96px 0 0; }
+#terrytory .ldg-section + .ledger, .ldg-section + .ledger { margin-top: 58px; }
+.rbody.empty .ldg-section { margin-top: 80px; }

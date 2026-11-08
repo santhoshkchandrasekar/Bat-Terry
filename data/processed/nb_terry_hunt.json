@@ -1,0 +1,249 @@
+{
+ "predator": {
+  "hypothesis": {
+   "name": "Capacity issues in peak months",
+   "department": "BTDT",
+   "request_type": "Parking Enforcement",
+   "neighborhood": null,
+   "months": [
+    5,
+    9,
+    10
+   ],
+   "kind": "capacity",
+   "suspected_cause": "Insufficient crew availability to meet the high volume of requests during the busiest months."
+  },
+  "evidence": {
+   "verdict": "CONFIRMED",
+   "requests_2024": 17836,
+   "overdue_2024": 10081,
+   "cliff_2024": 3080,
+   "cost_2024_usd": 509620.0,
+   "detail": "17,836 requests citywide in months [5, 9, 10]; 10,081 overdue (57% vs 50% for the department), 3,080 past the 30-day cliff; modeled cost $509,620."
+  },
+  "fix": null
+ },
+ "fix": {
+  "recommended_crews_by_month": [
+   18,
+   24,
+   24,
+   24,
+   26,
+   26,
+   26,
+   26,
+   26,
+   26,
+   26,
+   26
+  ],
+  "seasonal_by_month": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "baseline_total_cost": 7642206,
+  "plan_total_cost": 2805080,
+  "baseline_ontime": 19,
+  "plan_ontime": 100,
+  "plan_ontime_at_plus14": 92,
+  "break_pct": 16,
+  "rationale": "The crew change is to have 18 in January, 24 from February to April, and 26 from May to December. This plan costs $2.81M compared to $7.64M for doing nothing, while achieving a 100% on-time rate. If demand runs 14% over forecast it still closes 92% of requests on time; on-time falls below 90% only once demand is 16% over forecast.",
+  "unverified": []
+ },
+ "trace": [
+  {
+   "tool": "do_nothing",
+   "args": {
+    "department": "BTDT"
+   },
+   "result": {
+    "dept": "BTDT",
+    "crew_schedule": "Jan-Dec 18",
+    "ontime_rate": 0.196,
+    "overdue": 64222,
+    "cliff": 32709,
+    "backlog_end": 13608,
+    "projected_late_in_2026": 1397,
+    "crew_cost": 1980000,
+    "overdue_cost": 4555449,
+    "backlog_cost": 1106756,
+    "total_cost": 7642206,
+    "crews_by_month": [
+     18,
+     18,
+     18,
+     18,
+     18,
+     18,
+     18,
+     18,
+     18,
+     18,
+     18,
+     18
+    ],
+    "seasonal_by_month": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "tool": "optimize_plan",
+   "args": {
+    "department": "BTDT",
+    "mode": "neutral"
+   },
+   "result": {
+    "dept": "BTDT",
+    "crew_schedule": "Jan 18, Feb-Apr 24, May-Dec 26",
+    "ontime_rate": 1.0,
+    "overdue": 4,
+    "cliff": 0,
+    "backlog_end": 0,
+    "projected_late_in_2026": 0,
+    "crew_cost": 2805000,
+    "overdue_cost": 80,
+    "backlog_cost": 0,
+    "total_cost": 2805080,
+    "crews_by_month": [
+     18,
+     24,
+     24,
+     24,
+     26,
+     26,
+     26,
+     26,
+     26,
+     26,
+     26,
+     26
+    ],
+    "seasonal_by_month": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "mode": "neutral"
+   }
+  },
+  {
+   "tool": "simulate_plan",
+   "args": {
+    "department": "BTDT",
+    "crews_by_month": [
+     18,
+     24,
+     24,
+     24,
+     26,
+     26,
+     26,
+     26,
+     26,
+     26,
+     26,
+     26
+    ],
+    "demand_mult": 1.14
+   },
+   "result": {
+    "dept": "BTDT",
+    "crew_schedule": "Jan 18, Feb-Apr 24, May-Dec 26",
+    "ontime_rate": 0.917,
+    "overdue": 7562,
+    "cliff": 0,
+    "backlog_end": 0,
+    "projected_late_in_2026": 0,
+    "crew_cost": 2805000,
+    "overdue_cost": 151258,
+    "backlog_cost": 0,
+    "total_cost": 2956258,
+    "crews_by_month": [
+     18,
+     24,
+     24,
+     24,
+     26,
+     26,
+     26,
+     26,
+     26,
+     26,
+     26,
+     26
+    ],
+    "seasonal_by_month": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "tool": "break_point",
+   "args": {
+    "department": "BTDT",
+    "crews_by_month": [
+     18,
+     24,
+     24,
+     24,
+     26,
+     26,
+     26,
+     26,
+     26,
+     26,
+     26,
+     26
+    ],
+    "target_ontime": 0.9
+   },
+   "result": {
+    "break_pct": 16,
+    "ontime_at_break": 0.512
+   }
+  }
+ ]
+}

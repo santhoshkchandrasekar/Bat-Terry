@@ -1,0 +1,23 @@
+neighborhood,requests,silence_ratio,quietest_type,quietest_ratio
+South Boston / South Boston Waterfront,17547,0.7740022570773618,Parking Enforcement,0.6527719689965555
+Hyde Park,7514,0.8295548702555415,Improper Storage of Trash (Barrels),0.4048636322474953
+Mission Hill,3688,0.8683454462529637,Poor Conditions of Property,0.4067626109183628
+Mattapan,376,0.9311718435725332,Improper Storage of Trash (Barrels),0.667590942100746
+South Boston,1914,0.9324227460290953,Tree Maintenance Requests,0.7388583315704111
+Greater Mattapan,8106,0.9337086304339021,Sign Repair,0.5596263491949653
+Charlestown,6917,0.9394134901050212,Improper Storage of Trash (Barrels),0.8273709315375982
+Allston / Brighton,15166,0.9598488743264014,New Tree Requests,0.5725671860621092
+Dorchester,29427,0.9661126115862445,Improper Storage of Trash (Barrels),0.6849379576652305
+East Boston,15859,0.9953694158991612,Request for Pothole Repair,0.21586591372970534
+Beacon Hill,6459,0.9987024268896219,Empty Litter Basket,0.48562296251018744
+Allston,728,1.010902926555589,Requests for Street Cleaning,0.6679833578071465
+Roxbury,16584,1.0126923903582643,Sign Repair,0.5918408679927668
+Chestnut Hill,4,1.018514296337254,Recycling Cart Return,0.9756097560975608
+West Roxbury,6137,1.0218350025020295,Improper Storage of Trash (Barrels),0.733166241387467
+Roslindale,7240,1.0430956872193131,Poor Conditions of Property,0.6381655598973941
+Brighton,1278,1.063010465563938,New Tree Requests,0.7449770605916786
+Downtown / Financial District,9394,1.09017733397227,Equipment Repair,0.8280144098325917
+Jamaica Plain,10769,1.1349736835339543,Unshoveled Sidewalk,1.0144734336316892
+South End,14158,1.1884011379478299,Pest Infestation - Residential,0.9089253187613845
+Fenway / Kenmore / Audubon Circle / Longwood,3348,1.1930380927318354,Poor Conditions of Property,0.8535290594696536
+Back Bay,8545,1.2555396384905535,Ground Maintenance,0.9172096625841121

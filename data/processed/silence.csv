@@ -1,0 +1,23 @@
+neighborhood,requests,silence_ratio,quietest_type,quietest_ratio,flag
+South Boston / South Boston Waterfront,19543,0.7605054800774809,Recycling Cart Return,0.5297112605677553,QUIET
+Mission Hill,3531,0.7849051847137714,Improper Storage of Trash (Barrels),0.45488155832983423,QUIET
+Hyde Park,7804,0.8725400151879346,Improper Storage of Trash (Barrels),0.3835058393756573,
+Allston,915,0.8958102811368546,Improper Storage of Trash (Barrels),0.6122778209892548,
+South Boston,2081,0.9412941942565316,Poor Conditions of Property,0.6197539609300875,
+East Boston,14457,0.9439750499606732,Request for Pothole Repair,0.4555135686164229,
+Greater Mattapan,8256,0.9520910509162994,Improper Storage of Trash (Barrels),0.649993684476443,
+Chestnut Hill,8,0.97093262002461,Poor Conditions of Property,0.9302325581395349,
+Charlestown,7171,0.978026901212961,Recycling Cart Return,0.6074262348309591,
+Mattapan,472,0.9858494384378982,Improper Storage of Trash (Barrels),0.5422087491053008,
+Allston / Brighton,17770,0.988665120560528,Poor Conditions of Property,0.5491173372983352,
+West Roxbury,6771,0.992249733763791,Unshoveled Sidewalk,0.5471701146099565,
+Roxbury,16885,0.994074515317935,New Tree Requests,0.6111596878137244,
+Beacon Hill,6796,1.0065741092316904,Empty Litter Basket,0.59782409912852,
+Jamaica Plain,13066,1.0385516545910138,Parking Enforcement,0.8845410007635556,
+Dorchester,29237,1.0394389649497124,Improper Storage of Trash (Barrels),0.6890152673717228,
+Downtown / Financial District,10260,1.0594222033731782,Pest Infestation - Residential,0.8239445739445739,
+Roslindale,7579,1.0911280061090711,Ground Maintenance,0.825086131975914,
+Fenway / Kenmore / Audubon Circle / Longwood,3596,1.152818678088545,Schedule a Bulk Item Pickup,0.8897108637793371,
+South End,13764,1.157213168886388,Schedule a Bulk Item Pickup,0.9404525032853693,
+Brighton,1477,1.2090940752375097,Tree Maintenance Requests,0.6877217391304348,LOUD
+Back Bay,8965,1.2679246851397128,Missed Trash/Recycling/Yard Waste/Bulk Item,0.8844738669201997,LOUD

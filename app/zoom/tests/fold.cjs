@@ -1,0 +1,22 @@
+process.env.PORT = '8807';
+const B = require('../bshoot.cjs');
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+(async () => { await new Promise(r => B.srv.listen(B.PORT, r));
+  const b = await B.chromium.launch({ args: B.ARGS }); const ctx = await b.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+  await ctx.addInitScript(() => { localStorage.setItem('terry.opening', 'seen'); localStorage.setItem('terry.toured', '1'); localStorage.setItem('terry.seen', '1'); localStorage.setItem('terry.guide', 'off'); });
+  const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(String(e)));
+  await p.route('**/three.min.js', r => r.fulfill({ path: (process.env.THREE_JS || __dirname + '/three.min.js'), contentType: 'text/javascript' }));
+  await p.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
+  await p.goto(`http://localhost:${B.PORT}/?landing=0`); await sleep(4000);
+  await p.fill('#goalin', 'Every Transportation request on time in November'); await p.press('#goalin', 'Enter'); await sleep(1200);
+  if (await p.evaluate(() => !!document.querySelector('.gchip.opt'))) await p.click('.gchip.opt >> nth=0');
+  for (let i = 0; i < 200; i++) { await sleep(1000); if (await p.evaluate(() => !TerryProj.running && TerryState.roosts.length >= 1)) break; }
+  await sleep(1500);
+  await p.evaluate(() => { const h = document.querySelector('#terrytory .tt-head'); scrollTo(0, h.getBoundingClientRect().top + scrollY - 120); }); await sleep(500);
+  const before = await p.evaluate(() => [Math.round(scrollY), Math.round(document.querySelector('#terrytory .tt-head').getBoundingClientRect().top)]);
+  await p.click('.fold-all [data-all="fold"]'); await sleep(1500);
+  const after = await p.evaluate(() => [Math.round(scrollY), Math.round(document.querySelector('#terrytory .tt-head').getBoundingClientRect().top), Math.round(document.getElementById('screen').getBoundingClientRect().top)]);
+  await p.click('.fold-all [data-all="open"]'); await sleep(1500);
+  const reopen = await p.evaluate(() => Math.round(document.querySelector('#terrytory .tt-head').getBoundingClientRect().top));
+  console.log('before', before, 'after fold [scrollY, flipHeadTop, projectorTop]', after, 'after open headTop', reopen, errs);
+  await b.close(); B.srv.close(); })();

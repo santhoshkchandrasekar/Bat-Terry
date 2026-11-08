@@ -1,0 +1,6 @@
+reason,requests,target_days_median,late_share,close_days_median,close_days_p90,late_requests,share_of_all_isd_late
+Housing,7180,120.0,0.3,5.59,117.05,2188,0.43
+Environmental Services,4892,30.0,0.01,0.88,3.95,52,0.01
+Building,4747,7.0,0.46,10.35,316.69,2184,0.43
+Health,1248,2.01,0.26,1.74,5.81,322,0.06
+Highway Maintenance,245,3.11,0.84,21.46,378.0,207,0.04

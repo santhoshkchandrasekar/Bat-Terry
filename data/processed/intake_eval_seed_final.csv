@@ -1,0 +1,51 @@
+id,tier,message,expected,predicted,asked,confidence,retrieved,type_correct,queue_correct,dept_correct
+1,easy,There's a big hole on Centre St near the T stop and cars keep hitting it,Request for Pothole Repair,Request for Pothole Repair,,0.95,True,True,True,True
+2,easy,Streetlight outside 45 Dorchester Ave has been out for a week,Street Light Outages,Street Light Outages,,0.95,True,True,True,True
+3,easy,They skipped our trash pickup on Tuesday again,Missed Trash/Recycling/Yard Waste/Bulk Item,Missed Trash/Recycling/Yard Waste/Bulk Item,,0.95,True,True,True,True
+4,easy,Car has been parked in the bike lane on Mass Ave all morning,Parking Enforcement,Parking Enforcement,,0.95,True,True,True,True
+5,easy,I need to get rid of an old mattress,Mattress_Pickup,Mattress_Pickup,,0.95,True,True,True,True
+6,easy,Rats running around behind the restaurant on Hanover St every night,Rodent Activity,Rodent Activity,,0.95,True,True,True,True
+7,easy,Someone dumped a couch and tires on the corner of Blue Hill Ave,Illegal Dumping,Illegal Dumping,,0.95,True,True,True,True
+8,easy,Stop sign at Harvard and Cambridge St is bent and you can't read it,Sign Repair,Sign Repair,,0.95,True,True,True,True
+9,easy,I want to schedule a pickup for an old couch and a dresser,Schedule a Bulk Item Pickup,Schedule a Bulk Item Pickup,,0.95,True,True,True,True
+10,easy,A car with flat tires and no plates has been sitting on my street for a month,Abandoned Vehicles,Abandoned Vehicles,,0.95,True,True,True,True
+11,easy,My landlord hasn't fixed the heat and it's 50 degrees in my apartment,Heat - Excessive  Insufficient,Heat - Excessive  Insufficient,,0.95,True,True,True,True
+12,easy,Big branch hanging off the tree on the sidewalk on Beacon St looks like it's going to fall,Tree Emergencies,Tree Emergencies,,0.9,True,True,True,True
+13,easy,The traffic light at Columbus and Mass Ave is stuck on red in all directions,Traffic Signal Inspection,Traffic Signal Inspection,,0.95,True,True,True,True
+14,easy,Nobody shoveled the sidewalk in front of the empty lot on Washington St,Unshoveled Sidewalk,Unshoveled Sidewalk,,0.95,True,True,True,True
+15,easy,Dead raccoon in the road on Centre Street in JP,Pick up Dead Animal,Pick up Dead Animal,,0.95,True,True,True,True
+16,easy,Can I get a new recycling bin? Mine got taken,Request for Recycling Cart,Request for Recycling Cart,,0.95,True,True,True,True
+17,easy,The sidewalk bricks on Charles St are all popped up and my mom tripped,Sidewalk Repair (Make Safe),Sidewalk Repair (Make Safe),,0.95,True,True,True,True
+18,easy,Swing set at the playground on Blue Hill Ave is broken with a chain hanging,Equipment Repair,Equipment Repair,,0.95,True,True,True,True
+19,easy,Construction crew is working at 6am on Sunday next door,Working Beyond Hours,Working Beyond Hours,,0.9,True,True,True,True
+20,easy,There's a building going up on my block with no permit posted anywhere,Work w/out Permit,Work w/out Permit,,0.95,True,True,True,True
+21,medium,"potholes!!! commonwealth ave by BU, like 3 of them, my rim is bent",Request for Pothole Repair,Request for Pothole Repair,,0.95,True,True,True,True
+22,medium,lite is out on the pole in front of 12 elm st been dark for days sketchy at night,Street Light Outages,Street Light Outages,,0.95,True,True,True,True
+23,medium,the neighbors leave there trash barrels out on the sidewalk all week its gross,Improper Storage of Trash (Barrels),Improper Storage of Trash (Barrels),,0.95,True,True,True,True
+24,medium,some guy keeps parking his truck across my driveway,Parking Enforcement,Parking Enforcement,,0.95,True,True,True,True
+25,medium,mold all over the bathroom ceiling and landlord ignores me,Chronic Dampness/Mold,Chronic Dampness/Mold,,0.95,True,True,True,True
+26,medium,trash can at the bus stop on Tremont is overflowing onto the street,Empty Litter Basket,Empty Litter Basket,,0.9,True,True,True,True
+27,medium,theres a bike thats been chained to the fence on my street for like 6 months its rusted,Abandoned Bicycle,Abandoned Bicycle,,0.95,True,True,True,True
+28,medium,Hay un hueco enorme en la calle Centre cerca de la parada del tren,Request for Pothole Repair,Request for Pothole Repair,,0.95,True,True,True,True
+29,medium,La luz de la calle frente a mi casa no funciona,Street Light Outages,General Lighting Request,,0.95,False,False,False,True
+30,medium,No recogieron la basura esta semana en mi calle,Missed Trash/Recycling/Yard Waste/Bulk Item,Missed Trash/Recycling/Yard Waste/Bulk Item,,0.95,True,True,True,True
+31,medium,the water in my apartment is brown and the landlord says its fine,Unsatisfactory Utilities - Electrical  Plumbing,Unsatisfactory Living Conditions,,0.9,False,True,True,True
+32,medium,mice in my kitchen every night landlord wont call anyone,Mice Infestation - Residential,Mice Infestation - Residential,,0.9,True,True,True,True
+33,medium,street sweeper never came this month and the gutter is full of leaves,Requests for Street Cleaning,Requests for Street Cleaning,,0.95,True,True,True,True
+34,medium,the lights in the park on Columbia Rd are all off so nobody uses it after dark,Parks Lighting/Electrical Issues,Parks Lighting/Electrical Issues,,0.95,True,True,True,True
+35,medium,need a crosswalk at the school on Dudley there isnt one and kids cross anyway,New Sign  Crosswalk or Pavement Marking,New Sign  Crosswalk or Pavement Marking,,0.95,True,True,True,True
+36,medium,the grass in Ronan Park is knee high and full of trash,Ground Maintenance,Ground Maintenance,,0.9,True,True,True,True
+37,medium,restaurant on my block has a kitchen full of flies and dirty floors i saw through the door,Unsanitary Conditions - Establishment,Food Alert - Confirmed,,0.95,True,False,False,True
+38,medium,my recycling bin got picked up with the trash by mistake and never came back,Recycling Cart Return,Recycling Cart Return,,0.95,True,True,True,True
+39,hard,pothole on my street and also the streetlight next to it is out,ASK,,Could you specify if you want to report both the pothole and the streetlight issue?,0.9,True,True,True,
+40,hard,there's a problem with a tree on my street,ASK,Tree Maintenance Requests,,0.9,True,False,False,
+41,hard,the trash situation on my block is a disaster,ASK,Missed Trash/Recycling/Yard Waste/Bulk Item,,0.9,True,False,False,
+42,hard,something is wrong with the sign on the corner,ASK,Sign Repair,,0.95,True,False,False,
+43,hard,Love what the city is doing with the new bike lanes keep it up,General Comments For a Program or Policy,,What specific issue or feedback do you have about the bike lanes?,0.9,True,False,True,True
+44,hard,a car hit the streetlight pole on the corner and now it's leaning over the sidewalk,Street Light Knock Downs,Knockdown Replacement,,0.9,True,False,False,True
+45,hard,the whole block lost power and the street is pitch black,Major System Failure,Electrical,,0.9,True,False,False,False
+46,hard,My downstairs neighbor's ceiling is leaking from my bathroom and he's blaming me the landlord does nothing,Maintenance Complaint - Residential,Protection of Adjoining Property,,0.85,True,False,False,True
+47,hard,there's a plywood wall around a construction site that fell into the street,Unsafe Dangerous Conditions,Construction Debris,,0.9,False,True,True,False
+48,hard,contractor next door dumped concrete wash into the storm drain,Contractor Complaints,Illegal Dumping,,0.95,True,True,True,True
+49,hard,can someone plant a tree in front of my house the street has none,New Tree Requests,New Tree Requests,,0.95,True,True,True,True
+50,hard,I have a question about the parking rules,ASK,,What specific question do you have about the parking rules?,0.8,True,True,True,

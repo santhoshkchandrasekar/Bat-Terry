@@ -1,0 +1,162 @@
+/* screen.css (Engineer 3): the projected screen, the pull handle and the maximized window.
+   Everything here is light: fabric weave, a lamp hotspot with a slight keystone, vignette, grain and spill.
+   No drawn shadows. --gain (0 dark .. 1 lit) is the one dial; Day holds it at 1, Night lights it up. */
+@property --gain { syntax: "<number>"; inherits: true; initial-value: 1; }
+
+/* ---------------------------------------------------------------- F2 the screen */
+.rf { isolation: isolate; }
+#fab.rf { background: radial-gradient(ellipse 75% 70% at 50% 45%, rgba(251,241,220,.9), rgba(238,221,186,.9) 85%); }   /* no box-shadow: a glow around the cloth is clipped to a hard rectangle by the rig */
+.rf > .stage { z-index: 4; }
+
+/* 1 weave: the cloth. Warp and weft threads (stretched noise, one per direction), a 3 px thread grid, and a slow mottle like uneven sizing */
+.rf::before { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: .5;
+  background:
+    repeating-linear-gradient(0deg, rgba(0,0,0,.036) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.036) 0 1px, transparent 1px 3px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='w' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .9' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .25  0 0 0 0 .17  0 0 0 0 .08  0 0 0 .7 -.46'/%3E%3C/filter%3E%3Cfilter id='v' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9 .012' numOctaves='2' seed='8' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .25  0 0 0 0 .17  0 0 0 0 .08  0 0 0 .7 -.46'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3Crect width='100%25' height='100%25' filter='url(%23v)'/%3E%3C/svg%3E") 0 0 / 240px 240px,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Cfilter id='m' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.004 .007' numOctaves='3' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3  0 0 0 0 .2  0 0 0 0 .1  0 0 0 .9 -.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E") 0 0 / 600px 400px; }
+
+/* 2 beam: hotspot, gain and keystone. Soft-light, so the cloth keeps its colour and only its light moves */
+.rf > .s-beam { display: block; position: absolute; inset: 0; z-index: 1; pointer-events: none; mix-blend-mode: soft-light; opacity: var(--gain, 1);
+  background:
+    radial-gradient(ellipse 58% 52% at 50% 44%, rgba(255,250,236,.95), rgba(255,244,214,.55) 45%, rgba(255,236,196,0) 78%),
+    linear-gradient(180deg, rgba(255,255,255,.10), rgba(0,0,0,0) 35%, rgba(0,0,0,.06) 100%); }
+.rf > .s-beam::before { content: ""; position: absolute; inset: -2% -1% -1% -1%; transform: perspective(900px) rotateX(1.6deg); transform-origin: 50% 100%;
+  background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(255,255,255,.22), transparent 72%); }
+.rf > .s-beam::after { content: none; }
+
+/* 3 vignette and falloff */
+.rf::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2;
+  background: radial-gradient(ellipse 92% 88% at 50% 48%, transparent 40%, rgba(70,45,20,.34) 100%),
+              linear-gradient(90deg, rgba(60,40,20,.12), transparent 8%, transparent 92%, rgba(60,40,20,.12)); }
+
+/* 4 grain: the sparkle of a lit cloth */
+.rf > .s-grain { display: block; position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: .05; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 .2  0 0 0 0 .14  0 0 0 0 .08  0 0 0 1.4 -.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 180px 180px; }
+
+/* 5 the lamp reaches the bars too: one faint light layer above the chart, never over a control.
+   Soft-light on dark ink barely moves it, so the chart keeps its contrast. */
+.rf > .s-lamp { display: block; position: absolute; inset: 0; z-index: 6; pointer-events: none; mix-blend-mode: soft-light; opacity: calc(var(--gain, 1) * .42);
+  background: radial-gradient(ellipse 62% 56% at 50% 46%, rgba(255,248,226,.9), rgba(255,240,206,.35) 52%, rgba(255,232,190,0) 82%); }
+
+/* spill onto the rig, the branch and the leaves: light only, the fabric rectangle is cut out of it */
+#spill { position: absolute; z-index: 5; pointer-events: none; left: 0; top: 0; width: 0; height: 0; opacity: calc(var(--gain, 1) * .12 * var(--ph, 1));
+  mix-blend-mode: screen;
+  background: radial-gradient(ellipse closest-side at 50% 56%, rgba(255,226,170,.55), rgba(255,226,170,0) 100%);
+  -webkit-mask: linear-gradient(#000 0 0), linear-gradient(#000 0 0) var(--hx, 0) var(--hy, 0) / var(--hw, 0) var(--hh, 0) no-repeat; -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0), linear-gradient(#000 0 0) var(--hx, 0) var(--hy, 0) / var(--hw, 0) var(--hh, 0) no-repeat; mask-composite: exclude; }
+
+/* Night: a warmer, stronger lamp */
+:root[data-theme="night"] .rf > .s-beam {
+  background:
+    radial-gradient(ellipse 58% 52% at 50% 44%, rgba(255,246,222,1), rgba(255,240,200,.62) 45%, rgba(255,232,190,0) 78%),
+    linear-gradient(180deg, rgba(255,255,255,.10), rgba(0,0,0,0) 35%, rgba(0,0,0,.06) 100%); }
+:root[data-theme="night"] .rf::after {
+  background: radial-gradient(ellipse 92% 88% at 50% 48%, transparent 38%, rgba(40,25,12,.52) 100%),
+              linear-gradient(90deg, rgba(40,25,12,.14), transparent 7%, transparent 93%, rgba(40,25,12,.14)); }
+:root[data-theme="night"] #spill { opacity: calc(var(--gain, 1) * .3 * var(--ph, 1)); background: radial-gradient(ellipse closest-side at 50% 56%, rgba(255,214,150,.7), rgba(255,214,150,0) 100%); }
+
+/* dust drifting in the beam (Night only, and only when motion is welcome) */
+@media (prefers-reduced-motion: no-preference) {
+  :root[data-theme="night"] .rf > .s-beam::after { content: ""; position: absolute; inset: -40px 0 0 0; opacity: .03 ; mix-blend-mode: normal;
+    background-image: radial-gradient(circle, #fff 0 .8px, transparent 1.2px), radial-gradient(circle, #fff 0 .6px, transparent 1px);
+    background-size: 97px 83px, 61px 53px; background-position: 0 0, 30px 20px; animation: s-dust 24s linear infinite; }
+  @keyframes s-dust { to { transform: translate(-14px, 40px); } }
+  /* the screen lights: from .35 up to 1 with one 60 ms flicker at .8 */
+  :root[data-theme="night"] #page.s-lighting { animation: s-gain 900ms cubic-bezier(.3,.6,.3,1) both; }
+  @keyframes s-gain { 0% { --gain: .35; } 30% { --gain: .8; } 37% { --gain: .6; } 100% { --gain: 1; } }
+}
+
+/* ---------------------------------------------------------------- F3 pulled to a height: the content stays attached to the top,
+   the bottom edge of the cloth cuts it, and the last 16 px fade into the cloth so the cut reads as fabric */
+#fab > .stage { transform: translateY(var(--ty, 0px)); }
+.rf > .s-cut { display: none; position: absolute; left: 0; right: 0; bottom: 0; height: 18px; z-index: 7; pointer-events: none;
+  background: linear-gradient(to bottom, rgba(238,221,186,0), rgba(238,221,186,.95)); }
+#fab.pulled > .s-cut { display: block; }
+
+/* ---------------------------------------------------------------- F3 the handle */
+#pullzone { position: absolute; z-index: 7; height: 46px; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; }
+#pullzone[hidden] { display: none; }
+#pullzone.grabbing { cursor: grabbing; } #pullzone.hold { cursor: zoom-in; } #pullzone.locked { cursor: default; }
+#pullzone .pr-glow { position: absolute; left: 50%; top: 50%; width: 76px; height: 76px; margin: -34px 0 0 -38px; border-radius: 50%; pointer-events: none; opacity: 0; transition: opacity .25s ease;
+  background: radial-gradient(circle, rgba(255,236,196,.55), rgba(255,236,196,0) 68%); mix-blend-mode: screen; }
+#pullring { position: absolute; left: 50%; top: 50%; width: 34px; height: 34px; margin: -14px 0 0 -17px; padding: 0; border: 0; background: none; cursor: inherit; border-radius: 50%; touch-action: none; color: #fff7e4; transform-origin: 50% 0; }
+#pullring svg { display: block; margin: 2px; overflow: visible; filter: drop-shadow(0 0 1.5px rgba(20,23,28,.75)); }
+#pullring .pr-track { fill: none; stroke: currentColor; stroke-width: 1.6; opacity: .0; transition: opacity .2s ease; }
+#pullring .pr-fill { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; }
+#pullring .pr-chev { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transition: opacity .2s ease; }
+#pullzone:hover .pr-track, #pullring:focus-visible .pr-track, #pullzone.grabbing .pr-track { opacity: .85; }
+#pullzone:hover .pr-chev, #pullring:focus-visible .pr-chev { opacity: .9; }
+#pullzone:hover .pr-glow, #pullzone.grabbing .pr-glow { opacity: 1; }
+#pullring:focus-visible { outline: 2px solid var(--focus, #2B5A86); outline-offset: 3px; }
+#pullring.filling .pr-fill { stroke-dashoffset: 0; transition: stroke-dashoffset 650ms linear; }
+#pullring.full .pr-fill { stroke-dashoffset: 0; transition: none; }
+#pullzone.locked #pullring { opacity: .6; }
+#pullzone .pr-tip { position: absolute; left: 50%; bottom: calc(100% + 10px); transform: translate(-50%, 4px); white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity .18s ease, transform .18s ease;
+  font: 500 12px/1 var(--ui, system-ui); color: #fff; background: rgba(20,23,28,.92); padding: 7px 11px; border-radius: 8px; }
+#pullzone.tipon .pr-tip { opacity: 1; transform: translate(-50%, 0); }
+@media (prefers-reduced-motion: no-preference) {
+  /* at rest the hook breathes, so the handle is findable without a label */
+  #pullzone:not(:hover):not(.grabbing):not(.locked) .pr-glow { animation: pr-breathe 3.6s ease-in-out 1.2s infinite; }
+  @keyframes pr-breathe { 0%, 100% { opacity: 0; } 50% { opacity: .55; } }
+}
+
+/* ---------------------------------------------------------------- F4 the maximized window */
+.mx-hold { opacity: 0; }
+#maxi { position: fixed; inset: 0; z-index: 70; }
+#maxi[hidden] { display: none; }
+.mx-back { position: absolute; inset: 0; background: rgba(10,8,14,.62); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.mx-win { position: absolute; left: 50%; top: 50%; width: min(92vw, 1720px); height: min(88vh, 980px); margin: calc(min(88vh, 980px) / -2) 0 0 calc(min(92vw, 1720px) / -2);
+  border-radius: 12px; display: flex; flex-direction: column; will-change: transform;
+  box-shadow: 0 40px 90px -30px rgba(0,0,0,.7), 0 0 160px 20px rgba(255,226,170,.12); }
+.mx-roller, .mx-bar { flex: none; position: relative; z-index: 2; }
+.mx-roller { height: 12px; border-radius: 12px 12px 0 0; background: linear-gradient(to bottom, #E9E5DC, #B9B4A9 55%, #8B867C); }
+.mx-fab { position: relative; flex: 1 1 auto; min-height: 0; overflow: hidden; padding: 0 16px; color: var(--ink);
+  background: radial-gradient(ellipse 75% 70% at 50% 45%, #FBF1DC, #EEDDBA 85%); }
+.mx-bar { height: 9px; border-radius: 0 0 12px 12px; background: linear-gradient(to bottom, #CFCAC0, #9C978D 55%, #77726A); cursor: grab; touch-action: none; }
+.mx-bar::before { content: ""; position: absolute; left: 0; right: 0; top: -14px; bottom: -16px; }   /* a taller grab zone than the bar */
+.mx-bar.grabbing { cursor: grabbing; }
+.mx-grip { position: absolute; left: 50%; top: 50%; width: 46px; height: 3px; margin: -1.5px 0 0 -23px; border-radius: 2px; background: rgba(20,23,28,.38); }
+:root[data-theme="night"] .mx-roller { background: linear-gradient(to bottom, #5A6270, #3A404B 55%, #232830); }
+:root[data-theme="night"] .mx-bar { background: linear-gradient(to bottom, #4A515D, #313741 55%, #1D2128); }
+:root[data-theme="night"] .mx-grip { background: rgba(255,255,255,.4); }
+.mx-x { position: absolute; z-index: 9; right: -12px; top: -14px; width: 32px; height: 32px; padding: 0; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+  background: #FBF3E2; color: #14171C; border: 1px solid #E0CFAE; box-shadow: 0 6px 16px -6px rgba(0,0,0,.5); }
+.mx-x svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; }
+.mx-x:hover { background: #fff; } .mx-x:focus-visible { outline: 2px solid #2B5A86; outline-offset: 2px; }
+.mx-hint { position: absolute; z-index: 9; right: 30px; top: -29px; font: 400 12px/1 var(--ui, system-ui); color: rgba(255,255,255,.78); pointer-events: none; }
+@media (max-width: 700px) { .mx-win { width: 100vw; height: 100vh; margin: -50vh 0 0 -50vw; border-radius: 0; } .mx-hint { display: none; } .mx-x { right: 8px; top: 18px; } }
+
+/* (the lighter label column is gone: it stopped short of the cloth and showed as a pale box at the left and bottom) */
+/* the enlarged window: the chart sits straight on the cloth, no second rectangle */
+#maxi .stage, #maxi #stage { background: transparent !important; box-shadow: none !important; }
+#maxi .stage::before, #maxi .stage::after { content: none !important; display: none !important; }
+
+.bat-loader { position: absolute; left: 50%; top: 50%; width: 120px; height: 90px; margin: -45px 0 0 -60px; display: grid; place-items: center; opacity: 0; transition: opacity .2s ease-out; pointer-events: none; z-index: 6; color: var(--terry, #221B1E); } .bat-loader.on { opacity: 1; }
+.bat-loader svg { position: relative; fill: currentColor; } :root[data-theme="night"] .bat-loader { color: #C9C4BC; }
+.bl-wl, .bl-wr { transform-box: fill-box; animation: blflap 1.8s ease-in-out infinite; } .bl-wl { transform-origin: 100% 60%; } .bl-wr { transform-origin: 0 60%; } .bl-wr { animation-name: blflapr; }
+@keyframes blflap { 50% { transform: rotate(-22deg) scaleY(.8); } } @keyframes blflapr { 50% { transform: rotate(22deg) scaleY(.8); } }
+.bl-rings { position: absolute; left: 50%; top: 50%; width: 0; height: 0; } .bl-rings i { position: absolute; width: 60px; height: 60px; margin: -30px 0 0 -30px; border-radius: 50%; border: 1px solid var(--pred); opacity: 0; animation: blring 2.4s ease-out infinite; } .bl-rings i:nth-child(2) { animation-delay: .8s; } .bl-rings i:nth-child(3) { animation-delay: 1.6s; }
+@keyframes blring { 0% { transform: scale(.6); opacity: .7; } 100% { transform: scale(2.4); opacity: 0; } }
+.bl-t { position: absolute; bottom: -6px; font: 500 12px var(--ui); color: var(--ink2); } .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (prefers-reduced-motion: reduce) { .bl-wl, .bl-wr, .bl-rings i { animation: none; } .bat-loader { transition: none; } }
+
+/* maximize: the stage dims under the loader, the bat flies off, then the stage lifts */
+#stage.mx-dim { opacity: .3; filter: blur(2px); transition: opacity .16s, filter .16s; }
+#stage.mx-lift { transition: opacity .26s, filter .26s; }
+.bat-loader.fast .bl-wl, .bat-loader.fast .bl-wr { animation-duration: .22s !important; } .bat-loader.fast .bl-rings { display: none; }
+@media (prefers-reduced-motion: reduce) { #stage.mx-dim, #stage.mx-lift { transition: none; } }
+
+/* the hire arc at department year (app.js playArc): a sign marker, a dotted arc in the train colour, a moving head */
+#arcG .arc-sign { fill: var(--raised); stroke: var(--hire); stroke-width: 1.6px; }
+#arcG .arc-path { fill: none; stroke: var(--hire); stroke-width: 2.2px; stroke-linecap: round; stroke-dasharray: 0 5.5; }
+#arcG .arc-head { fill: var(--hire); }
+@media (prefers-reduced-motion: reduce) { #arcG { display: none; } }
+
+/* the projector waits on a plan (owner 08:35): the cloth's contents dim about 40% with a soft blur and the bat loader shows its caption;
+   both only after 250 ms (a CSS delay, so it lands even while the main thread is busy), cleared the moment the chart draws */
+#stage.pv-dim { opacity: .6; filter: blur(1.5px); transition: opacity .2s ease-out .25s, filter .2s ease-out .25s; }
+.bat-loader.pv { width: 260px; margin-left: -130px; height: 110px; margin-top: -55px; transition: opacity .2s ease-out .25s; z-index: 7; }
+.bat-loader .bl-t { font: 500 13px/1.3 var(--ui); color: var(--ink2); }
+@media (prefers-reduced-motion: reduce) { #stage.pv-dim { transition: opacity 0s linear .25s, filter 0s linear .25s; } .bat-loader.pv { transition: opacity 0s linear .25s; } }
+.bat-loader.pv .bl-t { white-space: nowrap; bottom: -2px; }

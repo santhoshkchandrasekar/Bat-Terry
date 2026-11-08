@@ -1,0 +1,22 @@
+{
+ "flips": 24,
+ "predators": 156,
+ "goals": 8,
+ "repeats": 3,
+ "confirmed_share_all": 0.506,
+ "confirmed_share_testable": 0.56,
+ "untestable_share": 0.096,
+ "invalid_names": 0,
+ "number_check_first_pass_fail_rate": 0.0,
+ "number_check_fixed_by_retry": 0,
+ "number_check_stripped": 0,
+ "consistency_jaccard_mean": 0.403,
+ "baseline_confirmed_share": 0.846,
+ "mean_seconds_per_flip": 6.9,
+ "by_kind": {
+  "capacity": 0.45,
+  "miss": 0.558,
+  "shock": 0.0,
+  "silence": 0.75
+ }
+}

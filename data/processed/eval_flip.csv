@@ -1,0 +1,157 @@
+goal,rep,dept,kind,type,neighborhood,verdict
+0,0,PWDx,miss,Request for Pothole Repair,Downtown / Financial District,CONFIRMED
+0,0,PWDx,miss,Sidewalk Repair (Make Safe),South End,CONFIRMED
+0,0,PWDx,capacity,Street Light Outages,Allston / Brighton,CONFIRMED
+0,0,PWDx,miss,Recycling Cart Return,Hyde Park,CONFIRMED
+0,0,PWDx,silence,General Comments For An Employee,South Boston / South Boston Waterfront,CONFIRMED
+0,0,PWDx,capacity,Contractor Complaints,Dorchester,CONFIRMED
+0,0,PWDx,miss,PWD Graffiti,Roxbury,REJECTED
+0,1,PWDx,miss,Sidewalk Repair (Make Safe),South End,CONFIRMED
+0,1,PWDx,capacity,Request for Pothole Repair,Downtown / Financial District,CONFIRMED
+0,1,PWDx,silence,,South Boston / South Boston Waterfront,CONFIRMED
+0,1,PWDx,miss,Contractor Complaints,,CONFIRMED
+0,1,PWDx,miss,Street Light Outages,Roxbury,CONFIRMED
+0,1,PWDx,capacity,Recycling Cart Return,Allston,REJECTED
+0,1,PWDx,miss,Request for Pothole Repair,Back Bay,CONFIRMED
+0,2,PWDx,miss,Sidewalk Repair (Make Safe),South End,CONFIRMED
+0,2,PWDx,miss,Request for Pothole Repair,Downtown / Financial District,CONFIRMED
+0,2,PWDx,miss,Street Light Outages,Back Bay,CONFIRMED
+0,2,PWDx,capacity,Recycling Cart Return,Allston / Brighton,CONFIRMED
+0,2,PWDx,silence,Unshoveled Sidewalk,Mission Hill,CONFIRMED
+0,2,PWDx,shock,Request for Snow Plowing,Allston / Brighton,UNTESTABLE
+0,2,PWDx,capacity,Requests for Street Cleaning,South Boston,REJECTED
+1,0,PWDx,miss,Sidewalk Repair (Make Safe),South End,CONFIRMED
+1,0,PWDx,miss,Request for Pothole Repair,South End,CONFIRMED
+1,0,PWDx,capacity,Sidewalk Repair (Make Safe),South End,CONFIRMED
+1,0,PWDx,capacity,Request for Pothole Repair,South End,CONFIRMED
+1,0,PWDx,silence,Request for Pothole Repair,South End,REJECTED
+1,0,PWDx,shock,Sidewalk Repair (Make Safe),South End,UNTESTABLE
+1,1,PWDx,miss,Request for Pothole Repair,South End,CONFIRMED
+1,1,PWDx,miss,Sidewalk Repair (Make Safe),South End,CONFIRMED
+1,1,PWDx,capacity,,South End,REJECTED
+1,1,PWDx,silence,,South Boston / South Boston Waterfront,CONFIRMED
+1,1,PWDx,shock,,South End,UNTESTABLE
+1,2,PWDx,miss,Sidewalk Repair (Make Safe),South End,CONFIRMED
+1,2,PWDx,miss,Request for Pothole Repair,South End,CONFIRMED
+1,2,PWDx,capacity,Sidewalk Repair (Make Safe),South End,CONFIRMED
+1,2,PWDx,silence,Sidewalk Repair (Make Safe),South End,REJECTED
+1,2,PWDx,shock,Request for Pothole Repair,South End,UNTESTABLE
+2,0,BTDT,miss,Parking Enforcement,South Boston / South Boston Waterfront,REJECTED
+2,0,BTDT,capacity,Parking Enforcement,Dorchester,CONFIRMED
+2,0,BTDT,miss,Parking Enforcement,East Boston,CONFIRMED
+2,0,BTDT,miss,Parking Enforcement,Jamaica Plain,CONFIRMED
+2,0,BTDT,silence,Parking Enforcement,South Boston / South Boston Waterfront,CONFIRMED
+2,0,BTDT,capacity,Traffic Signal Inspection,,REJECTED
+2,0,BTDT,shock,Parking Enforcement,,UNTESTABLE
+2,1,BTDT,miss,Parking Enforcement,South Boston / South Boston Waterfront,REJECTED
+2,1,BTDT,capacity,Parking Enforcement,Dorchester,CONFIRMED
+2,1,BTDT,silence,Parking Enforcement,South Boston / South Boston Waterfront,CONFIRMED
+2,1,BTDT,miss,Traffic Signal Inspection,Jamaica Plain,REJECTED
+2,1,BTDT,shock,Parking Enforcement,East Boston,UNTESTABLE
+2,1,BTDT,capacity,Sign Repair,Roxbury,REJECTED
+2,1,BTDT,miss,Pavement Marking Inspection,Allston,REJECTED
+2,2,BTDT,miss,Parking Enforcement,South Boston / South Boston Waterfront,REJECTED
+2,2,BTDT,capacity,Parking Enforcement,Dorchester,CONFIRMED
+2,2,BTDT,silence,,South Boston / South Boston Waterfront,CONFIRMED
+2,2,BTDT,miss,Traffic Signal Inspection,East Boston,REJECTED
+2,2,BTDT,capacity,Parking Enforcement,Jamaica Plain,CONFIRMED
+2,2,BTDT,miss,Pavement Marking Inspection,Allston,REJECTED
+2,2,BTDT,miss,Sign Repair,South End,REJECTED
+3,0,PARK,miss,Equipment Repair,Dorchester,REJECTED
+3,0,PARK,capacity,Equipment Repair,,CONFIRMED
+3,0,PARK,miss,New Tree Requests,Jamaica Plain,REJECTED
+3,0,PARK,silence,,South Boston / South Boston Waterfront,CONFIRMED
+3,0,PARK,shock,,,UNTESTABLE
+3,0,PARK,capacity,Ground Maintenance,,REJECTED
+3,1,PARK,miss,Equipment Repair,Dorchester,REJECTED
+3,1,PARK,capacity,Equipment Repair,,CONFIRMED
+3,1,PARK,silence,,Dorchester,REJECTED
+3,1,PARK,miss,New Tree Requests,Jamaica Plain,REJECTED
+3,1,PARK,miss,Ground Maintenance,,REJECTED
+3,1,PARK,shock,,Dorchester,UNTESTABLE
+3,2,PARK,miss,Equipment Repair,Dorchester,REJECTED
+3,2,PARK,capacity,Equipment Repair,,CONFIRMED
+3,2,PARK,miss,New Tree Requests,Jamaica Plain,REJECTED
+3,2,PARK,silence,,South Boston / South Boston Waterfront,CONFIRMED
+3,2,PARK,miss,Ground Maintenance,Dorchester,REJECTED
+3,2,PARK,miss,Tree Maintenance Requests,Roxbury,REJECTED
+3,2,PARK,miss,Sidewalk Repair (Make Safe),Dorchester,REJECTED
+4,0,PARK,miss,Equipment Repair,East Boston,CONFIRMED
+4,0,PARK,miss,New Tree Requests,Jamaica Plain,REJECTED
+4,0,PARK,capacity,Equipment Repair,,CONFIRMED
+4,0,PARK,silence,,South Boston / South Boston Waterfront,CONFIRMED
+4,0,PARK,capacity,Ground Maintenance,,REJECTED
+4,0,PARK,miss,Equipment Repair,Roxbury,REJECTED
+4,0,PARK,miss,New Tree Requests,West Roxbury,REJECTED
+4,1,PARK,miss,Equipment Repair,East Boston,CONFIRMED
+4,1,PARK,miss,New Tree Requests,Jamaica Plain,REJECTED
+4,1,PARK,capacity,Ground Maintenance,Dorchester,REJECTED
+4,1,PARK,capacity,Tree Maintenance Requests,Jamaica Plain,REJECTED
+4,1,PARK,capacity,Requests for Street Cleaning,Dorchester,REJECTED
+4,1,PARK,silence,,South Boston / South Boston Waterfront,CONFIRMED
+4,1,PARK,shock,,,UNTESTABLE
+4,2,PARK,miss,Equipment Repair,East Boston,CONFIRMED
+4,2,PARK,miss,Equipment Repair,Dorchester,CONFIRMED
+4,2,PARK,miss,New Tree Requests,Jamaica Plain,REJECTED
+4,2,PARK,capacity,Ground Maintenance,Allston / Brighton,REJECTED
+4,2,PARK,capacity,Requests for Street Cleaning,South Boston,REJECTED
+4,2,PARK,silence,,South Boston / South Boston Waterfront,CONFIRMED
+4,2,PARK,shock,,,UNTESTABLE
+5,0,PARK,capacity,Equipment Repair,East Boston,CONFIRMED
+5,0,PARK,miss,New Tree Requests,Jamaica Plain,REJECTED
+5,0,PARK,miss,Ground Maintenance,,REJECTED
+5,0,PARK,miss,Requests for Street Cleaning,,CONFIRMED
+5,0,PARK,silence,,South Boston / South Boston Waterfront,CONFIRMED
+5,0,PARK,shock,,,UNTESTABLE
+5,1,PARK,miss,Equipment Repair,East Boston,CONFIRMED
+5,1,PARK,capacity,Equipment Repair,,CONFIRMED
+5,1,PARK,miss,New Tree Requests,Jamaica Plain,REJECTED
+5,1,PARK,silence,,South Boston / South Boston Waterfront,CONFIRMED
+5,1,PARK,capacity,Ground Maintenance,,REJECTED
+5,1,PARK,miss,Equipment Repair,Dorchester,CONFIRMED
+5,1,PARK,miss,Tree Maintenance Requests,Jamaica Plain,REJECTED
+5,2,PARK,miss,Equipment Repair,East Boston,CONFIRMED
+5,2,PARK,miss,New Tree Requests,Jamaica Plain,REJECTED
+5,2,PARK,capacity,Ground Maintenance,,REJECTED
+5,2,PARK,capacity,Tree Maintenance Requests,,REJECTED
+5,2,PARK,miss,Requests for Street Cleaning,,CONFIRMED
+5,2,PARK,silence,,South Boston / South Boston Waterfront,CONFIRMED
+5,2,PARK,shock,,,UNTESTABLE
+6,0,ISD,miss,Unsatisfactory Living Conditions,Dorchester,CONFIRMED
+6,0,ISD,miss,Work w/out Permit,Roxbury,CONFIRMED
+6,0,ISD,miss,Unsatisfactory Living Conditions,Greater Mattapan,CONFIRMED
+6,0,ISD,silence,Unsatisfactory Living Conditions,Allston,REJECTED
+6,0,ISD,capacity,Maintenance Complaint - Residential,Dorchester,REJECTED
+6,0,ISD,shock,Heat - Excessive  Insufficient,,UNTESTABLE
+6,0,ISD,miss,Electrical,Roxbury,REJECTED
+6,1,ISD,miss,Unsatisfactory Living Conditions,Dorchester,CONFIRMED
+6,1,ISD,miss,Work w/out Permit,Dorchester,CONFIRMED
+6,1,ISD,capacity,,,REJECTED
+6,1,ISD,miss,Unsatisfactory Living Conditions,Greater Mattapan,CONFIRMED
+6,1,ISD,silence,Unsatisfactory Living Conditions,South Boston / South Boston Waterfront,CONFIRMED
+6,1,ISD,miss,Unsafe Dangerous Conditions,Roxbury,CONFIRMED
+6,1,ISD,miss,Heat - Excessive  Insufficient,Dorchester,REJECTED
+6,2,ISD,miss,Unsatisfactory Living Conditions,Dorchester,CONFIRMED
+6,2,ISD,miss,Work w/out Permit,Dorchester,CONFIRMED
+6,2,ISD,miss,Unsatisfactory Living Conditions,Greater Mattapan,CONFIRMED
+6,2,ISD,capacity,,,REJECTED
+6,2,ISD,silence,,South Boston / South Boston Waterfront,CONFIRMED
+6,2,ISD,miss,Unsafe Dangerous Conditions,Roxbury,CONFIRMED
+6,2,ISD,miss,Heat - Excessive  Insufficient,Dorchester,REJECTED
+7,0,PWDx,miss,Request for Pothole Repair,Dorchester,CONFIRMED
+7,0,PWDx,silence,Rodent Activity,South Boston / South Boston Waterfront,CONFIRMED
+7,0,PWDx,capacity,Rodent Activity,Dorchester,REJECTED
+7,0,PWDx,miss,Request for Pothole Repair,Dorchester,CONFIRMED
+7,0,PWDx,capacity,Rodent Activity,Dorchester,REJECTED
+7,0,PWDx,miss,Public Works General Request,Dorchester,REJECTED
+7,1,PWDx,miss,Request for Pothole Repair,Dorchester,CONFIRMED
+7,1,PWDx,capacity,Sidewalk Repair (Make Safe),Dorchester,CONFIRMED
+7,1,PWDx,silence,Rodent Activity,Dorchester,REJECTED
+7,1,PWDx,shock,Rodent Activity,Dorchester,UNTESTABLE
+7,1,PWDx,miss,Public Works General Request,Dorchester,REJECTED
+7,1,PWDx,capacity,Rodent Activity,Dorchester,REJECTED
+7,2,PWDx,miss,Request for Pothole Repair,Dorchester,CONFIRMED
+7,2,PWDx,miss,Sidewalk Repair (Make Safe),Dorchester,CONFIRMED
+7,2,PWDx,capacity,,Dorchester,REJECTED
+7,2,PWDx,silence,,Dorchester,REJECTED
+7,2,PWDx,shock,,Dorchester,UNTESTABLE

@@ -1,0 +1,100 @@
+/* The opening: first visit only (opening.js). A projector, Terry, his eyes in the dark, the name, the pull, the mark, the line.
+   Everything sits on one fixed layer above the page; the page loads underneath. */
+html.op-run, html.op-run body { overflow: hidden !important; }
+html.op-run .hero .brand { opacity: 0; }
+html.op-land .hero .brand { opacity: 1; transition: none; }
+
+#opening {
+  --op-cream: #FBF3E2;
+  --op-ember: 255, 196, 110;
+  position: fixed; inset: 0; z-index: 2147482000; overflow: hidden;
+  background: #0b0908; color: var(--op-cream);
+  font-family: var(--ui, "Instrument Sans", "Helvetica Neue", Arial, system-ui, sans-serif);
+  cursor: default; -webkit-user-select: none; user-select: none; contain: strict;
+}
+#opening.op-out { opacity: 0; transition: opacity .3s ease; pointer-events: none; }
+#opening * { box-sizing: border-box; }
+#opening .op-l { position: absolute; inset: 0; pointer-events: none; }
+
+/* the room and the projector screen, framed close (we are zoomed into the projector) */
+#opening .op-world { transform-origin: 50% 42%; will-change: transform; }
+#opening .op-room { background: radial-gradient(120% 90% at 50% 38%, #241b15 0%, #120e0b 55%, #070605 100%); }
+#opening .op-roller {
+  position: absolute; left: 3.5%; right: 3.5%; top: 4.2%; height: clamp(26px, 4.2vh, 44px); border-radius: 22px;
+  background: linear-gradient(180deg, #5d5852 0%, #d9d4cc 18%, #f4f1ea 34%, #bdb6ac 62%, #6c655d 86%, #3d3833 100%);
+  box-shadow: 0 10px 24px rgba(0,0,0,.45);
+}
+#opening .op-roller::before, #opening .op-roller::after {
+  content: ""; position: absolute; top: -8%; bottom: -8%; width: clamp(14px, 1.6vw, 26px); border-radius: 8px;
+  background: linear-gradient(180deg, #2a2725, #57524c 40%, #1d1b19);
+}
+#opening .op-roller::before { left: -6px; } #opening .op-roller::after { right: -6px; }
+#opening .op-cloth {
+  position: absolute; left: 6%; right: 6%; top: calc(4.2% + clamp(26px, 4.2vh, 44px) - 4px); bottom: -2%;
+  background:
+    repeating-linear-gradient(90deg, rgba(120,96,60,.035) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(0deg, rgba(120,96,60,.03) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #d9ccb1 0%, #ece2cc 14%, #efe5d0 60%, #e2d5b9 100%);
+  box-shadow: inset 0 18px 30px -18px rgba(60,40,20,.55), inset 14px 0 30px -20px rgba(60,40,20,.4), inset -14px 0 30px -20px rgba(60,40,20,.4), 0 30px 80px rgba(0,0,0,.6);
+  overflow: hidden;
+}
+#opening .op-bulb {
+  position: absolute; left: 50%; top: 44%; width: 120vmax; height: 90vmax; transform: translate(-50%, -50%);
+  background: radial-gradient(closest-side, rgba(255,236,190,.75), rgba(255,220,160,.32) 34%, rgba(255,200,130,0) 70%);
+  mix-blend-mode: soft-light;
+}
+#opening .op-vign { position: absolute; inset: 0; background: radial-gradient(80% 75% at 50% 44%, transparent 45%, rgba(70,44,20,.30) 82%, rgba(40,24,10,.5) 100%); }
+#opening .op-dust i {
+  position: absolute; left: 0; top: 0; width: 3px; height: 3px; border-radius: 50%;
+  background: rgba(255,250,236,.95); box-shadow: 0 0 1.5px .5px rgba(96,70,36,.35); will-change: transform, opacity;
+}
+
+#opening .op-dark { background: #050404; opacity: 0; }
+#opening .op-terry { will-change: filter, opacity; }
+
+/* his eyes: two warm points with a soft halo */
+#opening .op-eyes { left: 0; top: 0; right: auto; bottom: auto; width: 0; height: 0; will-change: transform, opacity, filter; }
+#opening .op-eye { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+#opening .op-eye b {
+  position: absolute; left: 50%; top: 50%; width: 100%; height: 100%; border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+#opening .op-eye .h { width: 900%; height: 900%; background: radial-gradient(closest-side, rgba(var(--op-ember), .42), rgba(var(--op-ember), .14) 45%, rgba(var(--op-ember), 0) 100%); }
+#opening .op-eye .c { width: 220%; height: 150%; border-radius: 60% 40% 55% 45% / 60% 60% 40% 40%;
+  background: radial-gradient(60% 70% at 46% 45%, #fffaf0 0%, #ffe9be 46%, #ffc36e 78%, rgba(255,170,80,0) 100%);
+  box-shadow: 0 0 6px 1px rgba(var(--op-ember), .75); }
+
+/* the type, in the header's own faces */
+#opening .op-stage { z-index: 3; }
+#opening .op-nm {
+  position: absolute; left: 0; top: 0; white-space: nowrap; transform-origin: 0 0;
+  font-family: var(--display, "Newsreader", Georgia, "Times New Roman", serif); font-weight: 600; line-height: 1;
+  font-variant-ligatures: none; font-optical-sizing: auto; color: var(--op-cream); will-change: transform, opacity;
+}
+#opening .op-sub, #opening .op-bt {
+  position: absolute; left: 0; top: 0; white-space: nowrap; transform-origin: 0 0;
+  font-family: var(--ui, "Instrument Sans", "Helvetica Neue", Arial, system-ui, sans-serif); font-weight: 400; line-height: normal;
+  color: var(--op-cream); will-change: transform, opacity;
+}
+#opening .op-sub .slot { opacity: 0; }
+#opening .op-logo { position: absolute; left: 0; top: 0; overflow: visible; fill: var(--op-cream); transform-origin: 0 0; will-change: transform, opacity; }
+#opening .op-flash { position: absolute; left: 0; top: 0; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(255,246,226,.55), rgba(255,226,170,.16) 50%, rgba(255,220,160,0) 100%); }
+
+/* a quiet Skip, from the first frame */
+#opening .op-skip {
+  position: absolute; right: max(16px, 2.2vw); bottom: max(14px, 2.4vh); z-index: 5; pointer-events: auto;
+  font: 500 13px/1 var(--ui, "Instrument Sans", system-ui, sans-serif); letter-spacing: .02em;
+  color: rgba(251,243,226,.62); background: rgba(20,16,13,.32); border: 1px solid rgba(251,243,226,.18);
+  border-radius: 999px; padding: 9px 14px 9px 15px; cursor: pointer; transition: color .2s, border-color .2s, background .2s;
+}
+#opening .op-skip:hover { color: rgba(251,243,226,.92); border-color: rgba(251,243,226,.4); }
+#opening .op-skip:focus-visible { outline: 2px solid rgba(251,243,226,.85); outline-offset: 3px; color: #fbf3e2; }
+#opening .op-skip span { margin-left: 6px; opacity: .7; }
+#opening .op-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+#opening .op-bt { transform-origin: 50% 55%; }
+#opening.op-city .op-room { background-size: cover; background-position: 50% 66%; }   /* the landing photograph's exact crop, so the lights come up on the same picture */
+#opening.op-city .op-cloth, #opening.op-city .op-roller { display: none; }
+#opening .op-sub .ins { display: inline-block; overflow: hidden; vertical-align: top; white-space: nowrap; }
+#opening .op-cr { opacity: 0; }
+#opening .op-dv { position: fixed; left: 0; top: 0; width: 0; height: 0; opacity: 0; pointer-events: none; }

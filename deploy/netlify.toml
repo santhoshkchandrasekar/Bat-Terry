@@ -1,0 +1,15 @@
+# Bat-Terry on Netlify: the static page in site/ and one function (netlify/functions/llm.mjs) at /api/llm.
+# Connected to GitHub, Netlify builds it itself: base directory deploy, then python3 build.py fills site/ (see README here).
+[build]
+  command = "python3 build.py"
+  publish = "site"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

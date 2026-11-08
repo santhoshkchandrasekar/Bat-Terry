@@ -1,0 +1,203 @@
+/* TerryAlmanac (almanac.js): the split-flap board under the projector. Day: cream tiles, ink lettering, a housing in the
+   projector roller's charcoal. Night: dark tiles with warm cream lettering. Tokens only. */
+#almanac {
+  position: relative; z-index: 2; margin: 14px 0 0; --alm-gap: var(--rh-4);   /* clear air between the bottom roller and what sits on the housing (almanac.js fit) */ box-sizing: border-box; max-width: calc(100vw - 32px);
+  --alm-house: var(--roller); --alm-tile: var(--paper-warm); --alm-text: var(--ink); --alm-dim: var(--paper-edge); --alm-split: rgba(var(--shadow), .34);
+  --alm-focus: var(--sky-pale); --alm-hover: rgba(255, 255, 255, .07);
+  --a-soft: var(--slate-wash); --a-paper: var(--paper-warm); --a-behind: var(--behind); --a-hire: var(--hire); --a-pred: var(--pred); --a-sun: var(--sun); --a-short: var(--short); --a-pill: var(--paper-warm);
+}
+:root[data-theme="night"] #almanac {
+  --alm-house: var(--board); --alm-tile: var(--raised); --alm-text: var(--ink); --alm-dim: var(--ink3); --alm-split: rgba(0, 0, 0, .7);
+  --alm-focus: var(--hire); --alm-hover: rgba(255, 255, 255, .04); --a-paper: var(--raised); --a-pill: var(--raised);
+}
+#almanac .alm-house {
+  position: relative; z-index: 2; border-radius: 12px; padding: 8px 9px 9px; border: 2px solid transparent;
+  background: linear-gradient(var(--alm-house), var(--alm-house)) padding-box, linear-gradient(180deg, var(--sun-core), var(--ochre) 30%, var(--board-edge) 100%) border-box;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .09), inset 0 -1px 0 rgba(0, 0, 0, .35), var(--shadow-soft);
+}
+:root[data-theme="night"] #almanac .alm-house { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05), 0 0 0 1px var(--board-edge), var(--shadow-soft); }
+#almanac .alm-head { display: flex; align-items: baseline; gap: 12px; padding: 0 4px 8px; color: var(--alm-dim); }
+#almanac .alm-name { margin: 0; font: 700 11px/1 var(--ui); letter-spacing: .16em; text-transform: uppercase; color: var(--alm-dim); }
+#almanac .alm-view { font: 500 13px/1 var(--ui); color: var(--alm-dim); opacity: .85; }
+#almanac .alm-hint { margin-left: auto; font: 400 12px/1 var(--ui); color: var(--alm-dim); opacity: .7; }
+#almanac .alm-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
+#almanac .alm-row {
+  display: flex; align-items: center; gap: 8px; width: 100%; padding: 3px; margin: 0; border: 0; border-radius: 7px;
+  background: transparent; color: var(--alm-text); font: inherit; text-align: left; cursor: pointer; transition: background-color .15s;
+}
+#almanac .alm-row:disabled { cursor: default; }
+#almanac .alm-row:not(:disabled):hover { background: var(--alm-hover); }
+#almanac .alm-row.arc-lit { background: color-mix(in srgb, var(--a-hire) 30%, transparent); box-shadow: inset 0 0 0 1px var(--a-hire); }
+#almanac .alm-row.arc-lit .fc { box-shadow: 0 0 0 1px var(--a-hire); }
+#almanac .alm-row:focus-visible { outline: 2px solid var(--alm-focus); outline-offset: 1px; }
+#almanac .alm-when, #almanac .alm-num { display: flex; gap: 2px; flex: none; }
+
+/* one flap unit: two static halves, a hairline split, and while flipping a falling top and a landing bottom */
+#almanac .fc { position: relative; flex: none; height: 38px; width: 19px; border-radius: 3px; color: var(--alm-text); box-shadow: 0 1px 0 rgba(0, 0, 0, .45); }
+#almanac .fc.nm { width: 23px; }
+#almanac .alm-when .fc:nth-child(4) { margin-left: 5px; }
+#almanac .fc.ic { width: 38px; }
+#almanac .fc.ln { flex: 1 1 auto; width: auto; min-width: 0; }
+#almanac .fc .h { position: absolute; left: 0; right: 0; height: 50%; overflow: hidden; background: var(--alm-tile); backface-visibility: hidden; }
+#almanac .fc .h.t { top: 0; border-radius: 3px 3px 0 0; background-image: linear-gradient(rgba(255, 255, 255, .06), rgba(255, 255, 255, 0)); }
+#almanac .fc .h.b { bottom: 0; border-radius: 0 0 3px 3px; background-image: linear-gradient(rgba(var(--shadow), .07), rgba(var(--shadow), 0) 45%); }
+#almanac .fc .v { position: absolute; left: 0; right: 0; top: 0; height: 200%; display: flex; align-items: center; justify-content: center; }
+#almanac .fc .h.b .v { top: -100%; }
+#almanac .fc .f { transform-origin: 50% 100%; z-index: 2; will-change: transform; }
+#almanac .fc .k { transform-origin: 50% 0; z-index: 2; will-change: transform; }
+#almanac .fc .sh { position: absolute; inset: 0; background: rgba(var(--shadow), .55); opacity: 0; pointer-events: none; }
+:root[data-theme="night"] #almanac .fc .sh { background: rgba(0, 0, 0, .8); }
+#almanac .fc::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; margin-top: -1px; background: var(--alm-split); z-index: 3; pointer-events: none; }
+
+/* lettering */
+#almanac .fc.ch .v { font: 700 16px/1 var(--ui); letter-spacing: 0; text-transform: uppercase; font-variant-numeric: tabular-nums; }
+#almanac .fc.nm .v { font: 700 22px/1 var(--ui); font-variant-numeric: tabular-nums lining-nums; letter-spacing: -.01em; }
+#almanac .fc.ic .v svg { width: 24px; height: 24px; display: block; }
+#almanac .fc.ic .ii { display: block; font-style: normal; }
+#almanac .fc.ln .v { justify-content: flex-start; gap: 10px; padding: 0 12px; font: 500 14.5px/1.2 var(--ui); }
+#almanac .fc.ln .tx { flex: 1 1 auto; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#almanac .alm-row.key .fc.ln .tx { font-style: italic; }
+#almanac .tag { flex: none; font: 700 11px/1 var(--ui); font-style: normal; letter-spacing: .06em; text-transform: uppercase; padding: 4px 7px; border-radius: 999px; border: 1px solid currentColor; }
+#almanac .tag.t-f { color: var(--hire); }
+#almanac .tag.t-b { color: var(--alm-text); }
+
+@media (max-width: 760px) {
+  #almanac .alm-hint { display: none; }
+  #almanac .alm-when { display: none; }
+  #almanac .fc.ln .v { font-size: 13.5px; }
+}
+@media (prefers-reduced-motion: reduce) { #almanac .alm-row { transition: none; } }
+/* on the sentence blade the hinge shows only at the edges, so the split never reads as a strikethrough */
+#almanac .fc.ln::after { background: linear-gradient(90deg, var(--alm-split) 0 10px, transparent 10px calc(100% - 10px), var(--alm-split) calc(100% - 10px)); }
+:root[data-theme="night"] #almanac { --alm-split: rgba(0, 0, 0, .5); }
+
+/* ==== the projector machine (owner 21:31): brass trim and rivets on the housing, a brass and glass lens centred on its top edge,
+   and a faint warm beam from the lens up to the cloth's foot. The split-flap face is unchanged. */
+#almanac .alm-house::before { content: ""; position: absolute; left: 14px; right: 14px; top: -3px; height: 4px; border-radius: 2px; pointer-events: none;
+  background: linear-gradient(180deg, var(--sun-core), var(--ochre) 60%, var(--board-edge)); box-shadow: 0 1px 0 rgba(0, 0, 0, .25); }
+#almanac .alm-house::after { content: ""; position: absolute; inset: 3px; pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, var(--sun-core) 0 .8px, var(--ochre) 1.4px, var(--board-edge) 2.1px, transparent 2.6px);
+  background-size: 6px 6px; background-repeat: no-repeat; background-position: left top, right top, left bottom, right bottom;
+  background-image: radial-gradient(circle, var(--sun-core) 0 .8px, var(--ochre) 1.4px, var(--board-edge) 2.1px, transparent 2.6px), radial-gradient(circle, var(--sun-core) 0 .8px, var(--ochre) 1.4px, var(--board-edge) 2.1px, transparent 2.6px), radial-gradient(circle, var(--sun-core) 0 .8px, var(--ochre) 1.4px, var(--board-edge) 2.1px, transparent 2.6px), radial-gradient(circle, var(--sun-core) 0 .8px, var(--ochre) 1.4px, var(--board-edge) 2.1px, transparent 2.6px); }
+/* the lens: a short brass barrel fixed to the rail by a flange with two screws, a knurled focus ring, a collar, and its glass facing up
+   at the cloth (seen as an ellipse). The beam: a soft warm cone from the glass to the cloth's foot, behind the cloth, feathered. */
+#almanac .alm-lens { position: absolute; left: 50%; top: -2px; width: 64px; height: 6px; transform: translate(-50%, -100%); z-index: 3; pointer-events: none;
+  border-radius: 3px 3px 1px 1px;
+  background: radial-gradient(circle at 7px 55%, var(--board-edge) 0 1.2px, rgba(255, 255, 255, .45) 1.6px, transparent 2.2px),
+    radial-gradient(circle at calc(100% - 7px) 55%, var(--board-edge) 0 1.2px, rgba(255, 255, 255, .45) 1.6px, transparent 2.2px),
+    linear-gradient(180deg, var(--sun-core), var(--ochre) 45%, var(--board-edge));
+  box-shadow: 0 1px 2px rgba(var(--shadow), .45); }
+#almanac .alm-lens .ln-barrel { position: absolute; left: 50%; bottom: 100%; width: 42px; height: 24px; transform: translateX(-50%);
+  background: repeating-linear-gradient(90deg, rgba(0, 0, 0, .2) 0 1px, transparent 1px 3px) 0 8px / 100% 7px no-repeat,
+    linear-gradient(90deg, var(--board-edge), var(--ochre) 16%, var(--sun-core) 32%, var(--ochre) 52%, color-mix(in srgb, var(--ochre) 60%, var(--board-edge)) 78%, var(--board-edge));
+  box-shadow: inset 0 7px 0 -6px rgba(0, 0, 0, .35), inset 0 -8px 0 -7px rgba(0, 0, 0, .35), inset 0 15px 0 -14px rgba(0, 0, 0, .3); }
+#almanac .alm-lens .ln-barrel::before { content: ""; position: absolute; left: -3px; right: -3px; top: -5px; height: 6px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--board-edge), var(--ochre) 15%, var(--sun-core) 32%, var(--ochre) 55%, var(--board-edge)); box-shadow: 0 1px 1px rgba(0, 0, 0, .35); }
+#almanac .alm-lens .ln-barrel::after { content: ""; position: absolute; left: -2px; right: -2px; bottom: 0; height: 3px;
+  background: linear-gradient(90deg, var(--board-edge), var(--ochre) 30%, var(--board-edge)); }
+#almanac .alm-lens .ln-glass { position: absolute; left: 50%; bottom: calc(100% + 26px); width: 40px; height: 10px; transform: translateX(-50%); border-radius: 50%;
+  background: radial-gradient(ellipse 60% 70% at 40% 35%, var(--paper), var(--sun-core) 32%, color-mix(in srgb, var(--sky-pale) 60%, var(--board-edge)) 78%);
+  box-shadow: 0 0 0 1.5px var(--ochre), 0 0 0 2.5px var(--board-edge), inset 0 -2px 3px rgba(0, 0, 0, .35); }
+#almanac .alm-lens .ln-glass::after { content: ""; position: absolute; inset: -12px -18px -3px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(closest-side, var(--sun-core), transparent); opacity: calc(var(--beam, 1) * .4); transition: opacity .6s var(--ease); }
+#almanac .alm-beam { position: absolute; left: 50%; bottom: calc(100% + 34px); width: var(--beam-w, 400px); height: var(--beam-h, 120px); transform: translateX(-50%);
+  z-index: 0; pointer-events: none; filter: blur(9px); opacity: calc(var(--beam, 1) * .16); transition: opacity .6s var(--ease); }
+#almanac .alm-beam::before { content: ""; position: absolute; inset: 0; clip-path: polygon(calc(50% - 20px) 100%, calc(50% + 20px) 100%, 100% 0, 0 0);
+  background: radial-gradient(ellipse 40% 130% at 50% 100%, color-mix(in srgb, var(--ochre) 75%, var(--rust)), transparent), linear-gradient(0deg, var(--ochre), var(--ochre) 70%, color-mix(in srgb, var(--ochre) 60%, transparent) 92%, transparent); }
+:root[data-theme="night"] #almanac .alm-beam { opacity: calc(var(--beam, 1) * .17); }
+:root[data-theme="night"] #almanac .alm-beam::before { background: linear-gradient(0deg, var(--sun-core), var(--sun-core) 35%, color-mix(in srgb, var(--sun-core) 55%, transparent) 85%, transparent); }
+/* the battery's plate hangs from the rail: the head starts 6 px lower so the plate never crowds the nameplate */
+#almanac.bud-on .alm-house { padding-top: 14px; }
+#almanac.bud-on.watch .alm-house { padding-top: 12px; }
+/* Night: the brass is moonlit, a dull bronze edge, not a gold glow */
+:root[data-theme="night"] #almanac .alm-house { background: linear-gradient(var(--alm-house), var(--alm-house)) padding-box,
+  linear-gradient(180deg, color-mix(in srgb, var(--ochre) 42%, var(--board-edge)), var(--board-edge) 45%, color-mix(in srgb, var(--board-edge) 70%, var(--board))) border-box; }
+:root[data-theme="night"] #almanac .alm-house::before, :root[data-theme="night"] #almanac .alm-house::after, :root[data-theme="night"] #almanac .alm-lens { filter: brightness(.6) saturate(.75); }
+#almanac.maxed .alm-beam { opacity: 0; }
+@media (prefers-reduced-motion: reduce) { #almanac .alm-beam, #almanac .alm-lens .ln-glass::after { transition: none; } }
+/* a sentence that does not fit one line sets in two smaller lines; it never truncates */
+#almanac .fc.ln.two .v { font-size: 12.5px; line-height: 1.12; }
+#almanac .fc.ln.two .tx { white-space: normal; text-overflow: clip; display: block; }
+#almanac .fc.ln.two.three .v { font-size: 11px; line-height: 1.04; letter-spacing: -.005em; }
+/* terms in the board: the shared treatment (serif italic, dotted underline, hover definition) */
+#almanac .fc.ln .tw { font-size: 1.08em; text-decoration-color: currentColor; text-decoration-thickness: 1px; }
+/* department icons (TerryIcons, the projector's own symbols): in the icon tile, for a beat about a single department */
+#almanac .fc.ic .v svg.dept-ic { width: 22px; height: 22px; stroke-width: 1.7; }
+
+/* ==== polish (owner 05:20): a mechanical departures board in the machine's body. One condensed face (Barlow Condensed), charcoal
+   flaps with cream letters filling the tile, a true dark split with a faint highlight, 2 px radii; the sentence strip is the same
+   flap material; legend rows get a brass plate, not italics; an engraved brass nameplate; the hint shows on hover and focus only. */
+#almanac { --alm-face: "Barlow Condensed", "Roboto Condensed", "Arial Narrow", sans-serif-condensed, var(--ui);
+  --alm-house: var(--roller); --alm-tile: color-mix(in srgb, var(--roller) 72%, var(--roller-hi)); --alm-text: var(--paper-warm); --alm-dim: color-mix(in srgb, var(--paper-warm) 62%, var(--roller));
+  --alm-split: rgba(0, 0, 0, .78); --alm-hover: rgba(255, 255, 255, .05); --a-paper: var(--alm-tile); --a-pill: var(--alm-tile); --a-soft: color-mix(in srgb, var(--paper-warm) 22%, var(--alm-tile)); --a-hire: var(--sky-dawn); --a-behind: var(--ochre); --a-pred: var(--umber-wash); }
+:root[data-theme="night"] #almanac { --alm-house: var(--board); --alm-tile: var(--roller); --alm-text: color-mix(in srgb, var(--ink) 82%, var(--sun-core)); --alm-dim: color-mix(in srgb, var(--ink) 55%, var(--board));
+  --alm-split: rgba(0, 0, 0, .85); --a-paper: var(--alm-tile); --a-pill: var(--alm-tile); }
+#almanac .fc { border-radius: 2px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07), inset 0 -1px 0 rgba(0, 0, 0, .5), 0 1px 0 rgba(0, 0, 0, .55); }
+#almanac .fc .h.t { border-radius: 2px 2px 0 0; background-image: linear-gradient(rgba(255, 255, 255, .05), rgba(255, 255, 255, 0) 70%); }
+#almanac .fc .h.b { border-radius: 0 0 2px 2px; background-image: linear-gradient(rgba(0, 0, 0, .18), rgba(0, 0, 0, 0) 40%); }
+#almanac .fc::after { height: 2px; margin-top: -1px; background: var(--alm-split); box-shadow: 0 -1px 0 rgba(255, 255, 255, .06); }
+/* the sentence strip: the split shows at its ends only, so it never reads as a line struck through the words */
+#almanac .fc.ln::after { height: 2px; margin-top: -1px; box-shadow: none; background: linear-gradient(90deg, var(--alm-split) 0 10px, transparent 10px calc(100% - 10px), var(--alm-split) calc(100% - 10px)); }
+#almanac .fc.ch .v { font: 600 31px/1 var(--alm-face); letter-spacing: -.01em; padding-top: 1px; }
+#almanac .fc.nm .v { font: 600 33px/1 var(--alm-face); letter-spacing: -.02em; padding-top: 1px; }
+#almanac .fc.ln .v { font: 500 20px/1 var(--alm-face); letter-spacing: .01em; padding: 1px 12px 0; }
+#almanac .alm-row.key .fc.ln .tx { font-style: normal; }
+#almanac .fc.ln.two .v { font-size: 15.5px; line-height: 1.02; }
+#almanac .fc.ln .tw { font-family: inherit; font-style: normal; font-size: 1em; text-decoration: underline dotted currentColor; text-underline-offset: 3px; }
+#almanac .kplate { flex: none; font: 600 11px/1 var(--alm-face); letter-spacing: .14em; text-transform: uppercase; font-style: normal; padding: 4px 6px 3px; border-radius: 2px;
+  color: var(--board); background: linear-gradient(180deg, var(--sun-core), var(--ochre) 55%, color-mix(in srgb, var(--ochre) 70%, var(--board-edge)));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 1px 1px rgba(0, 0, 0, .5); text-shadow: 0 1px 0 rgba(255, 255, 255, .35); }
+#almanac .tag.t-f { color: var(--sky-pale); font-family: var(--alm-face); font-size: 12px; letter-spacing: .1em; }
+:root[data-theme="night"] #almanac .tag.t-f { color: var(--hire); }
+#almanac .tag.t-b { font-family: var(--alm-face); font-size: 12px; }
+#almanac .tag.t-o { color: var(--alm-text); font-family: var(--alm-face); font-size: 12px; letter-spacing: .1em; }   /* the Original plan favoured in Compare; Flyway keeps t-f */
+#almanac .alm-head { align-items: center; padding: 0 2px 8px; gap: 10px; }
+#almanac .alm-name { font: 600 12px/1 var(--alm-face); letter-spacing: .32em; text-transform: uppercase; padding: 4px 6px 3px 10px; border-radius: 2px;
+  color: var(--board); background: linear-gradient(180deg, var(--sun-core), var(--ochre) 50%, color-mix(in srgb, var(--ochre) 70%, var(--board-edge)));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(0, 0, 0, .25), 0 1px 1px rgba(0, 0, 0, .6); text-shadow: 0 1px 0 rgba(255, 255, 255, .4); }
+#almanac .alm-view { font: 500 15px/1 var(--alm-face); letter-spacing: .04em; color: var(--alm-dim); opacity: 1; }
+#almanac .alm-hint { font: 500 13px/1 var(--alm-face); letter-spacing: .04em; opacity: 0; transition: opacity .2s var(--ease); }
+#almanac:hover .alm-hint, #almanac:focus-within .alm-hint { opacity: .85; }
+#almanac .bud-cell, #almanac .bud-gauge { font-family: var(--alm-face); font-size: 14px; letter-spacing: .03em; }
+@media (prefers-reduced-motion: reduce) { #almanac .alm-hint { transition: none; } }
+:root[data-theme="night"] #almanac { --a-hire: var(--hire); --a-pred: var(--pred); --a-behind: var(--behind); }
+#almanac.tight .fc.ln .v { font-size: 15.5px; line-height: 1.02; }
+/* watch on screen: the same machine, packed tighter (shorter flaps, a slimmer head) so it fits one screen with the cloth and the three lines */
+#almanac.watch .fc { height: 33px; }
+#almanac.watch .fc.ch .v { font-size: 27px; } #almanac.watch .fc.nm .v { font-size: 29px; } #almanac.watch .fc.ln .v { font-size: 17.5px; }
+#almanac.watch.tight .fc.ln .v, #almanac.watch .fc.ln.two .v { font-size: 14px; }
+#almanac.watch .alm-head { padding-bottom: 5px; } #almanac.watch .alm-rows { gap: 4px; }
+
+/* Chase it feeds the machine (owner 08:24): a brass slot on the rail right of the lens takes the goal card; a feed slot on the lower
+   edge prints the failure card. Clear of BUDGETerry (left of the lens) and of the beam (it starts at the lens's glass, above). */
+#almanac .alm-slot { position: absolute; left: calc(50% + 40px); top: -6px; width: 64px; height: 10px; z-index: 3; pointer-events: none; border-radius: 2px;
+  background: radial-gradient(circle at 5px 50%, var(--board-edge) 0 1px, rgba(255, 255, 255, .4) 1.4px, transparent 2px),
+    radial-gradient(circle at calc(100% - 5px) 50%, var(--board-edge) 0 1px, rgba(255, 255, 255, .4) 1.4px, transparent 2px),
+    linear-gradient(180deg, var(--sun-core), var(--ochre) 50%, var(--board-edge));
+  box-shadow: 0 1px 2px rgba(var(--shadow), .45); }
+#almanac .alm-slot i { position: absolute; left: 11px; right: 11px; top: 3px; height: 4px; border-radius: 2px; background: #0d0b09; box-shadow: inset 0 1px 1px rgba(0, 0, 0, .8), 0 1px 0 rgba(255, 255, 255, .25); }
+#almanac.bud-two:not(.chasing) .alm-slot { opacity: 0; }
+#almanac .alm-feed { position: absolute; left: 50%; bottom: -5px; width: 132px; height: 8px; transform: translateX(-50%); z-index: 3; pointer-events: none; border-radius: 1px 1px 3px 3px;
+  background: linear-gradient(180deg, var(--board-edge), var(--ochre) 45%, var(--board-edge)); box-shadow: 0 2px 3px rgba(var(--shadow), .35); }
+#almanac .alm-feed i { position: absolute; left: 10px; right: 10px; top: 2px; height: 3px; border-radius: 2px; background: #0d0b09; }
+:root[data-theme="night"] #almanac .alm-slot, :root[data-theme="night"] #almanac .alm-feed { filter: brightness(.6) saturate(.75); }
+
+/* units and column labels (owner 08:45): a smaller condensed caps unit flap after the number tiles on every row (blank when the row has
+   no number), and quiet engraved labels over the columns: WHEN · HOW MANY · WHAT HAPPENS (placed by almanac.js from the first row) */
+/* (7 Nov: room for the longest units, MONTHS and ON TIME, which were cut at 52 px; a little more contrast so they read) */
+#almanac .fc.un { width: 68px; }
+#almanac .fc.un .v { font: 600 11.5px/1 var(--alm-face); letter-spacing: .06em; text-transform: uppercase; color: color-mix(in srgb, var(--alm-text) 78%, var(--alm-dim)); padding-top: 1px; }
+#almanac .fc.un .ut { white-space: nowrap; }
+#almanac .alm-cols { position: relative; height: 14px; margin: 0 0 3px; pointer-events: none; }
+#almanac .alm-cols span { position: absolute; top: 0; font: 600 10px/1 var(--alm-face); letter-spacing: .22em; text-transform: uppercase; color: color-mix(in srgb, var(--alm-text) 46%, transparent);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, .55), 0 1px 0 rgba(255, 255, 255, .06); white-space: nowrap; }
+#almanac.watch .alm-cols { height: 12px; margin-bottom: 2px; }
+
+/* softer board (owner 08:50): a warm dark grey housing and flaps (not black), cream letters a notch lower in contrast (still well over AA),
+   brass nameplate, KEY plates and trim toned down a notch; Night the same, kept legible */
+#almanac { --alm-house: color-mix(in srgb, var(--roller) 80%, var(--roller-hi)); --alm-tile: color-mix(in srgb, var(--roller) 52%, var(--roller-hi));
+  --alm-text: color-mix(in srgb, var(--paper-warm) 88%, var(--roller-hi)); --alm-dim: color-mix(in srgb, var(--paper-warm) 58%, var(--roller-hi)); --alm-split: rgba(0, 0, 0, .6); }
+:root[data-theme="night"] #almanac { --alm-text: color-mix(in srgb, var(--ink) 76%, var(--sun-core)); --alm-split: rgba(0, 0, 0, .7); }
+#almanac .alm-name, #almanac .kplate, #almanac .alm-house::before, #almanac .alm-house::after, #almanac .alm-lens, #almanac .alm-slot, #almanac .alm-feed { filter: saturate(.78) brightness(.93); }
+:root[data-theme="night"] #almanac .alm-name, :root[data-theme="night"] #almanac .kplate { filter: saturate(.7) brightness(.8); }
+/* the "?" now sits in the title row, after the hint, so it never covers anything */

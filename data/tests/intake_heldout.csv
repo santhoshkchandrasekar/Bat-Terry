@@ -1,0 +1,522 @@
+id,tier,sampling,message,expected_type,expected_department,also_ok,label_note
+1,compound,frequency,"Hi there, I hope you're doing well. I'm trying to get rid of an old couch that's been taking up space in my tiny apartment for way too long. Honestly, I can't even remember the last time we had enough room for a proper dance party in the living room, and it's high time this couch found a new home (the dump, unfortunately). Could you please schedule a pickup for it? I prefer getting things done before the weekend rolls around. Looking forward to hearing back. Cheers!",Schedule a Bulk Item Pickup SS,PWDx,Schedule a Bulk Item Pickup,alternate accepted on manual review
+2,spanish,frequency,"Hola, buenos días. Quisiera reportar una infestación de ratas en mi edificio. Vivo en un complejo de apartamentos en Dorchester y he notado un aumento considerable de roedores en los últimos días. He visto ratas en el sótano y han comenzado a aparecer en las áreas comunes. También he escuchado ruidos por la noche en las paredes. Esto realmente está afectando la calidad de vida aquí y me preocupa que puedan traer enfermedades. Por favor, solicito que alguien del departamento de servicios inspeccione la situación lo más pronto posible. Gracias por su atención.",Pest Infestation - Residential,ISD,,
+3,spanish,frequency,"Hola,
+
+Necesito un nuevo contenedor de reciclaje, por favor. El nuestro se rompió y ya no podemos usarlo para reciclar nuestras cosas. Vivimos en el barrio de Dorchester. Agradecería mucho que nos enviaran uno nuevo lo más pronto posible.
+
+Gracias por su ayuda.
+
+Saludos,
+Carlos",Request for Recycling Cart,PWDx,,
+4,spanish,frequency,"Hola, 
+
+Quisiera reportar un vehículo que está estacionado en la calle Cedar, justo en la esquina con la avenida Washington. Está bloqueando la calle durante la limpieza programada de hoy. El auto es un sedán negro y ha estado ahí todo el día. Esto es un inconveniente porque impide que la limpieza se realice correctamente y afecta a todos en el vecindario. Por favor, envíen a alguien para hacer cumplir las restricciones de estacionamiento. Muchas gracias.
+
+Saludos,
+Carlos",Parking Enforcement,BTDT,,
+5,compound,frequency,"Hey there, I've been noticing something that's been bothering me for a while and I think it's time to speak up. Over on my street, Roslindale Ave, there's a neighbor who constantly leaves their trash barrels out on the sidewalk for days, even after the trash has been picked up. It's a real eyesore and makes it hard for folks walking with strollers or mobility scooters to pass by. I mean, we all have busy lives – I get it, I have a toddler who thinks bedtime is negotiable – but it would be great if this particular issue could be addressed to keep the sidewalks clear and neat. Thanks for listening!",Improper Storage of Trash (Barrels),PWDx,,
+6,messy,frequency,yo 311 whats up so there used to be a tree in front of my apartment on commonwealth ave and it got chopped down like ages ago but never replaced kinda missing the green you know? would love to see a new one there cheers!,New Tree Requests,PARK,,
+7,compound,frequency,"Hey there, I hope you're having a lovely day! I'm writing because there's a car that's been parked on my street for over two weeks now, right outside my apartment on Marlborough Street. It hasn't moved an inch, and to be honest, it looks like it hasn't been washed in months. We have street cleaning every Wednesday morning, and it's become a bit of an obstacle for the crews trying to do their job. 
+
+I've got two toddlers at home, and when I'm juggling them and trying to park near my building, it's a huge hassle to navigate around it. Could someone please come by and check it out? I've told myself to stay calm about it, and maybe that's because I just need more coffee. Anyway, thanks for looking into this. I really appreciate it!",Parking Enforcement,BTDT,Abandoned Vehicles,alternate accepted on manual review
+8,compound,frequency,"Hey there,
+
+I was walking my dog through McKinney Playground this morning and couldn't help but notice that someone had dumped a bunch of old furniture right by the entrance. There are chairs, a desk, and what looks like a mattress too. It's such a shame to see this mess, especially since the park is usually so well-kept. My pup, Max, loves his morning sniff-around here, but it's getting harder to enjoy when it's surrounded by someone else's junk. Could the city send a crew to clean this up before more people think it's a second-hand furniture store? Thanks for helping keep our playgrounds clean and enjoyable. 
+
+Best, 
+Jess",Illegal Dumping,PWDx,,
+9,messy,frequency,"yo 311, the street over on tremont is a hot mess rn 😩 trash everywhere n it smells bad like reeally bad maybe somethin died idk but plz send someone 2 clean it asap thx 🙏",Requests for Street Cleaning,PWDx,CE Collection,alternate accepted on manual review
+10,messy,frequency,hey 311 can i get someone to come by and pick up a old couch i got outside my place on dorchester ave need to get it outta here asap thanks 🙏,Schedule a Bulk Item Pickup,PWDx,Schedule a Bulk Item Pickup SS,alternate accepted on manual review
+11,spanish,frequency,"Hola,
+
+Quisiera reportar un problema que he notado en la cuadra de mi casa, en el barrio de Dorchester. En la calle Adams, entre las calles Ashmont y Milton, varios vecinos están dejando sus barriles de basura en la acera todo el tiempo, incluso cuando no es día de recolección. Esto no solo hace que la calle se vea descuidada, sino que también atrae roedores. He notado un aumento en la cantidad de ratas merodeando por la zona. 
+
+Sería ideal que alguien de su departamento pudiera pasar por aquí para evaluar la situación y tomar las medidas necesarias para asegurar que los barriles se guarden adecuadamente cuando no es día de recogida. Aprecio mucho su atención a este asunto, ya que queremos mantener nuestro vecindario limpio y seguro.
+
+Gracias de antemano por su ayuda.
+
+Atentamente,
+
+José Martínez",Improper Storage of Trash (Barrels),PWDx,,
+12,compound,frequency,"Subject: Parking Ticket Needed at 10th St 
+
+Hi 311,
+
+I hope you're all doing well. I live on 10th Street and love my neighborhood, but it's been quite the challenge dealing with the constant parking violations here. Specifically, there's a big white van that’s been parked in front of my house for over a week now, completely ignoring the street cleaning schedule. This is the third time this month, and it's frustrating because my cousin who’s visiting had to park all the way down the street. 
+
+I know everyone needs a place to park, but there's a limit, you know? Could you please send someone to issue a ticket or tow it? Really appreciate what you do - helps keep the neighborhood in order!
+
+Thanks a bunch!
+
+Mike R.",Parking Enforcement,BTDT,,
+13,clear,frequency,"Hello, I noticed several cars parked on the street this morning that are obstructing the scheduled street cleaning. Could someone please come to enforce this so the cleaning truck can get through? Thank you!",Parking Enforcement,BTDT,,
+14,clear,frequency,"Hello, I have a mattress that needs to be picked up from my curb at 123 Maple Street. Could I please have it collected as soon as possible? Thank you!",Mattress_Pickup,PWDx,,
+15,clear,frequency,"Hello, I'd like to schedule a pickup for a large old couch I need to dispose of. Please let me know the available dates for pickup. Thank you!",Schedule a Bulk Item Pickup,PWDx,Schedule a Bulk Item Pickup SS,alternate accepted on manual review
+16,messy,frequency,heyy boston 311 so my trash was supposed to get picked up yest on hanover st but its still sittin there and its startin to smell real bad i dunno if truck just missed it or what but can u send someone out to grab it soon would appreciate thx,Missed Trash/Recycling/Yard Waste/Bulk Item,PWDx,,
+17,clear,frequency,"Hello, I am writing to report unsanitary conditions in the apartment next to mine on Main Street. There seems to be garbage piling up and a strong smell that is affecting the hallway. Could someone from Inspectional Services look into this? Thank you.",Squalid Living Conditions,ISD,Unsatisfactory Living Conditions,alternate accepted on manual review
+18,spanish,frequency,"Hola, me gustaría reportar que me recogieron el carrito de reciclaje por error. Lo dejé afuera para que se vacíe, pero al parecer lo retiraron en vez de simplemente vaciarlo. Necesito que me lo devuelvan, ya que es el único que tengo. Mi dirección es 123 Calle Principal, Boston. Agradecería si pueden solucionarlo lo antes posible. Muchas gracias.",Recycling Cart Return,PWDx,,
+19,spanish,frequency,"Hola, 
+
+Quisiera programar una recogida de artículos voluminosos, por favor. Tengo un sofá y una silla que necesito desechar. Vivimos en el distrito de Jamaica Plain y nos gustaría organizar la recogida para el próximo jueves si es posible. Agradecería saber cuáles son los pasos a seguir y si hay algún costo asociado. 
+
+Gracias por su ayuda,
+
+Carlos",Schedule a Bulk Item Pickup SS,PWDx,Schedule a Bulk Item Pickup,alternate accepted on manual review
+20,compound,frequency,"Hey there, 
+
+I hope this message finds you well. I’m writing because I’ve been noticing something odd with my utility bills lately. Seems like I might be getting charged for my neighbor’s water usage, or something along those lines. The numbers just don’t add up considering how conscious I am about conservation—I've even been taking shorter showers! I swear I’ve been frugal, but the bill doesn’t reflect that.
+
+I don’t know if there's a mistake with how the meters are set up, but I really want to get a handle on it. It’s kind of crazy because I expect my bills to go down, not up, especially since I’ve been watching every penny with the rising costs of everything nowadays.
+
+Could someone look into this for me? It would be great to resolve this sooner rather than later.
+
+Thanks a ton!
+
+-Jenna",Cross Metering - Sub-Metering,ISD,,
+21,spanish,frequency,"Hola, 
+
+Quisiera reportar que hay varios autos estacionados en el lado izquierdo de la calle durante el horario de limpieza. Esto es en la calle Washington entre las calles Fuller y Adams. La limpieza de calles es todos los lunes de 9 a.m. a 11 a.m., pero estos autos no se mueven y los camiones de limpieza no pueden hacer su trabajo adecuadamente. Sería bueno que pasara alguien a verificar y, si es necesario, aplicar multas.
+
+Gracias.",Parking Enforcement,BTDT,,
+22,messy,frequency,"hey there!! got a car parked here on south street for like 3 days now 🚗🛑 no street cleanin done, its blocking the whole flow plus street cleanin days are today so hope u can send someone to check it out maybe tow it? thx a bunch! 🙏",Parking Enforcement,BTDT,,
+23,compound,frequency,"Hello there! I hope you're having a great day. 
+
+I need to schedule a bulk item pickup for a really old couch that's been sitting in my living room like an unwanted guest for far too long. It somehow survived my last move and my cat has taken it upon herself to turn the armrest into her personal scratching post. I've finally decided it's time to part ways with it. 
+
+Could you please arrange for this monstrosity's farewell journey? I’m hoping to get it picked up next Friday, the 23rd, if possible. Thank you so much for your help! 
+
+Best, 
+Karen from South End.",Schedule a Bulk Item Pickup SS,PWDx,Schedule a Bulk Item Pickup,alternate accepted on manual review
+24,compound,frequency,"Hey there, hope you're having a good day. I just wanted to highlight a bit of a nuisance that's been unfolding on our street. Ever since the weather got warmer, there's this red pickup truck that parks right in front of my house every Tuesday, like clockwork, just in time to ignore the street cleaning. It’s been months now, and they never seem to get a ticket! I don’t know if they know someone on the inside or just have incredible luck, but the street looks like a mess every time they drive off. It's really annoying because I have to plan my day to avoid the ticketing, but this truck just sits there like it owns the place. Could you send someone to check this out? Thanks a bunch!",Parking Enforcement,BTDT,,
+25,spanish,frequency,"Hola, 
+
+Quisiera reportar un problema de estacionamiento ilegal en mi calle. Un auto lleva estacionado en el mismo lugar por más de una semana, y parece que está abandonado. Está obstaculizando el paso y además el día de limpieza de calles no pudieron limpiar correctamente esa parte. La matrícula del coche es ABC-123 y se encuentra en la calle Main cerca de la intersección con la calle Elm. Por favor, ¿podrían enviar a alguien para revisar esta situación? Agradezco su pronta atención al asunto.
+
+Gracias,
+Juan",Parking Enforcement,BTDT,Abandoned Vehicles,alternate accepted on manual review
+26,spanish,frequency,"Hola, 
+
+Quisiera reportar que el servicio de recogida de basura no pasó en mi calle esta semana. Vivo en el distrito 06 y siempre sacamos la basura el martes, pero esta vez no la recogieron y ya han pasado dos días. Los contenedores están llenos y necesitamos que vengan a recogerlos lo antes posible para evitar acumulación de basura en la acera. Podrían por favor enviar una cuadrilla para resolver esto? Agradezco su pronta atención al asunto. 
+
+Gracias.",Missed Trash/Recycling/Yard Waste/Bulk Item,PWDx,,
+27,messy,frequency,"hey 311, need help w a bulk item pickup on Tremont St plz got a busted old couch sitting on the curb it’s an eyesore and i think my neighbor’s cat has claimed it as a scratching post lol when can u send someone? thx!",Schedule a Bulk Item Pickup,PWDx,Schedule a Bulk Item Pickup SS,alternate accepted on manual review
+28,spanish,frequency,"Hola, quiero reportar un problema con unos contratistas que están trabajando en mi vecindario en Dorchester. Están construyendo un nuevo edificio en la esquina de mi calle, y he notado que no están cumpliendo con los horarios permitidos para trabajar. Empiezan a hacer ruido muy temprano, como a las 6 de la mañana, lo cual es bastante molesto para todos los vecinos. Además, he visto que dejan mucho desorden en la calle, ya que no limpian después de terminar el trabajo del día. Podrían por favor investigar esta situación? Gracias por su atención. 
+
+Saludos,
+Ana López",Contractors Complaint,ISD,,
+29,clear,frequency,"Hi, I'd like to schedule a bulk item pickup for a mattress and dresser. Would it be possible to arrange this for next Thursday? Thank you!",Schedule a Bulk Item Pickup SS,PWDx,Schedule a Bulk Item Pickup,alternate accepted on manual review
+30,spanish,frequency,"Hola, quisiera programar una recolección de artículos grandes. Tengo un sofá viejo que necesito que recojan. Vivo en el barrio de Jamaica Plain. ¿Podrían indicarme qué día pueden pasar a recogerlo y si se necesita alguna etiqueta especial? ¡Gracias!",Schedule a Bulk Item Pickup,PWDx,Schedule a Bulk Item Pickup SS,alternate accepted on manual review
+31,compound,frequency,"Hi there, I'm trying to schedule a pickup for a bulky item—specifically an old recliner that's been sitting in our basement for far too long. I attempted to give it away, but no one seems to want a chair that smells like it’s from 1985. Anyway, my trash day is Thursday, and I was hoping it could be collected then as it would be one less thing cluttering our house. Thanks in advance!",Schedule a Bulk Item Pickup,PWDx,Schedule a Bulk Item Pickup SS,alternate accepted on manual review
+32,compound,frequency,"Subject: Chronic street parking violators during cleaning hours!
+
+Hello there,
+
+I hope this message finds you well. I really need some assistance with a recurring issue on my street, Winter Street in the South End neighborhood. There's this one blue sedan that never moves during street cleaning hours, and it's been like this for almost a month now. It's like the car's become a fixture on the block!
+
+Apart from the annoyance of having the sweeper dodging around this car, I should mention that I recently adopted the cutest puppy, and walking him on a clean sidewalk is one of life's simple joys. I worry about the cleanliness for his little paws.
+
+I know the city is doing a great job with street cleaning, but it would be fantastic if someone could come by and enforce the no-parking rule. Thank you so much for your attention to this!
+
+Best,
+
+Jamie",Parking Enforcement,BTDT,,
+33,messy,frequency,yo can someone come check out beacon st theres a car parked in the street cleaning zone and no one can clean the street like come on been like this since morning thanks,Parking Enforcement,BTDT,,
+34,messy,frequency,yo 311 can someone check out columbus ave there's a car been parked here for days without moving n street cleaning was yesterday but it didnt move then either its a silver sedan just kinda chilling here collecting that city grime thanks,Parking Enforcement,BTDT,,
+35,spanish,frequency,"Hola, 
+
+Quisiera reportar un vehículo que ha estado abandonado en nuestra calle por más de dos semanas. Es un sedán gris, con placas de Massachusetts, que está estacionado en la esquina de la calle Washington y la calle 3. Ya tiene varias multas en el parabrisas y parece que nadie ha venido a moverlo en todo este tiempo. Está ocupando un espacio innecesario en una zona donde el estacionamiento es bastante limitado. 
+
+Agradecería mucho que alguien del departamento de transporte pudiera venir a verificar la situación y tomar las medidas necesarias. 
+
+Gracias por su atención.
+
+Saludos,
+Juan Pérez",Abandoned Vehicles,BTDT,,
+36,messy,frequency,"yo boston 311, theres this car on franklin st thats been parked in the same spot for like a week now doesnt even look like its moved an inch can ya send someone to check it out n maybe tow it or ticket it? its kinda sketchy and def messes with the street cleaning schedule thx",Parking Enforcement,BTDT,Abandoned Vehicles,alternate accepted on manual review
+37,spanish,frequency,"Hola,
+
+Vivo en el vecindario de East Boston y he notado que hay un problema constante con el almacenamiento de basura en la calle Maverick al lado del edificio número 45. Los residentes dejan los barriles de basura en la acera varios días antes de la recogida, y a menudo están desbordados, lo cual atrae a ratas y da un aspecto muy descuidado a la zona. Esta situación ha empeorado en las últimas semanas. 
+
+Agradecería mucho que alguien del departamento correspondiente pudiera pasar a revisar y aplicar las normativas necesarias para mejorar la situación.
+
+Gracias de antemano por su atención.
+
+Saludos,
+
+Carlos R.",Improper Storage of Trash (Barrels),PWDx,,
+38,clear,frequency,"Hi, I noticed a car parked on Main Street during this morning's street cleaning hours, blocking the cleaners from doing their work. Could someone please come enforce the no-parking rule? Thank you!",Parking Enforcement,BTDT,,
+39,clear,frequency,"The traffic light at the intersection of Main St and Elm St hasn't been changing properly, causing long delays. Could someone come by to inspect it? Thank you!",Traffic Signal Inspection,BTDT,,
+40,clear,frequency,"Hi there, I noticed a car parked on the street that hasn't moved for weeks, and it's making it difficult for street cleaning. Could someone check it out? Thanks!",Parking Enforcement,BTDT,Abandoned Vehicles,alternate accepted on manual review
+41,messy,frequency,hey city ppl we got a car parked on washington st that's totally blocking the street cleaning truck! i mean really how do expect us to keep the street clean if there's cars just chilling there?? it's been there since last night with no sign of moving soon...can yall do something bout this? thx,Parking Enforcement,BTDT,,
+42,clear,frequency,"Hi there, I noticed the sidewalk on Beacon Street between Charles and Arlington hasn't been shoveled and is becoming difficult to navigate. Could you please look into having it cleared? Thanks!",Unshoveled Sidewalk,PWDx,,
+43,messy,frequency,hey there! need to get rid of an old couch sitting on the curb at 123 main st been there since last weekend no idea who i should talk to about getting it picked up can someone help schedule a pickup for it? thanks so much!,Schedule a Bulk Item Pickup,PWDx,Schedule a Bulk Item Pickup SS,alternate accepted on manual review
+44,compound,frequency,"Hey, it's been getting unbearable at my apartment in Dorchester. I know these old buildings can have issues, but the consistent lack of hot water is just driving me nuts! I have to take freezing showers every morning before catching the bus to work, and I don't know how much longer I can keep doing this without catching a cold. I told my landlord a month ago, but he just keeps saying a plumber is coming. Can someone from the city talk to him? I can't keep skipping my morning coffee just to heat water on the stove anymore!",Unsatisfactory Living Conditions,ISD,Unsatisfactory Utilities - Electrical  Plumbing,alternate accepted on manual review
+45,compound,frequency,"Hey there, 311 team!
+
+Hope you're all doing well. I wanted to bring up an issue I've noticed on my daily walks with my golden retriever, Sparky. There's a really big tree over on the corner of Maple and 3rd St. that seems to have a lot of dead branches. It honestly seems like it's just waiting for a strong gust of wind to send those branches crashing down. I’m no arborist, but it looks like it might need some pruning or treatment.
+
+It’s a bit concerning because there are always kids playing around there and dog walkers like myself using that area. Plus, with my luck, it’ll probably decide to drop a branch on me just as I’m about to finally break my personal best on my morning run!
+
+Thanks for everything you all do to keep our parks amazing. Hope Sparky can continue to enjoy our lovely leafy spots safely. 
+
+Cheers,
+
+Jessie",Tree Maintenance Requests,PARK,,
+46,compound,frequency,"Hey there, I hope you're doing well! Just wanted to let someone know that the stop sign on the corner of E 5th St and Dorchester Ave has been bent back to the point where you can barely see it, especially if you're coming from the west side. Not sure if someone backed into it or what, but it's become a little dicey going through there when you can't tell if folks are stopping. Plus, it seems like no one ever cleans around it, so trash tends to pile up there too, though I know that's technically a different issue. Anyway, figured I'd pass it along before it causes a fender-bender. Thanks so much for looking into it!",Sign Repair,BTDT,,
+47,spanish,frequency,"Hola,
+
+Quisiera reportar un problema recurrente en mi calle, sobre todo los días que se supone que pasa la limpieza de calles. Hay varios autos que no respetan las señales de no estacionar y se quedan estacionados en la acera, dificultando así que el camión de limpieza haga su trabajo adecuadamente. Esto ha estado ocurriendo en la calle Tremont entre las avenidas West Canton y Pembroke en el South End. ¡Por favor, envíen algún agente de tránsito para que revisen esta situación y multen a los infractores! Necesitamos que las calles se mantengan limpias y seguras.
+
+Gracias.",Parking Enforcement,BTDT,,
+48,clear,frequency,"Hello, it seems our trash was missed during the usual collection today on Main Street. Could someone please look into rescheduling a pickup? Thank you!",Missed Trash/Recycling/Yard Waste/Bulk Item,PWDx,,
+49,spanish,frequency,"Hola,
+
+Necesito coordinar la recogida de un mueble grande que voy a desechar. Es un sofá que ya no necesito y necesito que lo retiren de mi casa. ¿Podrían decirme qué día pueden pasar a recogerlo y si hay algún costo adicional? Estoy disponible cualquier día de esta semana. Vivo en el barrio de Dorchester. 
+
+Gracias de antemano por su ayuda.
+
+Saludos,
+Carlos R.",Schedule a Bulk Item Pickup,PWDx,Schedule a Bulk Item Pickup SS,alternate accepted on manual review
+50,spanish,frequency,"Hola,
+
+Me gustaría solicitar la plantación de un nuevo árbol en mi calle, en Jamaica Plain, cerca del 123 de Chestnut Avenue. Recientemente tuvimos que retirar un árbol porque estaba muerto y creo que sería beneficioso para todos en el vecindario reemplazarlo con uno nuevo. Los árboles no solo embellecen nuestras calles, sino que también proporcionan sombra y mejoran la calidad del aire. Aprecio mucho su atención a este asunto y espero que podamos tener un nuevo árbol plantado pronto. 
+
+Gracias de antemano por su ayuda.
+
+Saludos,
+
+Carlos M.",New Tree Requests,PARK,,
+51,compound,frequency,"Hi, I don't mean to sound like a broken record, but the trash situation on my street is getting out of hand again. There's a house two doors down from me on Arlington Street that consistently leaves their garbage barrels out on the sidewalk long after pickup day. I've told them more than once, but they just don't seem to care! It's an eyesore, not to mention it makes it hard to navigate the sidewalk with my stroller. You would think people would have more consideration for their neighbors, but I guess not. It would be great if someone could remind them of the rules or something. Thanks!",Improper Storage of Trash (Barrels),PWDx,,
+52,messy,frequency,"yo 311, theres a house on smith st thats lookin rough af, yard full of weeds and trash, front porch doors falling off practically, looks like no ones touched it in months. it's real eyesore for the neighborhood, can someone check it out? thx",Poor Conditions of Property,PWDx,,
+53,clear,frequency,There's a car parked on Main Street that has been there for several days and is obstructing the street cleaning scheduled for tomorrow. Could someone please check it out?,Parking Enforcement,BTDT,Abandoned Vehicles,alternate accepted on manual review
+54,spanish,frequency,"Hola,
+
+Quisiera reportar que hay un colchón dejado en la acera frente a mi casa en el barrio de Jamaica Plain. Está en muy mal estado y creo que puede ser un problema sanitario si no se recoge pronto. La dirección exacta es 123 Calle Principal. Apreciaría mucho si el equipo de recogida pudiera pasar por aquí lo antes posible para retirarlo.
+
+Gracias por su atención,
+
+María",Mattress_Pickup,PWDx,,
+55,messy,frequency,yo boston 311 theres a big issue on armington st with trash barrels not being stored right seems like some folks r just leaving them out on the sidewalk its a mess and ppl gotta walk around them plus it smells awful can ya send someone to check it out before it gets worse thanks,Improper Storage of Trash (Barrels),PWDx,,
+56,spanish,frequency,"Hola, quiero reportar que en la calle Washington hay varios autos estacionados que no se han movido en días y están dificultando la limpieza de la calle. Algunos incluso tienen multas sin pagar pegadas al parabrisas. Me preocupa que esto impida el buen funcionamiento de la limpieza y el tráfico. ¿Podría enviar a alguien para verificar y tomar las medidas necesarias? Gracias.",Parking Enforcement,BTDT,Abandoned Vehicles,alternate accepted on manual review
+57,messy,frequency,"yo city peeps
+
+some fool just dumped a bunch of trash on the corner of dorchester ave & savin hill ave near mckinney playground its a total mess there like bags of garbage n all... can yall send someone to clean it up... its really gross n i dont want it to get worse, if yall could handle this soon that'd be awesome
+
+thanks",Illegal Dumping,PWDx,,
+58,messy,frequency,yo 311 can we get a mattress pickup on tremont st? someone dumped their old mattress on the sidewalk near my building and it's just sitting there looking gross. i don't want any critters moving in ya know? pls send someone asap thx,Mattress_Pickup,PWDx,,
+59,clear,frequency,"I'd like to report some construction debris that's been left on the sidewalk at the corner of Main St and 4th Ave, making it difficult for pedestrians to pass through. Can this be looked into? Thank you!",Construction Debris,PWDx,,
+60,compound,frequency,"Hey 311 team,
+
+I hope you're doing well! I wanted to bring up an issue with a property on my street that seems to be in quite the disrepair. The place is at the corner of Main and 5th, and it looks like it hasn't been maintained in ages—peeling paint, broken windows and all. It's starting to look like something out of a haunted house movie, which would almost be funny if it weren't such a nuisance and eyesore.
+
+Also, those overgrown weeds in the front yard are about to take over the sidewalk. I swear they could start their own zip code soon. It really makes the whole neighborhood look shabby and it's affecting the vibe of our usually lovely street. 
+
+Thanks for looking into this. I’m sure you’ve got lots on your plate, but it’d be awesome if someone could sort this out before the weeds evolve into sentient beings.
+
+Warm regards,
+
+Jamie",Poor Conditions of Property,PWDx,,
+61,compound,frequency,"Hey there, hope you’re having a good day! I’m genuinely sorry to bother you with this, but I really need to point out a property on my street that's been in quite a state for some time now. It's the house on the corner of Maple Ave and Elm St. It's become quite the eyesore, with overgrown weeds and trash piling up in the yard. I used to enjoy walking by with my dog, but it's gotten so bad now that I have to cross the street to avoid it. Feels like it’s been neglected for ages, and it’s becoming a safety hazard with broken glass and who knows what in the debris. On a brighter note, my garden is blooming like crazy this year! Anyway, if you could look into it, it would really help clean up our neighborhood. I appreciate your help!",Poor Conditions of Property,PWDx,,
+62,messy,frequency,hey 311 theres a huge branch hanging dangerously low on washington st just past the corner with oak ave can someone come check it out before it falls? really worried it might hit someone walking by or someones car when it eventually gives in... thanks!,Tree Maintenance Requests,PARK,,
+63,clear,frequency,"Hello, I wanted to inform you that the street cleaning crew has missed our block on Green Street for the past two weeks. Could you please schedule them to come by? Thank you!",CE Collection,PWDx,Requests for Street Cleaning,alternate accepted on manual review
+64,spanish,frequency,"Hola, quiero reportar un problema de estacionamiento en mi calle. Vivo en East Boston, cerca de Bennington St., y constantemente hay vehículos estacionados en lugares donde no está permitido, especialmente durante los días de limpieza de calles. Esto hace que los camiones de limpieza no puedan hacer su trabajo adecuadamente y la suciedad se acumula. Me gustaría que alguien pudiera venir a revisar y hacer cumplir las normas de estacionamiento. Gracias por su atención.",Parking Enforcement,BTDT,,
+65,messy,frequency,"heyy 311! There's a mattress that's just chillin' on the curb on springfield st, been there for like 3 days now 🛏️🤢 can someone come grab it? thanks a ton 🙏",Mattress_Pickup,PWDx,,
+66,spanish,frequency,"Hola, buenas tardes. Quiero reportar un problema de estacionamiento ilegal en mi calle. En la esquina de Johnson St con la avenida Main hay varios autos estacionados en lugares donde está prohibido, y esto está afectando el flujo de tráfico y la seguridad de la zona. Además, hoy es día de limpieza de calles y los vehículos no se han movido, lo cual está obstaculizando el trabajo de los servicios de limpieza. Por favor, envíen a alguien para hacer cumplir las leyes de estacionamiento. ¡Gracias!",Parking Enforcement,BTDT,,
+67,clear,frequency,"Hello, I have a mattress outside my house at 123 Main Street that needs to be picked up. Could you please arrange for its removal at your earliest convenience? Thank you!",Mattress_Pickup,PWDx,,
+68,clear,frequency,"Hi there, I noticed a car parked on our street during the scheduled street cleaning hours and it’s preventing proper cleaning. Can someone from parking enforcement check it out? Thanks!",Parking Enforcement,BTDT,,
+69,spanish,frequency,"Hola, espero que estén bien. Quería comentar sobre el nuevo sistema de bicicletas compartidas que se ha implementado en la ciudad. Me parece una excelente iniciativa para fomentar el uso de medios de transporte sostenibles y reducir el tráfico vehicular. Sin embargo, he notado que en algunas áreas hay escasez de bicicletas disponibles, especialmente durante las horas pico. Sería ideal si pudieran aumentar la cantidad de bicicletas en esas zonas, o ajustar el sistema para redistribuirlas de manera más eficiente. Gracias por su atención y por trabajar en mejorar la movilidad urbana en Boston.",General Comments For a Program or Policy,BTDT,,
+70,clear,frequency,"Hello, I noticed multiple cars parked on the street during the designated street cleaning hours today, creating an obstruction for the cleaning crews. Could someone from enforcement please check this out? Much appreciated.",Parking Enforcement,BTDT,,
+71,spanish,frequency,"Hola, me gustaría reportar una situación en mi barrio. He notado que en Chester Park ha estado acumulándose bastante basura y necesita una buena limpieza. Los botes de basura están desbordados y hay papeles y bolsas por todas partes. Sería excelente si pudieran enviar a alguien para mantener el parque limpio para que todos podamos disfrutarlo. Muchas gracias por su atención.",CE Collection,PWDx,Illegal Dumping|Ground Maintenance|Requests for Street Cleaning,alternate accepted on manual review
+72,messy,frequency,"yo whats up 311, my neighbor on baker ave has their trash barrels just all over the place like literally on the sidewalk making it super hard to walk by they never bring them in and it smells and looks gross can yall send someone to check it out? thanks",Improper Storage of Trash (Barrels),PWDx,,
+73,clear,frequency,"Hello, could you please consider planting a new tree on the sidewalk outside 123 Main Street? There is an empty tree pit that could really benefit from being filled.",New Tree Requests,PARK,,
+74,compound,frequency,"Hello 311,
+
+I hope this message finds you well. I'm reaching out because there's a massive branch hanging precariously over the sidewalk on Washington Street, just outside of my apartment building. It seems like a miracle it hasn't fallen already, considering the windy weather we've been having lately. I can't help but worry every time I walk by with my morning coffee. On a lighter note, my dog has been loving the leaves blowing around, but better safe than sorry, right? Would it be possible to send someone from Parks & Rec to take a look before it becomes an accident waiting to happen?
+
+Thanks a bunch for helping keep our neighborhood safe!
+
+Best,
+Maggie",Tree Maintenance Requests,PARK,,
+75,spanish,frequency,"Hola, quiero reportar un problema con el estacionamiento en mi calle. Hay un coche estacionado en el lugar reservado para la limpieza de calles y no se ha movido en varios días. Esto está impidiendo que la calle se limpie adecuadamente y empieza a acumularse suciedad. Es necesario que alguien de transporte venga a revisar y, si es posible, multar al dueño del vehículo o hacer que lo muevan. Vivo en Halifax St. Gracias de antemano por su ayuda.",Parking Enforcement,BTDT,,
+76,compound,frequency,"Hey there, I hope you're having a good day! I'm writing to report an issue with the sidewalk on my street, Elm Street, just a bit down from the corner with Pine Street. There are a few bricks that are completely loose and uneven, right outside the bakery. It's become quite the tripping hazard, and I almost took a tumble while trying to navigate it this morning while balancing my coffee. 
+
+By the way, speaking of coffee, if you haven't tried the new espresso at that bakery, you totally should! Anyway, back to the matter at hand, I'm worried someone, especially the elderly who frequent the area, could get hurt. Could someone come take a look? Thanks so much for all you do for our city!",Sidewalk Repair (Make Safe),PWDx,,
+77,compound,frequency,"Hey there, 
+
+Hope you're doing well. I’m having an issue with my neighbor’s building on 14th Street. It looks like their fire escape is barely clinging on by a thread, which is both terrifying and oddly reminiscent of my college days when I was hanging by a thread too! I know there's a lot on everyone's plate, but I'd really appreciate it if someone could come and take a look at it before something happens. Thanks a bunch!
+
+Best,
+Sarah",Building Inspection Request,ISD,,
+78,spanish,frequency,"Hola, quisiera reportar que la luz de la calle en la esquina de Main St y 5th Ave no está funcionando desde hace varios días. Por las noches la zona queda bastante oscura y se vuelve un poco peligrosa para los peatones. Agradecería si pudieran enviar a alguien para repararla lo antes posible. Gracias de antemano por su atención.",General Lighting Request,PWDx,Street Light Outages,alternate accepted on manual review
+79,compound,frequency,"Hi there, I hope this message finds you well. I just wanted to bring to your attention the state of a property on my street that's been neglected for some time now. It's the house at the corner of Elm and Oak Street, the one with the blue shutters. The yard is completely overgrown with weeds, and it's been that way for months. Honestly, it looks like a scene out of Jumanji. I get that everyone is busy, but when my allergies start acting up just from walking past it, I figure it's time to say something. Besides, there's been a few mice sightings around the area recently, and I'm pretty sure they're having a field day in that jungle. I really think a little city intervention could make a big difference for all the neighbors. Anyway, thank you so much for looking into this!",Poor Conditions of Property,PWDx,,
+80,clear,frequency,"Hello, could you please send someone to check on the cars parked on Elm Street this morning? It looks like some vehicles haven’t moved for street cleaning, and it’s impacting the cleanup efforts. Thank you!",Parking Enforcement,BTDT,Abandoned Vehicles,alternate accepted on manual review
+81,compound,frequency,"Hey there, I hope this message finds you well. I really hate to bother you, but I just got back from dropping my kids off at school, only to find a car parked right in front of the NO PARKING sign on our street. It's blocking the way for street cleaning today, and I'm pretty sure it’s going to cause a mess since the sweeper can't get through. It’s a maroon minivan, and it’s been there since yesterday. I can’t believe people just ignore signs like that. Between this and the stench of overripe bananas in my kitchen, my day's off to a rough start. Can you please send someone to check it out? Thank you!",Parking Enforcement,BTDT,,
+82,compound,frequency,"Hey there! I hope y’all are doing well. I’m writing because I just came back from walking my dog, Charlie, and noticed there’s some pretty big construction activity happening at the house across the street on Maplewood Ave. I’m thrilled for them if they’re fixing up the place, but it seems like there’s a lot going on and I haven’t seen any permits posted on their windows or doors. They’ve got all sorts of trucks and construction noise going, and I’d hate for them to run into any trouble if they’re supposed to have permits but don’t. 
+
+Anyway, just thought I’d let you know. My mom always says it's better to be safe than sorry, right? Thanks for looking into it! Take care.",Work w/out Permit,ISD,,
+83,spanish,frequency,"Hola, buenos días. Quería reportar que el camión de basura no pasó por mi calle para recoger la basura. Normalmente vienen los martes, pero esta semana no vinieron y ahora tengo varias bolsas acumuladas afuera de mi casa. Vivo en el Distrito 07. ¿Podrían enviar a alguien para recogerlas? Gracias por su ayuda. Mi dirección es [nombre de la calle y número]. Espero su pronta respuesta. Saludos.",Missed Trash/Recycling/Yard Waste/Bulk Item,PWDx,,
+84,compound,frequency,"Hey there, hope you're doing well! I'm really frustrated because someone parked their car right in front of my driveway on Maple Street, making it impossible for me to get my car out. It’s been there since last night, and I’ve missed an important work meeting because I couldn’t drive out. Honestly, I'm more upset about all the effort I put into prepping for that presentation, and now it's all wasted because of some inconsiderate parker. Can you please send someone to check it out and get that car moved? Thanks a bunch!",Parking Enforcement,BTDT,,
+85,spanish,frequency,"Hola, 
+
+Quiero reportar que la acera en la esquina de Boylston Street con Tremont Street no ha sido despejada de nieve después de la tormenta que tuvimos recientemente. Es bastante difícil para los peatones caminar por allí, especialmente para personas mayores o con discapacidades. Esta situación es peligrosa y necesito que se atienda lo antes posible antes de que alguien se accidente. 
+
+Gracias por su atención a este asunto.
+
+Saludos,
+
+[Su Nombre]",Unshoveled Sidewalk,PWDx,,
+86,compound,frequency,"Hey there, I'm reaching out about a big tree on my street that looks like it's about to lose a few limbs. It's on the corner of Winter and 5th Ave, right across from the coffee shop where I spend way too much money on lattes. The kids always play near it when we hang out on weekends, so I’m a bit worried. Can someone come check it out before it decides to drop a branch on someone’s head? Thanks a bunch!",Tree Maintenance Requests,PARK,,
+87,compound,frequency,"Hey there, I'm reaching out because I've noticed that the house on the corner of Maple Street and Elm Avenue is starting to look a bit like a jungle. The weeds have grown so tall that I think they're starting to form their own ecosystem. I'm all for nature, but this is a bit much. It's getting hard to walk on the sidewalk, and I've seen a few kids trip while walking to school. It also doesn't help that I'm already dealing with my own gardening woes at home, trying and failing to keep my lawn in shape after this wild summer weather. Anyway, hope you can help address it soon. Thanks a lot!",Poor Conditions of Property,PWDx,,
+88,spanish,frequency,"Hola,
+
+Necesito que recojan un colchón que dejé fuera de mi casa para desecho. Está ubicado en la acera frente a mi dirección en 123 Main Street, Dorchester. Lo saqué hoy por la mañana, así que agradecería que pasen a recogerlo lo más pronto posible para evitar que se moje o se deteriore más.
+
+Gracias por su ayuda.
+
+Saludos,
+Carlos",Mattress_Pickup,PWDx,,
+89,compound,frequency,"Hey 311,
+
+I hope you're doing well! I was just wondering if someone could come by to pick up this old mattress that's been sitting on our curb for a few days. It's starting to look like an eyesore, and I'm worried it might attract all sorts of critters. We put it outside because my partner insisted on upgrading our bedroom setup after watching too much HGTV. Anyway, it's at 123 Maple Street, and we'd appreciate it if it could be taken away soon. Thanks a ton!
+
+Best,
+Lisa",Mattress_Pickup,PWDx,,
+90,compound,frequency,"Subject: Repeated Overnight Parking Violations on Myrtle St.
+
+Hello there,
+
+I hope this message finds you well. I wanted to bring to your attention an issue that seems to be growing on Myrtle Street. There’s a blue SUV that’s been parked overnight in the same spot for the past week, which usually isn’t a problem, but it’s in a street cleaning zone. I understand everyone is busy, but it's frustrating to see the street cleaner unable to do its job properly. Just yesterday, I had to park nearly three blocks away because of the lack of available spaces.
+
+Also, I can't help but notice that since the new bakery opened, parking has been chaotic here, but I guess that's the price of good pastries, right? If you could send someone to check it out, it might help alleviate the congestion, at least a little bit. Thanks for your help!
+
+Best,
+
+Sam",Parking Enforcement,BTDT,,
+91,messy,frequency,hey 311 pls send someone to check out tremont st theres a car parked in the street cleaning zone its thurs when they supposed to be off the street but its been here since morning no way street sweepers can get thru thanks,Parking Enforcement,BTDT,,
+92,clear,frequency,"Hello, I'd like to request a new tree to be planted in front of my house on Elm Street, as the old one was removed last year and we miss the shade it provided. Thank you for considering this!",New Tree Requests,PARK,,
+93,clear,frequency,"Hello, I need to schedule a pickup for a large couch I've placed on the curb at 123 Main Street. Could you please let me know when that can be arranged? Thank you!",Schedule a Bulk Item Pickup,PWDx,Schedule a Bulk Item Pickup SS,alternate accepted on manual review
+94,clear,frequency,"Hi, I live on Marlborough Street and noticed that our recycling wasn't picked up this Thursday as usual. Could you please look into this? Thanks!",Missed Trash/Recycling/Yard Waste/Bulk Item,PWDx,,
+95,messy,frequency,hey so theres a bunch of trash barrels that are just like chilling on the sidewalk on tremont st outside what looks like an abandoned building right near the corner of warrenton st theyre totally blocking the way for people trying to get by can someone check this out thanks,Improper Storage of Trash (Barrels),PWDx,,
+96,clear,frequency,"Hi there, I've noticed that the street light on the corner of Main St and Elm St has been out for the past few nights. It's quite dark in the area, and I'm concerned for the safety of pedestrians. Thanks for looking into this!",Street Light Outages,PWDx,,
+97,messy,frequency,hey boston 311 i got a car parked on my street for like a week now on boylston st no sign of the owner and its in the way of street cleaning can someone check it out? thanks!,Parking Enforcement,BTDT,Abandoned Vehicles,alternate accepted on manual review
+98,messy,frequency,"hey, theres an old mattress tossed out on the sidewalk on columbus ave near number 1205, been there a few days n looks nasty, can someone come scoop it up pls before it rains and it gets even grosser? thxx",Mattress_Pickup,PWDx,,
+99,spanish,frequency,"Hola, 
+
+Quisiera reportar que hay un automóvil estacionado en la calle Adams, justo frente al número 123, que ha estado allí por más de una semana sin moverse. Parece que lo dejaron abandonado y está ocupando un lugar que normalmente se necesita para la limpieza de las calles. Además, no tiene un permiso visible. 
+
+Les agradezco si pueden enviar a alguien para revisar esta situación y tomar las medidas necesarias. Es importante mantener las calles limpias y accesibles para todos los residentes. Muchas gracias.
+
+Saludos,
+Carlos M.",Parking Enforcement,BTDT,Abandoned Vehicles,alternate accepted on manual review
+100,clear,frequency,"Hi, there's a car parked on Westland Ave during street cleaning hours this morning and the street sweeper can't get through. Could you please send someone to check it out? Thanks!",Parking Enforcement,BTDT,,
+101,compound,frequency,"I recently attended the city meeting discussing the new bike lane proposal. While I appreciate the city's efforts to make Boston more bike-friendly, I couldn't help but notice there was a lot of talk but little consideration for the motorists who rely on street parking. My brother-in-law who lives in the area and has two young kids, constantly has trouble finding a parking spot as it is. Implementing these new bike lanes without a clear plan for replacing the lost parking spaces seems shortsighted. I support sustainable transportation, but we need a balanced approach that works for everyone. Amazingly, no one at the meeting had any answers for that. Just thought I'd share a resident's perspective who wants to avoid more family parking wars.",General Comments For a Program or Policy,BTDT,,
+102,clear,frequency,"Hello, I hope you're doing well. There's a large branch hanging precariously on a tree outside 37 Main Street, and it seems like it could fall at any moment. Could someone from the Parks & Recreation department come and take a look? Thank you!",Tree Maintenance Requests,PARK,,
+103,compound,frequency,"Hey there, I've got a mattress that needs to be picked up from my curb on Blue Hill Ave. It's been sitting there since last Thursday, and with all this rain recently, I'm worried it's becoming a waterlogged eyesore. I tried calling my brother to help me haul it away, but he suddenly remembered he's busy ""organizing his sock drawer""—I've heard better excuses! Anyway, it's starting to remind me of a soggy biscuit, and I don't think my neighbors are thrilled. Would appreciate it if someone could come and get it. Thanks a bunch!",Mattress_Pickup,PWDx,,
+104,spanish,frequency,"Hola, 
+
+Soy residente de Boston y me gustaría reportar un problema con la recolección de basura. Esta semana no recogieron la basura en mi calle, y normalmente lo hacen los martes. He visto que mis vecinos también tienen sus bolsas aun afuera, así que parece que no fue solo en mi dirección. Podrían por favor enviarnos un camión para recogerla? No quiero que se acumule demasiado. Gracias por su atención.
+
+Saludos,
+
+[Su Nombre]",Missed Trash/Recycling/Yard Waste/Bulk Item,PWDx,,
+105,clear,frequency,"Hi there, I was hoping you could plant a new tree on our street as there is an empty pit on the sidewalk in front of 214 Main Street. It would really help improve the look and feel of the neighborhood. Thanks a lot!",New Tree Requests,PARK,,
+106,clear,frequency,"Hello, I noticed some trash barrels on the sidewalk in front of 123 Main Street that haven’t been moved back onto the property since last week's collection day. Could someone look into this? Thank you!",Improper Storage of Trash (Barrels),PWDx,,
+107,messy,frequency,"yo 311, the house on somerville ave looks like a jungle, the grass and weeds are taking over like it's wild, nobody's cared for it in ages. plus there’s trash everywhere, looks awful and might be attracting rats or sumthin. can you get someone to check it out? thx",Poor Conditions of Property,PWDx,,
+108,spanish,frequency,"Hola,
+
+Quisiera reportar que la limpieza de calles en mi vecindario no se está realizando de manera adecuada. Hay mucha basura acumulada especialmente después de los días de recogida de residuos y eso afecta mucho la apariencia de la calle. Además, en Chester Park, noto que el mantenimiento del suelo ha sido descuidado y hay restos de palets que están siendo un problema. Sería genial si pudieran enviar a alguien para que se ocupe de esto y ver si se puede hacer algo más frecuente para mantener nuestras áreas públicas limpias.
+
+Gracias de antemano por su atención.
+
+Saludos,
+
+[Tu Nombre]",CE Collection,PWDx,Requests for Street Cleaning,alternate accepted on manual review
+109,clear,frequency,"Hi there, I noticed that some trash barrels have been left on the sidewalk for several days in front of 123 Main St., blocking pedestrian traffic. Could someone please check this out? Thank you!",Improper Storage of Trash (Barrels),PWDx,,
+110,clear,frequency,"Hi, it seems the sanitation team missed picking up the yard waste on my street today. Could you please arrange for them to come by and collect it? Thanks so much for your help!",Missed Trash/Recycling/Yard Waste/Bulk Item,PWDx,,
+111,clear,frequency,"Hello, I recently moved into a new apartment, and there isn't a recycling cart on the property. Could you please arrange to have one delivered? Thank you!",Request for Recycling Cart,PWDx,,
+112,spanish,frequency,"Hola,
+
+Quería reportar que hay un animal muerto en la acera frente a mi casa en el vecindario de Dorchester, específicamente en la esquina de Columbia Rd con Seaver St. Es un mapache y lleva ahí desde ayer. Por favor, ¿podrían venir a recogerlo? Está comenzando a oler mal y no quiero que atraiga insectos o más animales. Muchas gracias por su atención.
+
+Saludos,
+
+Laura M.",Pick up Dead Animal,PWDx,,
+113,clear,frequency,"Hi there, I noticed a car parked on our street during the scheduled street cleaning hours, and it seems it's preventing the cleaning from being done properly. Could someone please check and ticket the vehicle if necessary? Thanks!",Parking Enforcement,BTDT,,
+114,clear,frequency,"Hi there, I recently visited Franklin Park and noticed that a few of the pathways are overgrown with weeds and could use some attention. Could you please arrange for some maintenance? Thanks!",Ground Maintenance,PARK,,
+115,messy,frequency,hey 311 can someone come check out the cars parked on somerville ave plz theyre totally blocking the street for the street cleaning today and no one's around to move them this happens every time theres a scheduled cleaning day and its super annoying for everyone else trying to follow the rules thanks,Parking Enforcement,BTDT,,
+116,messy,frequency,hey 311 theres a streetlight out on tremont st near the park itz been out for like a week now and its super dark at night makes it kinda sketchy can someone come fix it plz thx,Street Light Outages,PWDx,,
+117,spanish,frequency,"Hola,
+
+Quisiera reportar un problema de basura ilegal en el Parque McKinney. He notado que últimamente muchas personas están dejando sus desechos en este lugar, sobre todo en las áreas de los bancos y cerca de la entrada principal. Esto está creando un ambiente desagradable y poco higiénico para quienes visitamos el parque regularmente. 
+
+Me gustaría solicitar que el departamento de obras públicas investigue este problema y tome medidas para mantener el parque limpio. Tal vez podrían aumentar la frecuencia del servicio de limpieza o colocar más basureros en el área para evitar que la gente continúe tirando basura de manera inapropiada.
+
+Agradezco su atención y espero que puedan resolver este asunto pronto.
+
+Gracias.",Illegal Dumping,PWDx,,
+118,compound,frequency,"Hey 311,
+
+I hope this message finds you well. It's been a rollercoaster of a week, and I could really use some help with an issue that's been bugging me. There's been a car parked in a ""No Parking"" zone on my street for the last three days, and it’s making it super inconvenient for everyone in the neighborhood. I mean, I already have to deal with my neighbor's ridiculous lawn ornaments every day, but this is just over the top!
+
+It's parked right outside 123 Main Street, and it’s a silver Honda Accord, if that helps. I'm worried it might be someone’s idea of testing the limits, but honestly, who has the time for that? I'd really appreciate it if you could send someone over to check it out. Thanks for being the unsung heroes of Boston!
+
+Best,
+
+Sam",Parking Enforcement,BTDT,,
+119,compound,frequency,"Hey 311 team, I hope you’re doing well. We recently upgraded to a new mattress (finally decided to stop putting it off after my back started complaining every morning), and now the old one’s just sitting by the curb outside our house at 123 Maple Street, looking sad and homeless. I scheduled a pickup, but nobody came on the designated day, and it’s starting to attract some unwanted attention from the local raccoon family. Can you please arrange for it to be picked up? Thanks so much! P.S. If you have any tips on dealing with raccoons that seem a bit too friendly, I’m all ears!",Mattress_Pickup,PWDx,,
+120,spanish,frequency,"Hola, quiero reportar un problema que he visto repetidamente en mi vecindario. Alguien ha estado tirando basura ilegalmente cerca del parque McKinney. Es un desastre y no solo se ve mal, sino que también puede ser un peligro para los niños que juegan en el área. Hay bolsas de basura, algunos muebles viejos y hasta un colchón tirado.
+
+Me gustaría que alguien del departamento de limpieza pública pudiera venir a revisar y limpiar esta área lo antes posible. También sería bueno poner un cartel o algo para disuadir a la gente de seguir tirando basura aquí. ¡Gracias por su atención a este asunto!",Illegal Dumping,PWDx,,
+121,spanish,uniform,"Hola,
+
+Quisiera reportar que fui a hacer unas compras al supermercado local en [nombre del supermercado] en [dirección]. Cuando llegué a casa me di cuenta que me cobraron de más por varios productos que estaban en oferta. En el recibo aparece que algunos productos tenían un precio más alto de lo que estaba anunciado en el estante. Me di cuenta especialmente con el [nombre del producto].
+
+Por favor, podrían investigar este asunto para asegurar que los precios en el sistema sean los correctos? Creo que otros clientes podrían estar siendo afectados también.
+
+Gracias por su atención.
+
+Atentamente,
+[Su nombre]",Scanning Overcharge,ISD,,
+122,compound,uniform,"Hey 311 team, hope you're having a good day! I'm reaching out because my neighbor at 215 Maple St. has been leaving their trash barrels out on the sidewalk all week long. It's really frustrating because it blocks the way and quite honestly, it just looks terrible. I walk my dog past there every morning and it's become an obstacle course for us. I tried talking to them, but it seems like they’re just ignoring the issue. Would appreciate if someone can look into this and remind them of the proper trash storage rules. Thanks a bunch!",Improper Storage of Trash (Barrels),PWDx,,
+123,messy,uniform,omg just walked by jimmy's pizza on tremont st and noticed a weird smell and saw smoke coming out from the back and vent!! not sure if it's a fire or just burnt food but it's concerning.. hope everything is ok! pls check this asap thx,Fire in Food Establishment,ISD,,
+124,spanish,uniform,"Hola, 
+
+Quisiera reportar un problema que estoy teniendo con la facturación de los servicios públicos en mi edificio. He notado que mi medidor está registrando un consumo que no corresponde a lo que en realidad utilizo. Creo que puede haber un problema de medición cruzada o submedición. Esto está afectando mi cuenta de electricidad y resulta muy costoso para mí. 
+
+Ya he hablado con el administrador del edificio, pero no he recibido una respuesta satisfactoria. Por favor, podrían enviar a alguien para inspeccionar y solucionar este problema? Vivo en la zona de Brighton. 
+
+Gracias por su atención.
+
+Saludos,
+Juan",Cross Metering - Sub-Metering,ISD,,
+125,clear,uniform,"Hello, I'm concerned about a local diner in my neighborhood where I've noticed food being prepared without gloves and raw ingredients left out in the open for extended periods. Could someone from the health department please check on this? Thank you.",Unsanitary Conditions - Food,ISD,,
+126,spanish,uniform,"Hola, buenos días. Me gustaría reportar un problema con la acera frente a mi casa en el vecindario de Jamaica Plain. Hay varias baldosas rotas y el pavimento está bastante desigual, lo que hace que sea peligroso para caminar, especialmente para personas mayores o con discapacidades. La dirección exacta es [tu dirección]. Apreciaría mucho si pudieran enviar a alguien para evaluarlo y hacer las reparaciones necesarias. Gracias por su atención a este asunto. Saludos cordiales.",Sidewalk Repair,PWDx,Sidewalk Repair (Make Safe),alternate accepted on manual review
+127,clear,uniform,"Hi, I'm reporting a potential rat bite incident that occurred to my child yesterday in our backyard on Elm Street. Could you please send someone to inspect and ensure that the area is safe? Thank you.",Rat Bite,ISD,,
+128,clear,uniform,"Hello, I've noticed that some of the benches in Franklin Park are worn and could benefit from a fresh coat of paint and minor repairs. It would really help to keep the park looking welcoming and safe for everyone. Thank you!",Park Improvement Requests,PARK,,
+129,compound,uniform,"Hello! I hope this message finds you guys well. I'm writing because I've spotted a bit of a rodent issue down on Sumner Street between 3rd and 4th Avenue. There seems to be a family of rats making themselves way too comfortable around the trash bins. Honestly, it's like they think they're paying rent or something! I can't even take my dog out for a walk without seeing one dart out from under a bin, and let me tell you, that's not the cardio anyone's looking for. I’m starting to get concerned about how this might affect the whole neighborhood’s vibe—and my blood pressure! If there's anything you could do to help take care of this problem, I would really appreciate it. Thanks so much for your attention to this matter. Cheers!",Rodent Activity,ISD,,
+130,spanish,uniform,"Hola, 
+
+Quisiera reportar que hay un problema con la salida de emergencia en mi edificio. La puerta siempre está bloqueada con cajas y otros objetos, lo cual es muy peligroso en caso de una emergencia. Creo que esto viola las regulaciones de seguridad y necesitamos que alguien venga a inspeccionar y asegurar que el camino esté despejado para todos los inquilinos. Por favor, envíen alguien para solucionar este problema lo antes posible.
+
+Gracias.",Egress,ISD,,
+131,messy,uniform,hey 311 theres a street light out on watertown st near the dunkin can someone fix it its been dark there for days and kinda sketchy at night to walk through thx,General Lighting Request,PWDx,Street Light Outages,alternate accepted on manual review
+132,clear,uniform,"Hello, I wanted to report that the streetlight on the corner of Main St and 2nd Ave is out, making it quite dark at night. Can this please be fixed soon? Thank you!",General Lighting Request,PWDx,Street Light Outages,alternate accepted on manual review
+133,clear,uniform,"Hi, I wanted to let you know that the sidewalk on Main Street, near the intersection with Elm Street, hasn’t been shoveled yet. It's making it difficult for pedestrians to get through and I’m concerned about the safety of everyone, especially those with mobility issues. Thanks for looking into this!",Unshoveled Sidewalk,PWDx,,
+134,compound,uniform,"Subject: Pothole Causes Daily Commute Headaches
+
+Hi there,
+
+I hope this message finds you well. I am writing to report a particularly troublesome pothole located on Washington Street, right in front of the coffee shop that I used to be able to visit every morning (before the pandemic changed everything). Anyway, this pothole has turned into a real nightmare for drivers in the area, including myself. Every morning, on my way to work, I'm forced to swerve slightly to avoid damaging my car, which is already on its last legs due to other city-related wear and tear. 
+
+I once even spilled my coffee trying to avoid the darn thing. It's about the size of a small dog now and getting worse with each passing day. Could you please look into getting it filled? I know the city has a lot on its plate, but this could help prevent potential accidents or distractions for all of us navigating that route.
+
+Thanks for taking the time to read this and for any help you can provide!
+
+Best,
+
+Sam",Request for Pothole Repair,PWDx,,
+135,messy,uniform,yo 311 hvng some serious issues w ventilation in my apt on comm ave its been super stuffy n humid 4 ages now tryin to air it out not really helping hv to keep windows open 24/7 n getting cold now w the weather changing landlord aint doin anything bout it can u guys plz check it out or tell me what to do tx,Poor Ventilation,ISD,,
+136,compound,uniform,"It's getting ridiculous how often the trash bins are overflowing at Peters Park. I take my dog there every morning for a walk, and it seems like every other day there's trash spilling out. It's a great park, but hardly anyone can enjoy it when there's garbage lying around. I know it has been crazy busy with everyone trying to soak up the last bits of fall, but it feels like this is becoming a pattern. I really hope this can get sorted soon so that the park stays nice for everyone to enjoy. Thanks!",Empty Litter Basket,PWDx,,
+137,compound,uniform,"Hey, I'm writing because the street light in front of my house at 123 Main Street has been out for a week now. It's getting really sketchy walking home from the T at night, especially since I work late most days. Not to mention, it makes it easier for my neighbors' cats to ambush me from the bushes—I'm pretty sure they do it for the entertainment. Anyway, it would be great if someone could come check it out and get it fixed soon. Thanks!",Street Light Outages,PWDx,,
+138,compound,uniform,"Subject: Need a recycling bin sticker please?
+
+Hi 311 team,
+
+I hope you're doing well. I'm writing to request a recycling bin sticker for our household. We've recently moved to Chestnut Hill and realized our recycling bin is missing its sticker, which makes our trash and recycling days way more confusing than they should be. With three kids constantly running around and a hectic work schedule, I'm trying to avoid any additional kerfuffle with the garbage situation. Would really appreciate if you could send me one at your earliest convenience. Thanks so much for your help!
+
+Best,
+Julie",Sticker Request,PWDx,,
+139,clear,uniform,"Hi, I'm writing to report a potential mouse problem in my apartment at 123 Main St. We've noticed droppings in the kitchen and have seen a couple of mice, so any help with an inspection would be greatly appreciated. Thank you!",Mice Infestation - Residential,ISD,,
+140,clear,uniform,"Hello, I'm writing to report that one of the swings at the playground in Christopher Columbus Park is broken. It could use some attention as it's currently not safe for children to use. Thank you!",Equipment Repair,PARK,,
+141,spanish,uniform,"Hola, 
+
+Me gustaría reportar que están ocurriendo trabajos de construcción en el edificio frente a mi casa ubicado en [dirección]. Están trabajando más allá de las horas permitidas, a menudo continúan hasta las 10 de la noche. Es muy ruidoso y está afectando nuestra tranquilidad. Entiendo que hay horarios estipulados para este tipo de actividades, por lo que agradezco que se tomen las medidas necesarias para abordar esta situación. 
+
+Gracias por su atención.
+
+[Nombre]",Working Beyond Hours,ISD,,
+142,messy,uniform,hey 311 there's wayyyy too many people living in this tiny apartment on beacon st it's like a clown car situation here lol i think there are like 10 people staying in a 2 bedroom and it's getting kinda crazy lots of noise and trash piling up pls send someone to check it out thx,Overcrowding,ISD,,
+143,compound,uniform,"Hey there, 311 team. I hope you're having a better day than I am. I was just grabbing a coffee at the corner café on Tremont Street this morning when I noticed something really concerning. There was a small fire that seemed to have started in their kitchen area. Thankfully, it didn't look too big and seemed under control by the time I left, but it did freak everyone out including me. The firefighters got there quickly, but I'd feel much better knowing someone from Inspectional Services can check things out to make sure there isn’t any lingering danger or code violations. I mean, I'd hate to lose my favorite breakfast spot because of a fire! Thanks for taking care of this.",Fire in Food Establishment,ISD,,
+144,messy,uniform,yo 311 i gotta say the pizza place on boylston st is sus rn i got a slice last night and my stomach aint been right since maybe worth a look? 🤢🍕,Food Alert - Unconfirmed,ISD,,
+145,clear,uniform,"Hi, I hope you can help. We've been without gas in our apartment for over two days now, which means no heating and no ability to cook. Could someone from Inspectional Services come by to take a look? Thank you.",No Utilities Residential - Gas,ISD,,
+146,clear,uniform,Could someone please review the timing of the traffic lights at the intersection of Tremont St and Stuart St? It seems like the wait times have increased significantly and it's causing long backups during rush hour.,Requests for Traffic Signal Studies or Reviews,BTDT,,
+147,messy,uniform,hey there 311! can u pls send someone to clean up the mess on hersey st? there's trash everywhere and it's starting to smell really bad especially with this heat wave we got going on 🤢 also there's a dead squirrel on the corner by the park entrance it's been there for like 3 days!! thanks a lot,Requests for Street Cleaning,PWDx,CE Collection,alternate accepted on manual review
+148,spanish,uniform,"Hola, quiero reportar que he visto trabajos de construcción en la vivienda ubicada en 123 Calle Mayor y no parece que tengan los permisos necesarios. Están haciendo mucho ruido y han traído maquinaria grande. Me preocupa que no cumplan con las regulaciones y pueda ser un riesgo para el vecindario. Gracias por su pronta atención.",Work w/out Permit,ISD,,
+149,clear,uniform,"Hi, I've noticed increased rodent activity in my neighborhood, particularly in the alleyways off of Main Street. Could you please send someone to inspect and address the issue? Thank you!",Rodent Activity,ISD,,
+150,compound,uniform,"Hey there 311, 
+
+I hope you guys are having a better day than I am. I was bitten by a rat this morning while taking out the trash in the alley behind my apartment on Pine Street. Can you believe it? I knew we had a rodent issue in the area, but I didn't expect to have a personal encounter like that. I mean, I just got that pair of sneakers too! I should've listened to my mom when she said to move to the quieter suburbs. Anyway, I went to the ER just to be safe, but we really need to get this rat problem under control before more people end up like me.
+
+Thanks,
+Danielle",Rat Bite,ISD,,
+151,messy,uniform,"hey 311 i found this rusty old bike chained 2 a pole on boylston st, it's been there 4ever, looks like no ones touched it in months, lots of weeds growing around it too, can some1 come pick it up pls? thx!",Abandoned Bicycle,BTDT,,
+152,messy,uniform,"yo city of boston, i live next to the construction on boylston st and they've got some serious issues with protecting our property. their scaffolding is like nearly on my property line and some bricks and other debris have fallen onto my yard. this is a major safety hazard for my kids and our dog. can u send someone to check it out or make them put up a proper barrier?? thx",Protection of Adjoining Property,ISD,,
+153,spanish,uniform,"Hola,
+
+Quisiera reportar un bache bastante grande en la intersección de la calle Washington con la avenida Main. Está justo en el medio del carril y es imposible de evitar, se siente como si uno se fuera a quedar atrapado ahí. He visto ya varios autos intentando maniobrar alrededor y es peligroso, especialmente por las noches cuando no se ve bien. Por favor, podría enviar un equipo para reparar esto lo antes posible antes de que cause algún accidente grave?
+
+Gracias de antemano,
+
+Carlos",Request for Pothole Repair,PWDx,,
+154,compound,uniform,"Hey there, I'm writing to bring attention to a serious issue regarding lead in my apartment. We've got chipping paint in several rooms, and I'm pretty sure it’s lead-based given how old the building is. I’ve got a young child and my wife is pregnant, so it’s really worrying us. We moved to Boston for a job opportunity, and while we love the area, dealing with this issue is really stressing us out. Can someone please come and inspect the place? I just want to make sure we're keeping our family safe. Thanks for your help!",Lead,ISD,,
+155,messy,uniform,"yo, whats up with the sidewalk on tremont st? it's like a game of hopscotch trying to get down the block, my friend almost twisted her ankle earlier smh 😩 looks like the bricks are breakin out everywhere and its a total mess out there, someone could get hurt, can yall fix this asap? thnx 🙏",Sidewalk Repair (Make Safe),PWDx,,
+156,compound,uniform,"Dear Parks & Recreation team,
+
+I hope this finds you well. My family and I love spending our weekends at Franklin Park, especially now that the leaves are turning and it feels like fall. However, I've noticed over the past few weeks that the playground area is in desperate need of some TLC. The swings are starting to look a bit worse for wear, with rust and squeaky chains, and some of the rubber mats under the slides are torn, which could be a tripping hazard for the kids. 
+
+I know budgets are tight, and everyone is doing their best, but it would be great if these could be fixed. The kids get so upset when they can't enjoy the playground fully, and honestly, I just want to see them happy and safe while they play. Appreciate all the work you do to keep our parks beautiful.
+
+Thanks for considering this request!
+
+Best regards,
+
+Maggie",Park Improvement Requests,PARK,,
+157,messy,uniform,"yo 311, i dont even know how 2 say this but i think i got bit by a rat while walkin on thayer st last night. was mindin my business when i felt a sharp pain and saw this little guy scurry away. not sure what to do, like should i see a doc or something? also, maybe someone should check out that area, seen a lotta rats around there lately. thx",Rat Bite,ISD,,
+158,clear,uniform,"Hi there, I noticed some graffiti on the electrical cabinet at the corner of Main St and 3rd Ave. Could you please arrange for it to be cleaned? Thanks a lot!",PWD Graffiti,PWDx,,
+159,compound,uniform,"Hey there, I hope someone is listening because this is really starting to bug me. Twice now, on my way to work down Elm Street, I've tripped over a rusty old chair that's been left in the street as a placeholder for a parking spot. It’s been out there for more than a week. I get it, we all want a guaranteed place to park, but come on, this is ridiculous! It's not only an eyesore but also a real tripping hazard. And speaking of walking down the street, do people even say ""good morning"" anymore? Anyway, please send someone to handle this. Thanks!",Space Savers,PWDx,,
+160,compound,uniform,"Hey there, 
+
+I hope you're having a better day than my morning commute! I wanted to let you know that the crosswalk markings at the intersection of Main St and 2nd Ave are almost completely faded. It's become a bit of a dodging game trying to cross there, and my neighbor sent me a meme about it, which would be funny if it wasn't so scary. I know winter was rough on the roads, but if someone could come by and give it a fresh coat, that would be amazing. 
+
+Thanks a bunch,",Pavement Marking Maintenance,BTDT,,
+161,ambiguous,ambiguous,Tree in front of my building.,ASK,,Tree Maintenance Requests,blind relabel by independent reviewer: Names a tree but not what is wrong
+162,ambiguous,ambiguous,There's a sign that's been damaged.,Sign Repair,BTDT,ASK,blind relabel by independent reviewer: Damaged sign routes to sign shop
+163,ambiguous,ambiguous,Are residents responsible for snow removal on sidewalks?,ASK,,General Comments For a Program or Policy,blind relabel by independent reviewer: Policy question about snow removal responsibility
+164,ambiguous,ambiguous,"Streetlight isn't working, or maybe it's just flickering.",Street Light Outages,PWDx,General Lighting Request,blind relabel by independent reviewer: Flickering or out still a streetlight outage
+165,ambiguous,ambiguous,"Graffiti on the wall, is it something the city removes?",PWD Graffiti,PWDx,ASK,blind relabel by independent reviewer: Graffiti reports go to graffiti program regardless
+166,ambiguous,ambiguous,"Found some trash bags, not sure if they belong to someone.",ASK,,Illegal Dumping|Improper Storage of Trash (Barrels)|CE Collection,blind relabel by independent reviewer: Unclear if dumping or someone's set-out trash
+167,ambiguous,ambiguous,Water pooling near the sidewalk.,ASK,,Public Works General Request|Roadway Repair,blind relabel by independent reviewer: Unclear cause; drain vs sidewalk vs water main
+168,ambiguous,ambiguous,Can we get a public trash bin in this area?,Request for Litter Basket Installation,PWDx,,blind relabel by independent reviewer: Direct request for new public bin
+169,ambiguous,ambiguous,Vacant lot or someone’s backyard? It's full of debris.,ASK,,Trash on Vacant Lot|Poor Conditions of Property,blind relabel by independent reviewer: Vacant lot vs private yard changes type
+170,ambiguous,ambiguous,A section of fence has fallen down.,ASK,,Poor Conditions of Property|Equipment Repair|Unsafe Dangerous Conditions,"blind relabel by independent reviewer: Whose fence; park, private, or street"
+171,ambiguous,ambiguous,Parking meter isn’t showing time correctly.,Parking Meter Repairs,BTDT,,blind relabel by independent reviewer: Malfunctioning meter
+172,ambiguous,ambiguous,Large branch is hanging dangerously low.,Tree Emergencies,PARK,Tree Maintenance Requests,blind relabel by independent reviewer: Dangerous hanging branch is emergency
+173,ambiguous,ambiguous,Is the plowing on our street delayed?,Request for Snow Plowing,PWDx,ASK,blind relabel by independent reviewer: Street not plowed; route to plowing
+174,ambiguous,ambiguous,"Noise from a nearby construction site, who do I call?",Work Hours-Loud Noise Complaints,PWDx,Working Beyond Hours|Contractors Complaint,blind relabel by independent reviewer: Construction noise complaint
+175,ambiguous,ambiguous,Street sign is unreadable.,Sign Repair,BTDT,,blind relabel by independent reviewer: Unreadable street sign needs replacement
+176,ambiguous,ambiguous,Found a stray shopping cart.,CE Collection,PWDx,ASK|Illegal Dumping,blind relabel by independent reviewer: Abandoned cart treated as debris pickup
+177,ambiguous,ambiguous,There's a strange smell coming from the storm drain.,ASK,,Public Works General Request,blind relabel by independent reviewer: Storm drain is BWSC; need details
+178,ambiguous,ambiguous,Is there a permit needed to remove a tree on the sidewalk?,ASK,,General Comments For a Program or Policy|Tree Maintenance Requests,blind relabel by independent reviewer: Permit policy question
+179,ambiguous,ambiguous,A hole in the pavement; not sure if it's city or private.,ASK,,Request for Pothole Repair|Sidewalk Repair (Make Safe),blind relabel by independent reviewer: Road vs sidewalk and ownership unclear
+180,ambiguous,ambiguous,Construction barriers left on the road.,Contractor Complaints,PWDx,Construction Debris,blind relabel by independent reviewer: Contractor left barriers in roadway
+181,ambiguous,ambiguous,How often are street trees pruned?,ASK,,General Comments For a Program or Policy,blind relabel by independent reviewer: Policy question about pruning schedule
+182,ambiguous,ambiguous,Overflowing dumpster?,Overflowing or Un-kept Dumpster,PWDx,,blind relabel by independent reviewer: Overflowing dumpster
+183,ambiguous,ambiguous,A light is out near the alley.,Street Light Outages,PWDx,General Lighting Request|ASK,blind relabel by independent reviewer: Light out; assume streetlight
+184,ambiguous,ambiguous,Playground equipment could use some maintenance.,Equipment Repair,PARK,Park Improvement Requests,blind relabel by independent reviewer: Playground equipment maintenance
+185,ambiguous,ambiguous,"Garage door open since this morning, is it a safety concern?",ASK,,Building Inspection Request,blind relabel by independent reviewer: Likely private; unclear city issue
+186,ambiguous,ambiguous,Who maintains the back alleys?,ASK,,Public Works General Request,"blind relabel by independent reviewer: Question about ownership, not a report"
+187,ambiguous,ambiguous,Vegetation obstructing the view near the intersection.,Tree Maintenance Requests,PARK,Poor Conditions of Property|ASK,"blind relabel by independent reviewer: Sight-line obstruction, likely street tree"
+188,ambiguous,ambiguous,"Pothole forming, could be worse after the rain.",Request for Pothole Repair,PWDx,Roadway Repair,blind relabel by independent reviewer: Pothole report
+189,ambiguous,ambiguous,"Mailboxes are broken into, does the city handle this?",ASK,,,blind relabel by independent reviewer: Mail theft is police or USPS matter
+190,ambiguous,ambiguous,"Found a bike blocking the entrance, is this city property?",ASK,,Abandoned Bicycle,blind relabel by independent reviewer: Unclear if abandoned or just parked
+191,ambiguous,ambiguous,Can I report a broken window on a building?,ASK,,Building Inspection Request|Poor Conditions of Property,blind relabel by independent reviewer: Need to know which building and why
+192,ambiguous,ambiguous,Street numbers have faded.,ASK,,Sign Repair,blind relabel by independent reviewer: Building numbers are owner's; sign unclear
+193,ambiguous,ambiguous,The park's water fountain isn't working.,Equipment Repair,PARK,Ground Maintenance,blind relabel by independent reviewer: Park fixture broken
+194,ambiguous,ambiguous,Are scooters allowed on sidewalks?,ASK,,General Comments For a Program or Policy|Transportation General Request,blind relabel by independent reviewer: Policy question about scooter rules
+195,ambiguous,ambiguous,"Missing cat poster taped to light posts, should these be removed?",Illegal Posting of Signs,PWDx,ASK,blind relabel by independent reviewer: Flyers on poles is illegal posting
+196,ambiguous,ambiguous,"Sidewalk is uneven, not sure if it's a city path.",Sidewalk Repair (Make Safe),PWDx,Sidewalk Repair|ASK,blind relabel by independent reviewer: Uneven sidewalk; city verifies ownership
+197,ambiguous,ambiguous,Storm grate is clogged with leaves.,Requests for Street Cleaning,PWDx,Public Works General Request|Utility Casting Repair,blind relabel by independent reviewer: Clogged catch basin cleared by PWD or BWSC
+198,ambiguous,ambiguous,Can the city remove a bee hive from a tree?,ASK,,Tree Maintenance Requests,blind relabel by independent reviewer: City usually does not remove hives; which tree
+199,ambiguous,ambiguous,Signpost is leaning but not broken.,Sign Repair,BTDT,Pole Compliance,blind relabel by independent reviewer: Leaning sign post needs straightening
+200,ambiguous,ambiguous,"There's a bump in the road, not too big but noticeable.",Roadway Repair,PWDx,Request for Pothole Repair,blind relabel by independent reviewer: Road surface defect

@@ -1,0 +1,41 @@
+id,expected_type,also_ok,note
+161,ASK,Tree Maintenance Requests,Names a tree but not what is wrong
+162,Sign Repair,ASK,Damaged sign routes to sign shop
+163,ASK,General Comments For a Program or Policy,Policy question about snow removal responsibility
+164,Street Light Outages,General Lighting Request,Flickering or out still a streetlight outage
+165,PWD Graffiti,ASK,Graffiti reports go to graffiti program regardless
+166,ASK,Illegal Dumping|Improper Storage of Trash (Barrels)|CE Collection,Unclear if dumping or someone's set-out trash
+167,ASK,Public Works General Request|Roadway Repair,Unclear cause; drain vs sidewalk vs water main
+168,Request for Litter Basket Installation,,Direct request for new public bin
+169,ASK,Trash on Vacant Lot|Poor Conditions of Property,Vacant lot vs private yard changes type
+170,ASK,Poor Conditions of Property|Equipment Repair|Unsafe Dangerous Conditions,"Whose fence; park, private, or street"
+171,Parking Meter Repairs,,Malfunctioning meter
+172,Tree Emergencies,Tree Maintenance Requests,Dangerous hanging branch is emergency
+173,Request for Snow Plowing,ASK,Street not plowed; route to plowing
+174,Work Hours-Loud Noise Complaints,Working Beyond Hours|Contractors Complaint,Construction noise complaint
+175,Sign Repair,,Unreadable street sign needs replacement
+176,CE Collection,ASK|Illegal Dumping,Abandoned cart treated as debris pickup
+177,ASK,Public Works General Request,Storm drain is BWSC; need details
+178,ASK,General Comments For a Program or Policy|Tree Maintenance Requests,Permit policy question
+179,ASK,Request for Pothole Repair|Sidewalk Repair (Make Safe),Road vs sidewalk and ownership unclear
+180,Contractor Complaints,Construction Debris,Contractor left barriers in roadway
+181,ASK,General Comments For a Program or Policy,Policy question about pruning schedule
+182,Overflowing or Un-kept Dumpster,,Overflowing dumpster
+183,Street Light Outages,General Lighting Request|ASK,Light out; assume streetlight
+184,Equipment Repair,Park Improvement Requests,Playground equipment maintenance
+185,ASK,Building Inspection Request,Likely private; unclear city issue
+186,ASK,Public Works General Request,"Question about ownership, not a report"
+187,Tree Maintenance Requests,Poor Conditions of Property|ASK,"Sight-line obstruction, likely street tree"
+188,Request for Pothole Repair,Roadway Repair,Pothole report
+189,ASK,,Mail theft is police or USPS matter
+190,ASK,Abandoned Bicycle,Unclear if abandoned or just parked
+191,ASK,Building Inspection Request|Poor Conditions of Property,Need to know which building and why
+192,ASK,Sign Repair,Building numbers are owner's; sign unclear
+193,Equipment Repair,Ground Maintenance,Park fixture broken
+194,ASK,General Comments For a Program or Policy|Transportation General Request,Policy question about scooter rules
+195,Illegal Posting of Signs,ASK,Flyers on poles is illegal posting
+196,Sidewalk Repair (Make Safe),Sidewalk Repair|ASK,Uneven sidewalk; city verifies ownership
+197,Requests for Street Cleaning,Public Works General Request|Utility Casting Repair,Clogged catch basin cleared by PWD or BWSC
+198,ASK,Tree Maintenance Requests,City usually does not remove hives; which tree
+199,Sign Repair,Pole Compliance,Leaning sign post needs straightening
+200,Roadway Repair,Request for Pothole Repair,Road surface defect

@@ -1,0 +1,131 @@
+/* BUDGETerry (budgeterry.js): the battery resting on the projector machine. Photo plus the parts it needs to sit for real: a contact
+   shadow, two brass cradles on the rail, a brass socket at the plug's height, an engraved plate, and the cells of charge behind its glass. Tokens only. */
+#almanac .bud { position: absolute; z-index: 3; pointer-events: none; }
+#almanac .bud[hidden], #almanac .bud-socket[hidden] { display: none; }
+#almanac .bud-img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; user-select: none;
+  filter: drop-shadow(0 1px 1px rgba(var(--shadow), .35)); }
+#almanac .bud-b .bud-img { transform: scaleX(-1); }
+/* where the body meets the brass rail: a soft contact shadow under its length (not under the cable) */
+#almanac .bud-shadow { position: absolute; left: 1%; width: 77%; bottom: calc(var(--s) * 8px); height: calc(var(--s) * 36px); border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(var(--shadow), .55), transparent); filter: blur(2px); }
+#almanac .bud-b .bud-shadow { left: auto; right: 1%; }
+:root[data-theme="night"] #almanac .bud-shadow { background: radial-gradient(closest-side, rgba(0, 0, 0, .8), transparent); }
+/* the glass: four department cells of charge behind it. The bands sit 2.5 px inside the bezel, clipped to the glass's rounded rect.
+   Day: the colours multiply into the glass's own tint (so the photo's glass shows through); Night: the same colours dimmed to the moonlit relight.
+   Over them: a soft inner shadow under the bezel's top edge, then the photo's own sheen (its glass highlights) in screen. */
+#almanac .bud-win { position: absolute; display: flex; overflow: hidden; pointer-events: auto; isolation: auto; }
+#almanac .bud-band { position: relative; flex: 1 1 0; min-width: 0; cursor: help; mix-blend-mode: multiply;
+  background: color-mix(in srgb, color-mix(in srgb, var(--c) 70%, var(--paper-edge)) 34%, transparent); transition: opacity .3s var(--ease), flex-grow .5s var(--ease); }
+/* the cell walls: a dark hairline with a lit edge beside it */
+#almanac .bud-band + .bud-band { box-shadow: inset 1px 0 0 rgba(var(--shadow), .55), inset 2px 0 0 rgba(255, 255, 255, .22); }
+#almanac .bud-band.dim { opacity: .38; }
+#almanac .bud-band i { position: absolute; display: block; }
+#almanac .bud-band .bb-lit { left: 0; top: 0; bottom: 0; width: var(--lit, 100%);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c) 58%, var(--paper-edge)) 0, color-mix(in srgb, var(--c) 78%, var(--paper-edge)) 45%, color-mix(in srgb, var(--c) 86%, var(--umber)) 100%);
+  opacity: .9; }
+#almanac .bud-band + .bud-band .bb-lit { left: 2px; }
+#almanac.bud-anim .bud-band .bb-lit { transition: width .45s var(--ease-out); }
+#almanac .bud-glass { position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+  background: linear-gradient(180deg, rgba(var(--shadow), .34), rgba(var(--shadow), .08) 22%, transparent 45%, transparent 82%, rgba(var(--shadow), .14));
+  box-shadow: inset 0 2px 3px rgba(var(--shadow), .35), inset 0 0 0 1px rgba(var(--shadow), .18); }
+#almanac .bud-sheen { position: absolute; max-width: none; pointer-events: none; mix-blend-mode: screen; opacity: .9; user-select: none; }
+#almanac .bud-b .bud-sheen { transform: scaleX(-1); }
+/* the remaining figure: etched in a frosted strip along the glass's foot, at its right end, over no band edge */
+#almanac .bud-frost { position: absolute; left: 0; right: 0; bottom: 0; height: max(10px, 28%); pointer-events: none; display: flex; align-items: center; justify-content: flex-end; padding: 0 max(5px, calc(var(--s) * 30px)) 0 0;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--paper-warm) 34%, transparent), color-mix(in srgb, var(--paper-edge) 44%, transparent));
+  box-shadow: inset 0 1px 0 rgba(var(--shadow), .22), inset 0 2px 0 rgba(255, 255, 255, .4); backdrop-filter: blur(1.5px); }
+#almanac .bud-fig { position: absolute; top: 50%; transform: translateY(-50%); font: 600 max(8.5px, calc(var(--s) * 38px))/1 var(--alm-face, var(--ui)); letter-spacing: .05em; white-space: nowrap; font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, var(--umber) 82%, transparent); text-shadow: 0 1px 0 rgba(255, 255, 255, .5); }
+/* the flyway's added crews: a pulsing segment just past the charge, in the band's colour, outlined */
+#almanac .bud-band .bb-fly { left: var(--fly-l, var(--lit)); top: 1px; bottom: 1px; width: var(--fly, 0%); border-radius: 2px; opacity: 0;
+  background: repeating-linear-gradient(-45deg, color-mix(in srgb, var(--c) 55%, transparent) 0 3px, transparent 3px 5px); box-shadow: inset 0 0 0 1px var(--c); }
+#almanac .bud-band.has-fly .bb-fly { opacity: 1; animation: bud-pulse 1.6s var(--ease) infinite; }
+@keyframes bud-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+/* the late penalties: a thin red leak line from the drained edge */
+#almanac .bud-band .bb-leak { left: var(--lit); bottom: 1px; height: 2px; width: var(--leak, 0%); background: var(--short); border-radius: 1px; opacity: 0; }
+#almanac .bud-band.has-leak .bb-leak { opacity: .95; }
+#almanac.bud-anim .bud-band .bb-fly, #almanac.bud-anim .bud-band .bb-leak { transition: left .45s var(--ease-out), width .45s var(--ease-out); }
+/* the engraved plate: riveted to the machine's rail under the battery, the same brass as the ALMANAC nameplate */
+#almanac .bud-label { position: absolute; z-index: 2; transform: translateX(-50%); pointer-events: auto; white-space: nowrap;
+  font: 600 10.5px/1 var(--alm-face, var(--ui)); letter-spacing: .08em; padding: 2px 8px 1px; border-radius: 2px;
+  color: var(--board); background: linear-gradient(180deg, var(--sun-core), var(--ochre) 50%, color-mix(in srgb, var(--ochre) 70%, var(--board-edge)));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(0, 0, 0, .25), 0 1px 1px rgba(0, 0, 0, .6); text-shadow: 0 1px 0 rgba(255, 255, 255, .4); }
+#almanac .bud-label::before, #almanac .bud-label::after { content: ""; position: absolute; top: 50%; width: 3px; height: 3px; margin-top: -1.5px; border-radius: 50%;
+  background: var(--board-edge); box-shadow: 0 1px 0 rgba(255, 255, 255, .45); }
+#almanac .bud-label::before { left: 2.5px; } #almanac .bud-label::after { right: 2.5px; }
+#almanac .bud-label .tw { font: inherit; font-style: normal; letter-spacing: inherit; text-decoration-color: currentColor; }
+#almanac .bud-ab { font-weight: 700; margin-left: 3px; }
+/* the Flyway's cell on the machine's head */
+#almanac .bud-cell { display: none; margin-left: auto; font: 600 12.5px/1 var(--ui); color: var(--alm-dim); white-space: nowrap; font-variant-numeric: tabular-nums; }
+#almanac .bud-cell.on { display: inline; }
+#almanac .bud-cell em { font-style: normal; color: var(--sky-pale); }
+:root[data-theme="night"] #almanac .bud-cell em { color: var(--hire); }
+#almanac .bud-cell.on ~ .alm-hint { display: none; }
+/* two low cradles: brass saddles fixed to the rail, their front faces wrapping the body's underside, each on a foot with two screws */
+#almanac .bud-saddle { position: absolute; z-index: 1; bottom: var(--foot); transform: translateX(-50%); border-radius: 2px 2px 1px 1px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .35) 0, rgba(255, 255, 255, 0) 35%, rgba(var(--shadow), .3) 100%), linear-gradient(90deg, var(--board-edge), var(--ochre) 18%, var(--sun-core) 38%, var(--ochre) 62%, var(--board-edge));
+  -webkit-mask: radial-gradient(ellipse 58% 62% at 50% -8%, transparent 97%, #000 100%); mask: radial-gradient(ellipse 58% 62% at 50% -8%, transparent 97%, #000 100%);
+  filter: drop-shadow(0 -1px 0 rgba(var(--shadow), .35)); }
+#almanac .bud-saddle::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
+  background: radial-gradient(circle at 4px 50%, var(--board-edge) 0 1px, transparent 1.6px), radial-gradient(circle at calc(100% - 4px) 50%, var(--board-edge) 0 1px, transparent 1.6px), linear-gradient(180deg, var(--ochre), var(--board-edge)); }
+/* the socket: a brass block on the rail; the plug's tip goes in behind its face, a dark collar where it enters */
+#almanac .bud-socket { position: absolute; z-index: 4; bottom: calc(100% + 3px); border-radius: 4px 4px 1px 1px;
+  background: radial-gradient(circle at 70% 22%, var(--board-edge) 0 1px, rgba(255, 255, 255, .4) 1.5px, transparent 2px),
+    linear-gradient(180deg, rgba(255, 255, 255, .0), rgba(var(--shadow), .3)), linear-gradient(90deg, var(--ochre), var(--sun-core) 30%, var(--ochre) 65%, var(--board-edge));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 1px 0 0 rgba(255, 255, 255, .25), 0 1px 2px rgba(var(--shadow), .45); }
+#almanac .bud-socket.bud-b { background-position: 0 0; }
+#almanac .bud-socket::before { content: ""; position: absolute; left: 0; width: 4px; bottom: calc(var(--py) - 5px); height: 10px; border-radius: 0 3px 3px 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, .8), rgba(0, 0, 0, .3)); box-shadow: 1px 0 0 rgba(255, 255, 255, .35); }
+#almanac .bud-socket::after { content: ""; position: absolute; left: -3px; right: -3px; bottom: -1px; height: 3px; border-radius: 1px; background: linear-gradient(180deg, var(--ochre), var(--board-edge)); }
+#almanac .bud-socket.bud-b::before { left: auto; right: 0; transform: scaleX(-1); }
+/* the compact gauge: under about 1100 px at the right end of the board's head, and in the enlarged screen's toolbar */
+#almanac .bud-gauge, .mx-win .bud-gauge { display: none; align-items: center; gap: 8px; font: 600 12px/1 var(--ui); white-space: nowrap; }
+#almanac.bud-compact .alm-hint { display: none; }
+#almanac.bud-compact .bud-gauge { display: inline-flex; margin-left: auto; color: var(--alm-dim); }
+.bud-gauge .bg-name .tw { font-weight: 500; font-size: 1.1em; }
+.bud-gauge .bg-bar { display: flex; gap: 1px; width: 120px; height: 10px; padding: 1px; border-radius: 3px; box-shadow: 0 0 0 1px var(--ochre); background: rgba(var(--shadow), .3); }
+.bud-gauge .bg-bar i { flex: 1 1 0; position: relative; border-radius: 1px; background: color-mix(in srgb, var(--c) 22%, transparent); overflow: hidden; }
+.bud-gauge .bg-bar i.dim { opacity: .35; }
+.bud-gauge .bg-bar b { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: var(--c); }
+.bud-gauge .bg-fig { font-variant-numeric: tabular-nums; }
+.mx-win .bud-gauge.in-mx { display: inline-flex; position: absolute; z-index: 9; left: 30px; top: -31px; color: rgba(255, 255, 255, .86); }
+/* hover: one band's dollars */
+.bud-tip { position: fixed; z-index: 60; max-width: 300px; padding: 8px 10px; border-radius: 8px; background: var(--raised); color: var(--ink); box-shadow: var(--shadow-soft), 0 0 0 1px var(--line);
+  font: 400 12.5px/1.45 var(--ui); pointer-events: none; }
+.bud-tip b { font-weight: 700; }
+.bud-tip span { color: var(--ink3); }
+.bud-tip em { font-family: var(--display); font-style: italic; }
+@media (prefers-reduced-motion: reduce) {
+  #almanac .bud-band, #almanac .bud-band i { transition: none !important; }
+  #almanac .bud-band.has-fly .bb-fly { animation: none; }
+}
+/* department icons: in the hover detail only (owner 05:18, "if in doubt, hover only") */
+.bud-tip .tip-ic { width: 15px; height: 15px; margin: -3px 5px 0 0; }
+/* Night: the cells dimmed to the moonlit relight (no glow): normal blend over the dark glass; the brass parts take the photo's lower light */
+:root[data-theme="night"] #almanac .bud-band { mix-blend-mode: normal; background: color-mix(in srgb, color-mix(in srgb, var(--c) 40%, var(--board)) 40%, transparent); }
+:root[data-theme="night"] #almanac .bud-band .bb-lit { opacity: .82;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c) 44%, var(--board)), color-mix(in srgb, var(--c) 36%, var(--board))); }
+:root[data-theme="night"] #almanac .bud-band + .bud-band { box-shadow: inset 1px 0 0 rgba(0, 0, 0, .6), inset 2px 0 0 rgba(255, 255, 255, .07); }
+:root[data-theme="night"] #almanac .bud-sheen { opacity: .7; }
+:root[data-theme="night"] #almanac .bud-frost { background: linear-gradient(180deg, color-mix(in srgb, var(--sky-pale) 50%, transparent), color-mix(in srgb, var(--board-edge) 55%, transparent)); box-shadow: inset 0 1px 0 rgba(0, 0, 0, .4), inset 0 2px 0 rgba(255, 255, 255, .08); }
+:root[data-theme="night"] #almanac .bud-fig { color: color-mix(in srgb, var(--ink) 72%, transparent); text-shadow: 0 1px 0 rgba(0, 0, 0, .5); }
+:root[data-theme="night"] #almanac .bud-saddle, :root[data-theme="night"] #almanac .bud-socket { filter: brightness(.6) saturate(.8); }
+
+/* the plate rides above the battery on a short brass bracket (owner 08:50), toned a notch down */
+#almanac .bud-stem { position: absolute; z-index: 1; width: 2px; height: 8px; margin-left: -1px; border-radius: 1px; pointer-events: none;
+  background: linear-gradient(90deg, var(--board-edge), var(--ochre), var(--board-edge)); }
+#almanac .bud-label { filter: saturate(.8) brightness(.94); }
+:root[data-theme="night"] #almanac .bud-stem { filter: brightness(.6) saturate(.75); }
+
+/* owner 11:44: the charge glows, and the reading moves from the tiny etched strip to the plate above the battery */
+#almanac .bud-frost { display: none; }
+#almanac .bud-label { font-size: 12px; padding: 3px 10px 2px; }
+#almanac .bud-band { mix-blend-mode: normal; background: color-mix(in srgb, var(--c) 22%, transparent); }
+#almanac .bud-band .bb-lit { opacity: 1; filter: saturate(1.3) brightness(1.06);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c) 72%, var(--sun-core)) 0, var(--c) 48%, color-mix(in srgb, var(--c) 88%, var(--umber)) 100%);
+  box-shadow: inset 0 0 6px color-mix(in srgb, var(--c) 40%, var(--sun-core)), 0 0 8px color-mix(in srgb, var(--c) 55%, transparent); }
+:root[data-theme="night"] #almanac .bud-band { background: color-mix(in srgb, var(--c) 16%, transparent); }
+:root[data-theme="night"] #almanac .bud-band .bb-lit { opacity: 1; filter: saturate(1.2) brightness(1.18);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c) 70%, var(--sun-core)) 0, color-mix(in srgb, var(--c) 92%, var(--board)) 55%, color-mix(in srgb, var(--c) 74%, var(--board)) 100%);
+  box-shadow: inset 0 0 7px color-mix(in srgb, var(--c) 50%, var(--sun-core)), 0 0 10px color-mix(in srgb, var(--c) 60%, transparent); }
+@media (prefers-reduced-motion: reduce) { #almanac .bud-band .bb-lit { transition: none; } }

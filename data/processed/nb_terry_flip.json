@@ -1,0 +1,222 @@
+{
+ "flip": {
+  "goal": "I close every Transportation request in Boston on time in 2025.",
+  "target_department": "BTDT",
+  "inverted": "On December 31, 2025, I failed to close every Transportation request on time, just as in 2024, when 4,302 Parking Enforcement requests in South Boston / South Boston Waterfront went late, contributing to a staggering backlog.",
+  "predators": [
+   {
+    "name": "Parking Enforcement backlog in South Boston",
+    "department": "BTDT",
+    "request_type": "Parking Enforcement",
+    "neighborhood": "South Boston / South Boston Waterfront",
+    "months": [],
+    "kind": "miss",
+    "suspected_cause": "Increased demand for parking enforcement during peak months without adequate staffing."
+   },
+   {
+    "name": "Capacity issues in peak months",
+    "department": "BTDT",
+    "request_type": "Parking Enforcement",
+    "neighborhood": null,
+    "months": [
+     5,
+     9,
+     10
+    ],
+    "kind": "capacity",
+    "suspected_cause": "Insufficient crew availability to meet the high volume of requests during the busiest months."
+   },
+   {
+    "name": "Silence from South Boston residents",
+    "department": "BTDT",
+    "request_type": null,
+    "neighborhood": "South Boston / South Boston Waterfront",
+    "months": [],
+    "kind": "silence",
+    "suspected_cause": "Residents under-reporting parking issues, leading to an incomplete understanding of demand."
+   },
+   {
+    "name": "Parking Enforcement backlog in Dorchester",
+    "department": "BTDT",
+    "request_type": "Parking Enforcement",
+    "neighborhood": "Dorchester",
+    "months": [],
+    "kind": "miss",
+    "suspected_cause": "Continued high volume of late requests due to unaddressed enforcement needs."
+   },
+   {
+    "name": "Parking Enforcement backlog in East Boston",
+    "department": "BTDT",
+    "request_type": "Parking Enforcement",
+    "neighborhood": "East Boston",
+    "months": [],
+    "kind": "miss",
+    "suspected_cause": "High volume of late requests due to lack of timely responses."
+   },
+   {
+    "name": "Parking Enforcement backlog in Jamaica Plain",
+    "department": "BTDT",
+    "request_type": "Parking Enforcement",
+    "neighborhood": "Jamaica Plain",
+    "months": [],
+    "kind": "miss",
+    "suspected_cause": "Persistent delays in addressing parking enforcement requests."
+   },
+   {
+    "name": "Parking Enforcement backlog in South End",
+    "department": "BTDT",
+    "request_type": "Parking Enforcement",
+    "neighborhood": "South End",
+    "months": [],
+    "kind": "miss",
+    "suspected_cause": "Failure to address the growing number of late requests in the neighborhood."
+   }
+  ]
+ },
+ "predators": [
+  {
+   "hypothesis": {
+    "name": "Parking Enforcement backlog in South Boston",
+    "department": "BTDT",
+    "request_type": "Parking Enforcement",
+    "neighborhood": "South Boston / South Boston Waterfront",
+    "months": [],
+    "kind": "miss",
+    "suspected_cause": "Increased demand for parking enforcement during peak months without adequate staffing."
+   },
+   "evidence": {
+    "verdict": "REJECTED",
+    "requests_2024": 11295,
+    "overdue_2024": 4302,
+    "cliff_2024": 2043,
+    "cost_2024_usd": 290340.0,
+    "detail": "11,295 requests in South Boston / South Boston Waterfront; 4,302 overdue (38% vs 50% for the department), 2,043 past the 30-day cliff; modeled cost $290,340."
+   },
+   "fix": null
+  },
+  {
+   "hypothesis": {
+    "name": "Capacity issues in peak months",
+    "department": "BTDT",
+    "request_type": "Parking Enforcement",
+    "neighborhood": null,
+    "months": [
+     5,
+     9,
+     10
+    ],
+    "kind": "capacity",
+    "suspected_cause": "Insufficient crew availability to meet the high volume of requests during the busiest months."
+   },
+   "evidence": {
+    "verdict": "CONFIRMED",
+    "requests_2024": 17836,
+    "overdue_2024": 10081,
+    "cliff_2024": 3080,
+    "cost_2024_usd": 509620.0,
+    "detail": "17,836 requests citywide in months [5, 9, 10]; 10,081 overdue (57% vs 50% for the department), 3,080 past the 30-day cliff; modeled cost $509,620."
+   },
+   "fix": null
+  },
+  {
+   "hypothesis": {
+    "name": "Silence from South Boston residents",
+    "department": "BTDT",
+    "request_type": null,
+    "neighborhood": "South Boston / South Boston Waterfront",
+    "months": [],
+    "kind": "silence",
+    "suspected_cause": "Residents under-reporting parking issues, leading to an incomplete understanding of demand."
+   },
+   "evidence": {
+    "verdict": "CONFIRMED",
+    "requests_2024": 19543,
+    "overdue_2024": 0,
+    "cliff_2024": 0,
+    "cost_2024_usd": 0,
+    "detail": "Residents in South Boston / South Boston Waterfront report at 0.76x the city rate for the same problem types (quietest: Recycling Cart Return at 0.53x)."
+   },
+   "fix": null
+  },
+  {
+   "hypothesis": {
+    "name": "Parking Enforcement backlog in Dorchester",
+    "department": "BTDT",
+    "request_type": "Parking Enforcement",
+    "neighborhood": "Dorchester",
+    "months": [],
+    "kind": "miss",
+    "suspected_cause": "Continued high volume of late requests due to unaddressed enforcement needs."
+   },
+   "evidence": {
+    "verdict": "CONFIRMED",
+    "requests_2024": 6840,
+    "overdue_2024": 3609,
+    "cliff_2024": 1639,
+    "cost_2024_usd": 236080.0,
+    "detail": "6,840 requests in Dorchester; 3,609 overdue (53% vs 50% for the department), 1,639 past the 30-day cliff; modeled cost $236,080."
+   },
+   "fix": null
+  },
+  {
+   "hypothesis": {
+    "name": "Parking Enforcement backlog in East Boston",
+    "department": "BTDT",
+    "request_type": "Parking Enforcement",
+    "neighborhood": "East Boston",
+    "months": [],
+    "kind": "miss",
+    "suspected_cause": "High volume of late requests due to lack of timely responses."
+   },
+   "evidence": {
+    "verdict": "CONFIRMED",
+    "requests_2024": 5518,
+    "overdue_2024": 3108,
+    "cliff_2024": 1345,
+    "cost_2024_usd": 196660.0,
+    "detail": "5,518 requests in East Boston; 3,108 overdue (56% vs 50% for the department), 1,345 past the 30-day cliff; modeled cost $196,660."
+   },
+   "fix": null
+  },
+  {
+   "hypothesis": {
+    "name": "Parking Enforcement backlog in Jamaica Plain",
+    "department": "BTDT",
+    "request_type": "Parking Enforcement",
+    "neighborhood": "Jamaica Plain",
+    "months": [],
+    "kind": "miss",
+    "suspected_cause": "Persistent delays in addressing parking enforcement requests."
+   },
+   "evidence": {
+    "verdict": "CONFIRMED",
+    "requests_2024": 3966,
+    "overdue_2024": 2620,
+    "cliff_2024": 1149,
+    "cost_2024_usd": 167300.0,
+    "detail": "3,966 requests in Jamaica Plain; 2,620 overdue (66% vs 50% for the department), 1,149 past the 30-day cliff; modeled cost $167,300."
+   },
+   "fix": null
+  },
+  {
+   "hypothesis": {
+    "name": "Parking Enforcement backlog in South End",
+    "department": "BTDT",
+    "request_type": "Parking Enforcement",
+    "neighborhood": "South End",
+    "months": [],
+    "kind": "miss",
+    "suspected_cause": "Failure to address the growing number of late requests in the neighborhood."
+   },
+   "evidence": {
+    "verdict": "CONFIRMED",
+    "requests_2024": 3813,
+    "overdue_2024": 2100,
+    "cliff_2024": 1024,
+    "cost_2024_usd": 144400.0,
+    "detail": "3,813 requests in South End; 2,100 overdue (55% vs 50% for the department), 1,024 past the 30-day cliff; modeled cost $144,400."
+   },
+   "fix": null
+  }
+ ]
+}

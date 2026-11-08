@@ -1,0 +1,81 @@
+[
+ {
+  "kind": "snowstorm",
+  "label": "the January 2022 blizzard",
+  "effects": [
+   {
+    "dept": "PWDx",
+    "days": 14,
+    "mult": 2.06,
+    "extra": 5134,
+    "window": "2022-01-30 to 2022-02-12"
+   },
+   {
+    "dept": "BTDT",
+    "days": 7,
+    "mult": 1.22,
+    "extra": 323,
+    "window": "2022-01-28 to 2022-02-03"
+   }
+  ]
+ },
+ {
+  "kind": "windstorm",
+  "label": "the December 2023 wind and rain storm",
+  "effects": [
+   {
+    "dept": "PARK",
+    "days": 14,
+    "mult": 2.66,
+    "extra": 534,
+    "window": "2023-12-11 to 2023-12-24"
+   }
+  ]
+ },
+ {
+  "kind": "deep_freeze",
+  "label": "the February 2023 deep freeze",
+  "effects": [
+   {
+    "dept": "ISD",
+    "days": 14,
+    "mult": 2.06,
+    "extra": 659,
+    "window": "2023-02-02 to 2023-02-15"
+   }
+  ]
+ },
+ {
+  "kind": "move_in",
+  "label": "the 1 September 2023 move-in weekend",
+  "effects": [
+   {
+    "dept": "PWDx",
+    "days": 7,
+    "mult": 1.73,
+    "extra": 3114,
+    "window": "2023-08-26 to 2023-09-01"
+   },
+   {
+    "dept": "BTDT",
+    "days": 3,
+    "mult": 1.45,
+    "extra": 318,
+    "window": "2023-09-05 to 2023-09-07"
+   }
+  ]
+ },
+ {
+  "kind": "heat_wave",
+  "label": "the July 2022 heat wave",
+  "effects": [
+   {
+    "dept": "PARK",
+    "days": 3,
+    "mult": 1.66,
+    "extra": 120,
+    "window": "2022-07-19 to 2022-07-21"
+   }
+  ]
+ }
+]

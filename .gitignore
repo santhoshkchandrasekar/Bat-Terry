@@ -1,0 +1,14 @@
+data/raw/
+__pycache__/
+.env
+.ipynb_checkpoints/
+config/llm.local
+app/live/shots/
+app/brand/shots/
+app/heart/shots/
+app/zoom/shots/
+app/zoom/tests/out/
+app/zoom/tests/three.min.js
+deploy/site/
+deploy/node_modules/
+.netlify/

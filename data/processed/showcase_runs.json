@@ -1,0 +1,1511 @@
+[
+ {
+  "dept": "PWDx",
+  "goal": "I close every Public Works request in Boston on time in 2025.",
+  "inverted": "On December 31, 2025, I failed to close every Public Works request on time, just as in 2024, when 502 Sidewalk Repair (Make Safe) requests in the South End went late.",
+  "predators": [
+   {
+    "hypothesis": {
+     "name": "Sidewalk Repair (Make Safe) backlog in South End",
+     "department": "PWDx",
+     "request_type": "Sidewalk Repair (Make Safe)",
+     "neighborhood": "South End",
+     "months": [],
+     "kind": "miss",
+     "suspected_cause": "Increased demand for repairs during peak months overwhelmed our capacity."
+    },
+    "evidence": {
+     "verdict": "CONFIRMED",
+     "requests_2024": 547,
+     "overdue_2024": 502,
+     "cliff_2024": 467,
+     "cost_2024_usd": 56740.0,
+     "detail": "547 requests in South End; 502 overdue (92% vs 10% for the department), 467 past the 30-day cliff; modeled cost $56,740."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Pothole Repair delays in Downtown / Financial District",
+     "department": "PWDx",
+     "request_type": "Request for Pothole Repair",
+     "neighborhood": "Downtown / Financial District",
+     "months": [],
+     "kind": "miss",
+     "suspected_cause": "Insufficient resources allocated to handle the volume of pothole repair requests."
+    },
+    "evidence": {
+     "verdict": "CONFIRMED",
+     "requests_2024": 602,
+     "overdue_2024": 444,
+     "cliff_2024": 277,
+     "cost_2024_usd": 36580.0,
+     "detail": "602 requests in Downtown / Financial District; 444 overdue (74% vs 10% for the department), 277 past the 30-day cliff; modeled cost $36,580."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Street Light Outages in peak months",
+     "department": "PWDx",
+     "request_type": "Street Light Outages",
+     "neighborhood": null,
+     "months": [
+      8,
+      9
+     ],
+     "kind": "capacity",
+     "suspected_cause": "High volume of requests during summer months exceeded available crew capacity."
+    },
+    "evidence": {
+     "verdict": "CONFIRMED",
+     "requests_2024": 525,
+     "overdue_2024": 310,
+     "cliff_2024": 224,
+     "cost_2024_usd": 28600.0,
+     "detail": "525 requests citywide in months [8, 9]; 310 overdue (59% vs 10% for the department), 224 past the 30-day cliff; modeled cost $28,600."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Recycling Cart Return delays in South Boston",
+     "department": "PWDx",
+     "request_type": "Recycling Cart Return",
+     "neighborhood": "South Boston",
+     "months": [],
+     "kind": "miss",
+     "suspected_cause": "Inadequate follow-up on recycling cart returns led to a backlog."
+    },
+    "evidence": {
+     "verdict": "REJECTED",
+     "requests_2024": 16,
+     "overdue_2024": 14,
+     "cliff_2024": 0,
+     "cost_2024_usd": 280.0,
+     "detail": "16 requests in South Boston; 14 overdue (88% vs 10% for the department), 0 past the 30-day cliff; modeled cost $280."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Underreporting in Allston",
+     "department": "PWDx",
+     "request_type": null,
+     "neighborhood": "Allston",
+     "months": [],
+     "kind": "silence",
+     "suspected_cause": "Residents in Allston are less likely to report issues, leading to unaddressed problems."
+    },
+    "evidence": {
+     "verdict": "REJECTED",
+     "requests_2024": 915,
+     "overdue_2024": 0,
+     "cliff_2024": 0,
+     "cost_2024_usd": 0,
+     "detail": "Residents in Allston report at 0.90x the city rate for the same problem types (quietest: Improper Storage of Trash (Barrels) at 0.61x)."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Contractor Complaints unresolved in peak season",
+     "department": "PWDx",
+     "request_type": "Contractor Complaints",
+     "neighborhood": null,
+     "months": [
+      4,
+      8,
+      9
+     ],
+     "kind": "capacity",
+     "suspected_cause": "High volume of contractor complaints during peak construction months overwhelmed response teams."
+    },
+    "evidence": {
+     "verdict": "CONFIRMED",
+     "requests_2024": 300,
+     "overdue_2024": 60,
+     "cliff_2024": 48,
+     "cost_2024_usd": 6000.0,
+     "detail": "300 requests citywide in months [4, 8, 9]; 60 overdue (20% vs 10% for the department), 48 past the 30-day cliff; modeled cost $6,000."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "General Lighting Requests in winter months",
+     "department": "PWDx",
+     "request_type": "General Lighting Request",
+     "neighborhood": null,
+     "months": [
+      12
+     ],
+     "kind": "capacity",
+     "suspected_cause": "Increased requests for lighting improvements in winter months without sufficient staffing."
+    },
+    "evidence": {
+     "verdict": "REJECTED",
+     "requests_2024": 11,
+     "overdue_2024": 3,
+     "cliff_2024": 3,
+     "cost_2024_usd": 360.0,
+     "detail": "11 requests citywide in months [12]; 3 overdue (27% vs 10% for the department), 3 past the 30-day cliff; modeled cost $360."
+    },
+    "fix": null
+   }
+  ],
+  "hunt": {
+   "predator": "Sidewalk Repair (Make Safe) backlog in South End",
+   "fix": {
+    "recommended_crews_by_month": [
+     50,
+     50,
+     56,
+     60,
+     60,
+     62,
+     66,
+     70,
+     70,
+     70,
+     70,
+     70
+    ],
+    "seasonal_by_month": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "baseline_total_cost": 8904708,
+    "plan_total_cost": 8429856,
+    "baseline_ontime": 0.546,
+    "plan_ontime": 0.983,
+    "plan_ontime_at_plus14": 0.904,
+    "break_pct": 16,
+    "rationale": "The crew change is to have 50 crews in January-February, 56 in March, 60 in April-May, 62 in June, 66 in July, and 70 from August to December. This plan costs $8.43M compared to $8.90M for doing nothing, improving the on-time rate from 55% to 98%. If demand runs 14% over forecast it still closes 90% of requests on time; on-time falls below 90% only once demand is 16% over forecast.",
+    "unverified": []
+   },
+   "trace": [
+    {
+     "tool": "do_nothing",
+     "args": {
+      "department": "PWDx"
+     },
+     "result": {
+      "dept": "PWDx",
+      "crew_schedule": "Jan-Dec 50",
+      "ontime_rate": 0.546,
+      "overdue": 58417,
+      "cliff": 0,
+      "backlog_end": 9426,
+      "projected_late_in_2026": 2184,
+      "crew_cost": 6500000,
+      "overdue_cost": 1168343,
+      "backlog_cost": 1236365,
+      "total_cost": 8904708,
+      "crews_by_month": [
+       50,
+       50,
+       50,
+       50,
+       50,
+       50,
+       50,
+       50,
+       50,
+       50,
+       50,
+       50
+      ],
+      "seasonal_by_month": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "tool": "optimize_plan",
+     "args": {
+      "department": "PWDx",
+      "mode": "neutral"
+     },
+     "result": {
+      "dept": "PWDx",
+      "crew_schedule": "Jan-Feb 50, Mar 56, Apr-May 60, Jun 62, Jul 66, Aug-Dec 70",
+      "ontime_rate": 0.983,
+      "overdue": 2242,
+      "cliff": 0,
+      "backlog_end": 0,
+      "projected_late_in_2026": 0,
+      "crew_cost": 8385000,
+      "overdue_cost": 44856,
+      "backlog_cost": 0,
+      "total_cost": 8429856,
+      "crews_by_month": [
+       50,
+       50,
+       56,
+       60,
+       60,
+       62,
+       66,
+       70,
+       70,
+       70,
+       70,
+       70
+      ],
+      "seasonal_by_month": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      "mode": "neutral"
+     }
+    },
+    {
+     "tool": "simulate_plan",
+     "args": {
+      "department": "PWDx",
+      "crews_by_month": [
+       50,
+       50,
+       56,
+       60,
+       60,
+       62,
+       66,
+       70,
+       70,
+       70,
+       70,
+       70
+      ],
+      "demand_mult": 1.14
+     },
+     "result": {
+      "dept": "PWDx",
+      "crew_schedule": "Jan-Feb 50, Mar 56, Apr-May 60, Jun 62, Jul 66, Aug-Dec 70",
+      "ontime_rate": 0.904,
+      "overdue": 14059,
+      "cliff": 0,
+      "backlog_end": 0,
+      "projected_late_in_2026": 0,
+      "crew_cost": 8385000,
+      "overdue_cost": 281192,
+      "backlog_cost": 0,
+      "total_cost": 8666192,
+      "crews_by_month": [
+       50,
+       50,
+       56,
+       60,
+       60,
+       62,
+       66,
+       70,
+       70,
+       70,
+       70,
+       70
+      ],
+      "seasonal_by_month": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "tool": "break_point",
+     "args": {
+      "department": "PWDx",
+      "crews_by_month": [
+       50,
+       50,
+       56,
+       60,
+       60,
+       62,
+       66,
+       70,
+       70,
+       70,
+       70,
+       70
+      ],
+      "target_ontime": 0.9
+     },
+     "result": {
+      "break_pct": 16,
+      "ontime_at_break": 0.862
+     }
+    }
+   ]
+  }
+ },
+ {
+  "dept": "BTDT",
+  "goal": "I close every Transportation request in Boston on time in 2025.",
+  "inverted": "On December 31, 2025, I failed to close every Transportation request in Boston on time, just as in 2024, when 4,302 Parking Enforcement requests in South Boston / South Boston Waterfront went late.",
+  "predators": [
+   {
+    "hypothesis": {
+     "name": "Parking Enforcement backlog in South Boston / South Boston Waterfront",
+     "department": "BTDT",
+     "request_type": "Parking Enforcement",
+     "neighborhood": "South Boston / South Boston Waterfront",
+     "months": [],
+     "kind": "miss",
+     "suspected_cause": "High volume of parking enforcement requests during peak months overwhelmed available resources."
+    },
+    "evidence": {
+     "verdict": "REJECTED",
+     "requests_2024": 11295,
+     "overdue_2024": 4302,
+     "cliff_2024": 2043,
+     "cost_2024_usd": 290340.0,
+     "detail": "11,295 requests in South Boston / South Boston Waterfront; 4,302 overdue (38% vs 50% for the department), 2,043 past the 30-day cliff; modeled cost $290,340."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Parking Enforcement capacity issues in Dorchester",
+     "department": "BTDT",
+     "request_type": "Parking Enforcement",
+     "neighborhood": "Dorchester",
+     "months": [],
+     "kind": "capacity",
+     "suspected_cause": "Insufficient staffing to handle the surge in requests during peak months."
+    },
+    "evidence": {
+     "verdict": "CONFIRMED",
+     "requests_2024": 6840,
+     "overdue_2024": 3609,
+     "cliff_2024": 1639,
+     "cost_2024_usd": 236080.0,
+     "detail": "6,840 requests in Dorchester; 3,609 overdue (53% vs 50% for the department), 1,639 past the 30-day cliff; modeled cost $236,080."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Parking Enforcement demand spike in East Boston",
+     "department": "BTDT",
+     "request_type": "Parking Enforcement",
+     "neighborhood": "East Boston",
+     "months": [],
+     "kind": "shock",
+     "suspected_cause": "Unexpected increase in parking violations due to events or seasonal activities."
+    },
+    "evidence": {
+     "verdict": "UNTESTABLE",
+     "requests_2024": 0,
+     "overdue_2024": 0,
+     "cliff_2024": 0,
+     "cost_2024_usd": 0,
+     "detail": "Weather and event spikes are tested in the simulator, not in history."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Silence in reporting from Mission Hill",
+     "department": "BTDT",
+     "request_type": "Parking Enforcement",
+     "neighborhood": "Mission Hill",
+     "months": [],
+     "kind": "silence",
+     "suspected_cause": "Residents under-reporting parking issues, leading to unaddressed requests."
+    },
+    "evidence": {
+     "verdict": "CONFIRMED",
+     "requests_2024": 3531,
+     "overdue_2024": 0,
+     "cliff_2024": 0,
+     "cost_2024_usd": 0,
+     "detail": "Residents in Mission Hill report at 0.78x the city rate for the same problem types (quietest: Improper Storage of Trash (Barrels) at 0.45x)."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Parking Enforcement delays in Allston / Brighton",
+     "department": "BTDT",
+     "request_type": "Parking Enforcement",
+     "neighborhood": "Allston / Brighton",
+     "months": [],
+     "kind": "miss",
+     "suspected_cause": "Late response times due to high case load during peak months."
+    },
+    "evidence": {
+     "verdict": "REJECTED",
+     "requests_2024": 4849,
+     "overdue_2024": 2262,
+     "cliff_2024": 1058,
+     "cost_2024_usd": 151040.0,
+     "detail": "4,849 requests in Allston / Brighton; 2,262 overdue (47% vs 50% for the department), 1,058 past the 30-day cliff; modeled cost $151,040."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Parking Enforcement capacity issues in South End",
+     "department": "BTDT",
+     "request_type": "Parking Enforcement",
+     "neighborhood": "South End",
+     "months": [],
+     "kind": "capacity",
+     "suspected_cause": "Inability to meet demand due to limited crew availability."
+    },
+    "evidence": {
+     "verdict": "CONFIRMED",
+     "requests_2024": 3813,
+     "overdue_2024": 2100,
+     "cliff_2024": 1024,
+     "cost_2024_usd": 144400.0,
+     "detail": "3,813 requests in South End; 2,100 overdue (55% vs 50% for the department), 1,024 past the 30-day cliff; modeled cost $144,400."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Parking Enforcement backlog in Roxbury",
+     "department": "BTDT",
+     "request_type": "Parking Enforcement",
+     "neighborhood": "Roxbury",
+     "months": [],
+     "kind": "miss",
+     "suspected_cause": "Consistently high volume of requests leading to late closures."
+    },
+    "evidence": {
+     "verdict": "CONFIRMED",
+     "requests_2024": 3560,
+     "overdue_2024": 2140,
+     "cliff_2024": 998,
+     "cost_2024_usd": 142600.0,
+     "detail": "3,560 requests in Roxbury; 2,140 overdue (60% vs 50% for the department), 998 past the 30-day cliff; modeled cost $142,600."
+    },
+    "fix": null
+   }
+  ],
+  "hunt": {
+   "predator": "Parking Enforcement capacity issues in Dorchester",
+   "fix": {
+    "recommended_crews_by_month": [
+     18,
+     24,
+     24,
+     24,
+     26,
+     26,
+     26,
+     26,
+     26,
+     26,
+     26,
+     26
+    ],
+    "seasonal_by_month": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "baseline_total_cost": 7642206,
+    "plan_total_cost": 2805080,
+    "baseline_ontime": 0.196,
+    "plan_ontime": 1.0,
+    "plan_ontime_at_plus14": 0.917,
+    "break_pct": 16,
+    "rationale": "The crew change is to have 18 in January, 24 from February to April, and 26 from May to December. This plan costs $2.81M compared to $7.64M doing nothing, while achieving a 100% on-time rate. If demand runs 14% over forecast it still closes 92% of requests on time; on-time falls below 90% only once demand is 16% over forecast.",
+    "unverified": []
+   },
+   "trace": [
+    {
+     "tool": "do_nothing",
+     "args": {
+      "department": "BTDT"
+     },
+     "result": {
+      "dept": "BTDT",
+      "crew_schedule": "Jan-Dec 18",
+      "ontime_rate": 0.196,
+      "overdue": 64222,
+      "cliff": 32709,
+      "backlog_end": 13608,
+      "projected_late_in_2026": 1397,
+      "crew_cost": 1980000,
+      "overdue_cost": 4555449,
+      "backlog_cost": 1106756,
+      "total_cost": 7642206,
+      "crews_by_month": [
+       18,
+       18,
+       18,
+       18,
+       18,
+       18,
+       18,
+       18,
+       18,
+       18,
+       18,
+       18
+      ],
+      "seasonal_by_month": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "tool": "optimize_plan",
+     "args": {
+      "department": "BTDT",
+      "mode": "neutral"
+     },
+     "result": {
+      "dept": "BTDT",
+      "crew_schedule": "Jan 18, Feb-Apr 24, May-Dec 26",
+      "ontime_rate": 1.0,
+      "overdue": 4,
+      "cliff": 0,
+      "backlog_end": 0,
+      "projected_late_in_2026": 0,
+      "crew_cost": 2805000,
+      "overdue_cost": 80,
+      "backlog_cost": 0,
+      "total_cost": 2805080,
+      "crews_by_month": [
+       18,
+       24,
+       24,
+       24,
+       26,
+       26,
+       26,
+       26,
+       26,
+       26,
+       26,
+       26
+      ],
+      "seasonal_by_month": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      "mode": "neutral"
+     }
+    },
+    {
+     "tool": "simulate_plan",
+     "args": {
+      "department": "BTDT",
+      "crews_by_month": [
+       18,
+       24,
+       24,
+       24,
+       26,
+       26,
+       26,
+       26,
+       26,
+       26,
+       26,
+       26
+      ],
+      "demand_mult": 1.14
+     },
+     "result": {
+      "dept": "BTDT",
+      "crew_schedule": "Jan 18, Feb-Apr 24, May-Dec 26",
+      "ontime_rate": 0.917,
+      "overdue": 7562,
+      "cliff": 0,
+      "backlog_end": 0,
+      "projected_late_in_2026": 0,
+      "crew_cost": 2805000,
+      "overdue_cost": 151258,
+      "backlog_cost": 0,
+      "total_cost": 2956258,
+      "crews_by_month": [
+       18,
+       24,
+       24,
+       24,
+       26,
+       26,
+       26,
+       26,
+       26,
+       26,
+       26,
+       26
+      ],
+      "seasonal_by_month": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "tool": "break_point",
+     "args": {
+      "department": "BTDT",
+      "crews_by_month": [
+       18,
+       24,
+       24,
+       24,
+       26,
+       26,
+       26,
+       26,
+       26,
+       26,
+       26,
+       26
+      ],
+      "target_ontime": 0.9
+     },
+     "result": {
+      "break_pct": 16,
+      "ontime_at_break": 0.512
+     }
+    }
+   ]
+  }
+ },
+ {
+  "dept": "PARK",
+  "goal": "I keep up with every Parks request in 2025 without falling behind.",
+  "inverted": "On December 31, 2025, I failed to keep up with every Parks request, with 54 Equipment Repair requests in East Boston going late, just as in 2024.",
+  "predators": [
+   {
+    "hypothesis": {
+     "name": "Equipment Repair backlog in East Boston",
+     "department": "PARK",
+     "request_type": "Equipment Repair",
+     "neighborhood": "East Boston",
+     "months": [],
+     "kind": "miss",
+     "suspected_cause": "Increased demand for repairs during peak summer months overwhelmed available crew capacity."
+    },
+    "evidence": {
+     "verdict": "CONFIRMED",
+     "requests_2024": 208,
+     "overdue_2024": 54,
+     "cliff_2024": 20,
+     "cost_2024_usd": 3080.0,
+     "detail": "208 requests in East Boston; 54 overdue (26% vs 7% for the department), 20 past the 30-day cliff; modeled cost $3,080."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Equipment Repair backlog in Dorchester",
+     "department": "PARK",
+     "request_type": "Equipment Repair",
+     "neighborhood": "Dorchester",
+     "months": [],
+     "kind": "miss",
+     "suspected_cause": "A shortage of repair crews during peak summer months led to delays."
+    },
+    "evidence": {
+     "verdict": "CONFIRMED",
+     "requests_2024": 308,
+     "overdue_2024": 54,
+     "cliff_2024": 17,
+     "cost_2024_usd": 2780.0,
+     "detail": "308 requests in Dorchester; 54 overdue (18% vs 7% for the department), 17 past the 30-day cliff; modeled cost $2,780."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "New Tree Requests backlog in Jamaica Plain",
+     "department": "PARK",
+     "request_type": "New Tree Requests",
+     "neighborhood": "Jamaica Plain",
+     "months": [],
+     "kind": "miss",
+     "suspected_cause": "High volume of requests combined with insufficient planting crews during peak months caused delays."
+    },
+    "evidence": {
+     "verdict": "REJECTED",
+     "requests_2024": 164,
+     "overdue_2024": 17,
+     "cliff_2024": 15,
+     "cost_2024_usd": 1840.0,
+     "detail": "164 requests in Jamaica Plain; 17 overdue (10% vs 7% for the department), 15 past the 30-day cliff; modeled cost $1,840."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Ground Maintenance delays citywide",
+     "department": "PARK",
+     "request_type": "Ground Maintenance",
+     "neighborhood": null,
+     "months": [],
+     "kind": "capacity",
+     "suspected_cause": "Increased demand for maintenance services during peak summer months exceeded available crew capacity."
+    },
+    "evidence": {
+     "verdict": "REJECTED",
+     "requests_2024": 3070,
+     "overdue_2024": 205,
+     "cliff_2024": 22,
+     "cost_2024_usd": 6300.0,
+     "detail": "3,070 requests citywide; 205 overdue (7% vs 7% for the department), 22 past the 30-day cliff; modeled cost $6,300."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Underreporting in South Boston / South Boston Waterfront",
+     "department": "PARK",
+     "request_type": null,
+     "neighborhood": "South Boston / South Boston Waterfront",
+     "months": [],
+     "kind": "silence",
+     "suspected_cause": "Residents in this neighborhood are not reporting issues, leading to unaddressed requests."
+    },
+    "evidence": {
+     "verdict": "CONFIRMED",
+     "requests_2024": 19543,
+     "overdue_2024": 0,
+     "cliff_2024": 0,
+     "cost_2024_usd": 0,
+     "detail": "Residents in South Boston / South Boston Waterfront report at 0.76x the city rate for the same problem types (quietest: Recycling Cart Return at 0.53x)."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Equipment Repair capacity squeeze in summer",
+     "department": "PARK",
+     "request_type": "Equipment Repair",
+     "neighborhood": null,
+     "months": [
+      6,
+      7,
+      8
+     ],
+     "kind": "capacity",
+     "suspected_cause": "Peak summer season leads to a surge in requests that crews cannot meet."
+    },
+    "evidence": {
+     "verdict": "CONFIRMED",
+     "requests_2024": 892,
+     "overdue_2024": 157,
+     "cliff_2024": 55,
+     "cost_2024_usd": 8640.0,
+     "detail": "892 requests citywide in months [6, 7, 8]; 157 overdue (18% vs 7% for the department), 55 past the 30-day cliff; modeled cost $8,640."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Tree Maintenance Requests backlog in Jamaica Plain",
+     "department": "PARK",
+     "request_type": "Tree Maintenance Requests",
+     "neighborhood": "Jamaica Plain",
+     "months": [],
+     "kind": "miss",
+     "suspected_cause": "An increase in tree-related issues during peak months outpaced the available maintenance crews."
+    },
+    "evidence": {
+     "verdict": "REJECTED",
+     "requests_2024": 418,
+     "overdue_2024": 2,
+     "cliff_2024": 2,
+     "cost_2024_usd": 240.0,
+     "detail": "418 requests in Jamaica Plain; 2 overdue (0% vs 7% for the department), 2 past the 30-day cliff; modeled cost $240."
+    },
+    "fix": null
+   }
+  ],
+  "hunt": {
+   "predator": "Equipment Repair capacity squeeze in summer",
+   "fix": {
+    "recommended_crews_by_month": [
+     10,
+     10,
+     10,
+     10,
+     10,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12,
+     12
+    ],
+    "seasonal_by_month": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "baseline_total_cost": 1715893,
+    "plan_total_cost": 1595893,
+    "baseline_ontime": 100,
+    "plan_ontime": 100,
+    "plan_ontime_at_plus14": 100,
+    "break_pct": 56,
+    "rationale": "The crew change is to maintain 10 crews from January to May and increase to 12 crews from June to December. This plan costs $1.60M versus doing nothing, which costs $1.72M, while maintaining a 100% on-time rate. If demand runs 14% over forecast it still closes 100% of requests on time; on-time falls below 90% only once demand is 56% over forecast.",
+    "unverified": []
+   },
+   "trace": [
+    {
+     "tool": "do_nothing",
+     "args": {
+      "department": "PARK"
+     },
+     "result": {
+      "dept": "PARK",
+      "crew_schedule": "Jan-Dec 10",
+      "ontime_rate": 1.0,
+      "overdue": 1,
+      "cliff": 0,
+      "backlog_end": 4736,
+      "projected_late_in_2026": 1840,
+      "crew_cost": 1200000,
+      "overdue_cost": 20,
+      "backlog_cost": 515873,
+      "total_cost": 1715893,
+      "crews_by_month": [
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10
+      ],
+      "seasonal_by_month": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "tool": "optimize_plan",
+     "args": {
+      "department": "PARK",
+      "mode": "neutral"
+     },
+     "result": {
+      "dept": "PARK",
+      "crew_schedule": "Jan-May 10, Jun-Dec 12",
+      "ontime_rate": 1.0,
+      "overdue": 1,
+      "cliff": 0,
+      "backlog_end": 2972,
+      "projected_late_in_2026": 0,
+      "crew_cost": 1360000,
+      "overdue_cost": 20,
+      "backlog_cost": 235873,
+      "total_cost": 1595893,
+      "crews_by_month": [
+       10,
+       10,
+       10,
+       10,
+       10,
+       12,
+       12,
+       12,
+       12,
+       12,
+       12,
+       12
+      ],
+      "seasonal_by_month": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      "mode": "neutral"
+     }
+    },
+    {
+     "tool": "simulate_plan",
+     "args": {
+      "department": "PARK",
+      "crews_by_month": [
+       10,
+       10,
+       10,
+       10,
+       10,
+       12,
+       12,
+       12,
+       12,
+       12,
+       12,
+       12
+      ],
+      "demand_mult": 1.14
+     },
+     "result": {
+      "dept": "PARK",
+      "crew_schedule": "Jan-May 10, Jun-Dec 12",
+      "ontime_rate": 1.0,
+      "overdue": 1,
+      "cliff": 0,
+      "backlog_end": 5249,
+      "projected_late_in_2026": 0,
+      "crew_cost": 1360000,
+      "overdue_cost": 20,
+      "backlog_cost": 416587,
+      "total_cost": 1776607,
+      "crews_by_month": [
+       10,
+       10,
+       10,
+       10,
+       10,
+       12,
+       12,
+       12,
+       12,
+       12,
+       12,
+       12
+      ],
+      "seasonal_by_month": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "tool": "break_point",
+     "args": {
+      "department": "PARK",
+      "crews_by_month": [
+       10,
+       10,
+       10,
+       10,
+       10,
+       12,
+       12,
+       12,
+       12,
+       12,
+       12,
+       12
+      ],
+      "target_ontime": 0.9
+     },
+     "result": {
+      "break_pct": 56,
+      "ontime_at_break": 0.893
+     }
+    }
+   ]
+  }
+ },
+ {
+  "dept": "ISD",
+  "goal": "I close every Inspectional Services request on time in 2025.",
+  "inverted": "On December 31, 2025, I failed to close every Inspectional Services request on time, just as in 2024, when 201 Unsatisfactory Living Conditions requests in Dorchester went late.",
+  "predators": [
+   {
+    "hypothesis": {
+     "name": "Unsatisfactory Living Conditions in Dorchester",
+     "department": "ISD",
+     "request_type": "Unsatisfactory Living Conditions",
+     "neighborhood": "Dorchester",
+     "months": [],
+     "kind": "miss",
+     "suspected_cause": "High demand for inspections outpaced available resources during peak months."
+    },
+    "evidence": {
+     "verdict": "CONFIRMED",
+     "requests_2024": 481,
+     "overdue_2024": 201,
+     "cliff_2024": 171,
+     "cost_2024_usd": 21120.0,
+     "detail": "481 requests in Dorchester; 201 overdue (42% vs 28% for the department), 171 past the 30-day cliff; modeled cost $21,120."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Work w/out Permit in Dorchester",
+     "department": "ISD",
+     "request_type": "Work w/out Permit",
+     "neighborhood": "Dorchester",
+     "months": [],
+     "kind": "miss",
+     "suspected_cause": "Increased construction activity led to a surge in requests that could not be processed on time."
+    },
+    "evidence": {
+     "verdict": "CONFIRMED",
+     "requests_2024": 153,
+     "overdue_2024": 110,
+     "cliff_2024": 65,
+     "cost_2024_usd": 8700.0,
+     "detail": "153 requests in Dorchester; 110 overdue (72% vs 28% for the department), 65 past the 30-day cliff; modeled cost $8,700."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Maintenance Complaint - Residential in Dorchester",
+     "department": "ISD",
+     "request_type": "Maintenance Complaint - Residential",
+     "neighborhood": "Dorchester",
+     "months": [],
+     "kind": "capacity",
+     "suspected_cause": "Limited crew availability during peak summer months resulted in delays."
+    },
+    "evidence": {
+     "verdict": "CONFIRMED",
+     "requests_2024": 122,
+     "overdue_2024": 52,
+     "cliff_2024": 46,
+     "cost_2024_usd": 5640.0,
+     "detail": "122 requests in Dorchester; 52 overdue (43% vs 28% for the department), 46 past the 30-day cliff; modeled cost $5,640."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Unsatisfactory Living Conditions in Roxbury",
+     "department": "ISD",
+     "request_type": "Unsatisfactory Living Conditions",
+     "neighborhood": "Roxbury",
+     "months": [],
+     "kind": "miss",
+     "suspected_cause": "Continued high volume of complaints overwhelmed the inspection staff."
+    },
+    "evidence": {
+     "verdict": "REJECTED",
+     "requests_2024": 436,
+     "overdue_2024": 126,
+     "cliff_2024": 103,
+     "cost_2024_usd": 12820.0,
+     "detail": "436 requests in Roxbury; 126 overdue (29% vs 28% for the department), 103 past the 30-day cliff; modeled cost $12,820."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Unsatisfactory Living Conditions in Greater Mattapan",
+     "department": "ISD",
+     "request_type": "Unsatisfactory Living Conditions",
+     "neighborhood": "Greater Mattapan",
+     "months": [],
+     "kind": "silence",
+     "suspected_cause": "Residents may have stopped reporting issues due to perceived ineffectiveness of response."
+    },
+    "evidence": {
+     "verdict": "REJECTED",
+     "requests_2024": 8256,
+     "overdue_2024": 0,
+     "cliff_2024": 0,
+     "cost_2024_usd": 0,
+     "detail": "Residents in Greater Mattapan report at 0.95x the city rate for the same problem types (quietest: Improper Storage of Trash (Barrels) at 0.65x)."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Electrical requests citywide",
+     "department": "ISD",
+     "request_type": "Electrical",
+     "neighborhood": null,
+     "months": [
+      7,
+      8,
+      9
+     ],
+     "kind": "capacity",
+     "suspected_cause": "Increased demand for electrical inspections during summer months caused delays."
+    },
+    "evidence": {
+     "verdict": "CONFIRMED",
+     "requests_2024": 124,
+     "overdue_2024": 54,
+     "cliff_2024": 37,
+     "cost_2024_usd": 4780.0,
+     "detail": "124 requests citywide in months [7, 8, 9]; 54 overdue (44% vs 28% for the department), 37 past the 30-day cliff; modeled cost $4,780."
+    },
+    "fix": null
+   },
+   {
+    "hypothesis": {
+     "name": "Heat - Excessive Insufficient in Dorchester",
+     "department": "ISD",
+     "request_type": "Heat - Excessive  Insufficient",
+     "neighborhood": "Dorchester",
+     "months": [],
+     "kind": "capacity",
+     "suspected_cause": "High volume of heating complaints during winter months led to insufficient response capacity."
+    },
+    "evidence": {
+     "verdict": "REJECTED",
+     "requests_2024": 134,
+     "overdue_2024": 38,
+     "cliff_2024": 31,
+     "cost_2024_usd": 3860.0,
+     "detail": "134 requests in Dorchester; 38 overdue (28% vs 28% for the department), 31 past the 30-day cliff; modeled cost $3,860."
+    },
+    "fix": null
+   }
+  ],
+  "hunt": {
+   "predator": "Unsatisfactory Living Conditions in Dorchester",
+   "fix": {
+    "recommended_crews_by_month": [
+     16,
+     16,
+     16,
+     16,
+     18,
+     18,
+     19,
+     19,
+     19,
+     19,
+     19,
+     19
+    ],
+    "seasonal_by_month": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "baseline_total_cost": 2884082,
+    "plan_total_cost": 2627962,
+    "baseline_ontime": 99.9,
+    "plan_ontime": 99.9,
+    "plan_ontime_at_plus14": 99.9,
+    "break_pct": 26,
+    "rationale": "The crew change is Jan-Apr 16, May-Jun 18, Jul-Dec 19. This plan costs $2.63M versus $2.88M doing nothing, maintaining a 99.9% on-time rate. If demand runs 14% over forecast it still closes 100% of requests on time; on-time falls below 90% only once demand is 26% over forecast.",
+    "unverified": []
+   },
+   "trace": [
+    {
+     "tool": "do_nothing",
+     "args": {
+      "department": "ISD"
+     },
+     "result": {
+      "dept": "ISD",
+      "crew_schedule": "Jan-Dec 16",
+      "ontime_rate": 0.999,
+      "overdue": 21,
+      "cliff": 0,
+      "backlog_end": 2538,
+      "projected_late_in_2026": 2497,
+      "crew_cost": 2240000,
+      "overdue_cost": 420,
+      "backlog_cost": 643662,
+      "total_cost": 2884082,
+      "crews_by_month": [
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16,
+       16
+      ],
+      "seasonal_by_month": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "tool": "optimize_plan",
+     "args": {
+      "department": "ISD",
+      "mode": "neutral"
+     },
+     "result": {
+      "dept": "ISD",
+      "crew_schedule": "Jan-Apr 16, May-Jun 18, Jul-Dec 19",
+      "ontime_rate": 0.999,
+      "overdue": 21,
+      "cliff": 0,
+      "backlog_end": 690,
+      "projected_late_in_2026": 0,
+      "crew_cost": 2531667,
+      "overdue_cost": 420,
+      "backlog_cost": 95876,
+      "total_cost": 2627962,
+      "crews_by_month": [
+       16,
+       16,
+       16,
+       16,
+       18,
+       18,
+       19,
+       19,
+       19,
+       19,
+       19,
+       19
+      ],
+      "seasonal_by_month": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      "mode": "neutral"
+     }
+    },
+    {
+     "tool": "simulate_plan",
+     "args": {
+      "department": "ISD",
+      "crews_by_month": [
+       16,
+       16,
+       16,
+       16,
+       18,
+       18,
+       19,
+       19,
+       19,
+       19,
+       19,
+       19
+      ],
+      "demand_mult": 1.14
+     },
+     "result": {
+      "dept": "ISD",
+      "crew_schedule": "Jan-Apr 16, May-Jun 18, Jul-Dec 19",
+      "ontime_rate": 0.999,
+      "overdue": 23,
+      "cliff": 0,
+      "backlog_end": 3293,
+      "projected_late_in_2026": 3252,
+      "crew_cost": 2531667,
+      "overdue_cost": 460,
+      "backlog_cost": 836461,
+      "total_cost": 3368588,
+      "crews_by_month": [
+       16,
+       16,
+       16,
+       16,
+       18,
+       18,
+       19,
+       19,
+       19,
+       19,
+       19,
+       19
+      ],
+      "seasonal_by_month": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "tool": "break_point",
+     "args": {
+      "department": "ISD",
+      "crews_by_month": [
+       16,
+       16,
+       16,
+       16,
+       18,
+       18,
+       19,
+       19,
+       19,
+       19,
+       19,
+       19
+      ],
+      "target_ontime": 0.9
+     },
+     "result": {
+      "break_pct": 26,
+      "ontime_at_break": 0.863
+     }
+    }
+   ]
+  }
+ }
+]

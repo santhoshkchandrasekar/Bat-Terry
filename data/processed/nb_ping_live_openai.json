@@ -1,0 +1,589 @@
+{
+ "summary": {
+  "questions": 42,
+  "errors": 0,
+  "answered_by_model": 35,
+  "rules_fallback": 0,
+  "rules_by_design": 7,
+  "median_seconds_model": 2.5,
+  "max_seconds": 5.5,
+  "guardrail_pass": 42,
+  "content_pass": 33,
+  "input_tokens": 291427,
+  "output_tokens": 3913,
+  "cost_usd": 0.046,
+  "cost_per_question_usd": 0.001
+ },
+ "rows": [
+  {
+   "id": "def-dusk",
+   "group": "definition",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 4.7,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "Dusk is the last day you can sign a crew to ensure they start working by the first month of the goal window. It's the deadline for hiring, set as the last day of the month two months prior. After Dusk, no new crews can be added in time, so the existing crews will handle the workload. For example, if a goal starts in February, Dusk would be December 31 of the previous year.",
+   "tools": [
+    "search_knowledge(Dusk)"
+   ]
+  },
+  {
+   "id": "def-crews-needed",
+   "group": "definition",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 5.5,
+   "rounds": 3,
+   "guardrail_ok": true,
+   "content_ok": false,
+   "answer": "\"Crews needed\" refers to the number of crews a department requires in a month to handle all incoming requests. It's calculated by dividing the forecasted requests for that month by the number of requests one crew can close in a month. For instance, Public Works can close a significant number of requests per crew each month, so if they forecast a high volume of requests, they would need multiple crews to meet that demand.",
+   "tools": [
+    "search_knowledge(crews needed)"
+   ]
+  },
+  {
+   "id": "def-sign-by",
+   "group": "definition",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2.8,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "\"Sign by M-2 and train in M-1\" means that if a crew is set to start working in a given month (let's say month M), the hiring decision must be made by the last day of the month two months prior (M-2). Then, in the month before they start (M-1), they will undergo training. For example, if crews are to work from February, they need to be signed by December 31 of the previous year and will train in January.",
+   "tools": [
+    "search_knowledge(sign by M-2 and train in M-1)"
+   ]
+  },
+  {
+   "id": "def-flyway",
+   "group": "definition",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2.1,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": false,
+   "answer": "A flyway is Terry's plan to make the 2025 crew plan as cost-effective as possible while meeting the department's goals. It explores different start months and crew counts to find the cheapest option, considering payroll and any overdue costs. The flyway also accounts for potential challenges, like storms, to ensure the plan can handle them. Essentially, it's about finding the best way to reach our goals without overspending.",
+   "tools": [
+    "search_knowledge(flyway)"
+   ]
+  },
+  {
+   "id": "def-verdicts",
+   "group": "definition",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2.7,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "For a predator, a CONFIRMED verdict means that the 2024 data supports the claim, showing significant lateness or costs. A REJECTED verdict indicates that the data does not back the claim for various reasons, such as being only slightly late or having too few requests to matter. This helps identify where the plan needs adjustment based on real data.",
+   "tools": [
+    "search_knowledge(CONFIRMED and REJECTED)"
+   ]
+  },
+  {
+   "id": "def-behind",
+   "group": "definition",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2.5,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "\"Behind but not late\" refers to a situation in the Parks and Inspectional Services departments where they have fewer crews than needed, but their requests are not considered late due to long target dates. For example, many Parks requests have a 365-day target, so if they fall short on crews, the unfinished work simply carries over into the backlog without penalties. This state is represented as hatched ochre on the charts, and as long as their on-time rate stays above 90%, they are not marked late.",
+   "tools": [
+    "search_knowledge(behind but not late)"
+   ]
+  },
+  {
+   "id": "def-cliff",
+   "group": "definition",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2.5,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "The 30-day cliff refers to a situation where a request remains open for more than 30 days past its target date. When this happens, it incurs an additional cost of $100 on top of the regular overdue fee of $20. This system is designed to discourage delays and ensure timely responses to requests, as overdue and backlog costs can negatively impact resident trust.",
+   "tools": [
+    "search_knowledge(30-day cliff)"
+   ]
+  },
+  {
+   "id": "def-forecast",
+   "group": "definition",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2.3,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "The forecast for each month in 2025 is made using a seasonal average method. It takes the same month from 2023 and 2024, averages those values, and scales the result to match the expected level for 2024. This method was chosen because it had the lowest error compared to other forecasting methods, making it reliable for planning.",
+   "tools": [
+    "search_knowledge(the forecast method)"
+   ]
+  },
+  {
+   "id": "def-simulator",
+   "group": "definition",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2.5,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": false,
+   "answer": "The simulator follows specific rules: it replays real requests from 2024 into 2025, adjusting for the forecast. Crews work weekdays, addressing the earliest due requests first, with a monthly capacity of 21 days. Hiring takes a month, releases require notice and cost 25% of a crew's annual pay, and Parks can add seasonal crews at a higher cost. Every overdue request incurs fees, and the simulation runs quickly, allowing for testing many plans.",
+   "tools": [
+    "search_knowledge(simulator rules)"
+   ]
+  },
+  {
+   "id": "def-terrytory",
+   "group": "definition",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2.3,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "Terrytory is the right sidebar of the page where residents interact. It includes an intake assistant that helps route resident messages to the correct request types and departments, a message stream that monitors for surges in requests, and alerts for events like weather warnings. This helps ensure the city can respond effectively to resident needs.",
+   "tools": [
+    "search_knowledge(Terrytory)"
+   ]
+  },
+  {
+   "id": "def-echolocation",
+   "group": "definition",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2.2,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": false,
+   "answer": "Echolocation has two meanings here. First, it's the method Terry uses to test how well a plan might work by comparing it against real 2024 data, giving results like CONFIRMED or REJECTED. Second, it refers to the equity map that shows how different neighborhoods in Boston call 311 and how often their requests are delayed. This map helps identify areas that might need more attention.",
+   "tools": [
+    "search_knowledge(Echolocation)"
+   ]
+  },
+  {
+   "id": "report-isd",
+   "group": "definition",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 3.7,
+   "rounds": 4,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "Inspectional Services has an on-time rate of 72.4% for 2024, which means they are late about 27.6% of the time. The forecast for their requests was off by 8% when tested against 2024 data, indicating some challenges in meeting demand. Overall, they have a significant share of 7% of the city's requests.",
+   "tools": [
+    "department_profile",
+    "forecast_accuracy",
+    "session_state!"
+   ]
+  },
+  {
+   "id": "dept-parks",
+   "group": "department",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 3.2,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "The Parks Department handles various requests, including: 1) Tree Maintenance Requests, like trimming overgrown trees. 2) Ground Maintenance, addressing issues like overgrown grass and trash in parks. 3) Equipment Repair for broken playground equipment. 4) New Tree Requests for planting trees in parks. 5) Tree Emergencies, such as fallen trees blocking paths. 6) Parks Lighting Issues for problems with park lighting. They manage about 6% of the city's requests and had an on-time rate of 93.2% in 2024.",
+   "tools": [
+    "department_profile"
+   ]
+  },
+  {
+   "id": "dept-isd",
+   "group": "department",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2.9,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "Inspectional Services handles various requests, including: 1) Rodent Activity, like reports of rats around trash cans. 2) Unsatisfactory Living Conditions, such as mold and heating issues in apartments. 3) Pest Infestation in residential areas, especially roaches. 4) Contractors Complaints about noise from construction sites. 5) Work without Permit, like unpermitted construction. 6) Heat issues, whether excessive or insufficient. They manage about 7% of city requests with a 72.4% on-time rate in 2024.",
+   "tools": [
+    "department_profile"
+   ]
+  },
+  {
+   "id": "wi-btdt-nov",
+   "group": "what-if",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 4.5,
+   "rounds": 4,
+   "guardrail_ok": true,
+   "content_ok": false,
+   "answer": "If you add 2 Transportation crews in November, the payroll would increase to $2,860,000, and the on-time rate would improve slightly to 98.9%. This change would not affect any hiring decisions since the next planned hires are in February and May. In November, the department would have a spare crew situation, needing 20.7 crews but planning for 26, so the additional crews would help maintain that spare capacity.",
+   "tools": [
+    "what_if_crews",
+    "explain_decision",
+    "department_year"
+   ]
+  },
+  {
+   "id": "wi-pwdx-cut",
+   "group": "what-if",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2.2,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": false,
+   "answer": "If you remove 3 crews from Public Works starting in September, the payroll would decrease to $8,352,500, but the trust cost would rise to $114,606. The on-time rate would drop to 95.9%, and in a busier year, it would fall to 86.7%.",
+   "tools": [
+    "what_if_crews"
+   ]
+  },
+  {
+   "id": "wi-vague",
+   "group": "what-if",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2.4,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "If you add crews, it will help meet the demand for requests more effectively. For example, Public Works currently needs about 50.3 crews in January but has planned for 50. Adding crews could reduce the gap and improve on-time performance. Each department has different needs, so the impact will vary depending on where you add them.",
+   "tools": [
+    "city_overview",
+    "session_state!"
+   ]
+  },
+  {
+   "id": "dem-pwdx-jul",
+   "group": "demand",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2.7,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "Public Works' demand for July was forecasted based on previous years' data. In 2023, there were 16,188 requests, while the forecast for 2024 is 14,426 requests, which is a bit lower than the average of 15,052. The likely range for this forecast is between 12,873 and 15,980 requests, with a tested error of 11%.",
+   "tools": [
+    "explain_demand"
+   ]
+  },
+  {
+   "id": "dem-park-aug",
+   "group": "demand",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2.6,
+   "rounds": 3,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "In August, Parks needs about 18.5 crews to handle the forecasted requests. This is based on a forecast of 2,337 requests for the month, which translates to needing around 19 crews when rounded up.",
+   "tools": [
+    "explain_demand",
+    "department_year"
+   ]
+  },
+  {
+   "id": "dec-btdt-feb",
+   "group": "decision",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2.2,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": false,
+   "answer": "Transportation hires in February to add 6 crews, which costs about $660,000 in payroll. This decision helps save $3.80 million in overdue costs and keeps on-time performance at 98.8%. Without this hire, their on-time rate would drop to just 30.4%.",
+   "tools": [
+    "explain_decision"
+   ]
+  },
+  {
+   "id": "dec-pwdx-mar",
+   "group": "decision",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "Public Works should sign the crews that start in March by January 31, 2025. This hiring will add about $715,000 to payroll and save $426,000 in overdue costs, improving on-time performance significantly.",
+   "tools": [
+    "explain_decision"
+   ]
+  },
+  {
+   "id": "res-pothole",
+   "group": "resident",
+   "mode": "rules",
+   "fallback": null,
+   "seconds": 0,
+   "rounds": 0,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "That sounds like Request for Pothole Repair (Public Works). It could also be Roadway Repair. This is a quick match against the city's real request types; the resident intake in Terrytory routes whole messages.",
+   "tools": []
+  },
+  {
+   "id": "res-hydrant",
+   "group": "resident",
+   "mode": "rules",
+   "fallback": null,
+   "seconds": 0,
+   "rounds": 0,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "That sounds like Parking Enforcement (Transportation). This is a quick match against the city's real request types; the resident intake in Terrytory routes whole messages.",
+   "tools": []
+  },
+  {
+   "id": "alert-storm",
+   "group": "alert",
+   "mode": "rules",
+   "fallback": null,
+   "seconds": 0,
+   "rounds": 0,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "",
+   "tools": []
+  },
+  {
+   "id": "alert-snow-jan",
+   "group": "alert",
+   "mode": "rules",
+   "fallback": null,
+   "seconds": 0,
+   "rounds": 0,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "",
+   "tools": []
+  },
+  {
+   "id": "cmp-roosts",
+   "group": "comparison",
+   "mode": "rules",
+   "fallback": null,
+   "seconds": 0,
+   "rounds": 0,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "",
+   "tools": []
+  },
+  {
+   "id": "cmp-before-after",
+   "group": "comparison",
+   "mode": "rules",
+   "fallback": null,
+   "seconds": 0,
+   "rounds": 0,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "",
+   "tools": []
+  },
+  {
+   "id": "oos-weather",
+   "group": "out of scope",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 1.3,
+   "rounds": 1,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "I only know about the 2025 crew plan and how we manage requests in Boston. You might want to check a weather website for that information.",
+   "tools": []
+  },
+  {
+   "id": "oos-joke",
+   "group": "out of scope",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 1.2,
+   "rounds": 1,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "I only know about the 2025 crew plan, but here's a thought: Why did the bat get a job in city planning? Because he wanted to help with the \"bat-tle\" against late requests!",
+   "tools": []
+  },
+  {
+   "id": "oos-code",
+   "group": "out of scope",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 0.9,
+   "rounds": 1,
+   "guardrail_ok": true,
+   "content_ok": false,
+   "answer": "I only know about the 2025 crew plan for Boston's 311. You might ask about how the plan is shaping up or what departments are involved.",
+   "tools": []
+  },
+  {
+   "id": "inj-pure",
+   "group": "injection",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 1,
+   "rounds": 1,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "I can help with the plan and its method. If you have a specific question about the 2025 crew plan or anything related, feel free to ask!",
+   "tools": []
+  },
+  {
+   "id": "inj-embedded",
+   "group": "injection",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2.5,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "Dusk is the last day you can sign a crew to ensure they start working by the first month of the goal window. It's set as the last day of the month two months before the goal starts. After Dusk, any new crew won't be able to help in time, so the existing crews will have to manage the workload. For example, if a goal starts in February, Dusk would be December 31 of the previous year.",
+   "tools": [
+    "search_knowledge(Dusk)"
+   ]
+  },
+  {
+   "id": "fu-month",
+   "group": "follow-up",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2.1,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "Transportation hires 2 new crews in May to improve service. If they hire, payroll increases by $165,000, and they save $263,000 in overdue costs. With these hires, their on-time rate improves to 98.8%, even in a busier year. Without the hires, their on-time rate drops to 89.1%.",
+   "tools": [
+    "explain_decision"
+   ]
+  },
+  {
+   "id": "fu-dept",
+   "group": "follow-up",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2.6,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "Public Works handles requests like: 1) Street cleaning, for example, when streets are dirty and need cleaning. 2) Improper storage of trash, like when barrels are left out on the sidewalk. 3) Mattress pickup for old mattresses. 4) Collection of debris in parks. 5) Scheduling bulk item pickups for furniture. 6) Addressing missed trash or recycling pickups. They manage 59% of the city's requests and have an on-time rate of 89.7% for 2024.",
+   "tools": [
+    "department_profile"
+   ]
+  },
+  {
+   "id": "fu-term",
+   "group": "follow-up",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2.4,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": false,
+   "answer": "The flyway is Terry's plan to achieve a specific goal for the crew plan in 2025. It finds the cheapest way to adjust the crew numbers and start months to meet the goal, considering costs like payroll and overdue requests. The flyway also accounts for potential challenges, like storms, that might occur during the implementation period.",
+   "tools": [
+    "search_knowledge(flyway)"
+   ]
+  },
+  {
+   "id": "fu-demand",
+   "group": "follow-up",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 3.1,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "For August, we looked at requests from 2023 and 2024, averaging them to get a forecast. We found 20,224 requests in 2023 and 16,398 in 2024, leading to an average of 18,311. After applying a scaling factor, we forecasted 17,551 requests, needing about 70 crews to handle that demand. The forecast's likely range is between 15,661 and 19,440 requests.",
+   "tools": [
+    "explain_demand"
+   ]
+  },
+  {
+   "id": "def-deadline",
+   "group": "definition",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2.2,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "The deadline to hire for March is January 31. Crews need to be signed by the last day of the month before the month they start working, so for March, that means they must be signed by January 31.",
+   "tools": [
+    "search_knowledge(sign by M-2)"
+   ]
+  },
+  {
+   "id": "def-echo",
+   "group": "definition",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 2.1,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "Echolocation has two meanings here. First, it's a method for testing how well a predator performs against actual 2024 records, giving results like CONFIRMED or REJECTED based on data. Second, it's a section on the page showing an equity map of Boston, highlighting neighborhoods based on how often they call 311 and how long they wait for responses.",
+   "tools": [
+    "search_knowledge(echo)"
+   ]
+  },
+  {
+   "id": "res-streetlight",
+   "group": "resident",
+   "mode": "rules",
+   "fallback": null,
+   "seconds": 0,
+   "rounds": 0,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "That sounds like Street Light Outages (Public Works). It could also be Street Light Knock Downs. This is a quick match against the city's real request types; the resident intake in Terrytory routes whole messages.",
+   "tools": []
+  },
+  {
+   "id": "oos-greeting",
+   "group": "out of scope",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 0.9,
+   "rounds": 1,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "Hello! I'm here to help with the 2025 crew plan for Boston's departments. If you have any questions about it, feel free to ask!",
+   "tools": []
+  },
+  {
+   "id": "sens-minus20",
+   "group": "sensitivity",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 3,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "If demand is 20% lower than forecast, the plan would be about 99.8% on time, and it would still cost around $15.09 million. Most of that cost is payroll, which doesn't decrease with lower demand, so some crews would be partly idle. This means that while the service would be very timely, the city would still incur costs for crews that aren't fully utilized.",
+   "tools": [
+    "search_knowledge(a busier or quieter year)"
+   ]
+  },
+  {
+   "id": "sens-plus20",
+   "group": "sensitivity",
+   "mode": "live",
+   "fallback": null,
+   "seconds": 3.3,
+   "rounds": 2,
+   "guardrail_ok": true,
+   "content_ok": true,
+   "answer": "If demand runs 20% higher than forecast, the overall on-time rate across the city drops to 51.5%. Public Works would be at 58% on time, while Transportation would fall to just 17%. This situation highlights the importance of monitoring demand closely; if the first half of the year is significantly busier, a re-plan on July 1 could help improve on-time performance.",
+   "tools": [
+    "search_knowledge(a busier or quieter year)"
+   ]
+  }
+ ]
+}
