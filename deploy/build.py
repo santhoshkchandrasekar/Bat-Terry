@@ -22,8 +22,10 @@ m = re.search(r'<script src="opening\.js(\?v=\d+)?"></script>', html)
 assert m, "opening.js tag not found"
 html = html.replace(m.group(0), '<script src="host.js"></script>\n' + m.group(0), 1)
 # a standard document skeleton around the page (the page itself starts at its <title>)
+icons = re.findall(r'<link rel="(?:icon|apple-touch-icon)"[^>]*>\n?', html)   # the tab icon belongs in <head>
+for t in icons: html = html.replace(t, "", 1)
 html = ('<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">'
-        '</head><body>' + html + '</body></html>')
+        + "".join(t.strip() for t in icons) + '</head><body>' + html + '</body></html>')
 (SITE / "index.html").write_text(html)
 shutil.copy2(HERE / "host.js", SITE / "host.js")
 

@@ -1,4 +1,7 @@
 <title>Bat-Terry, the battery that keeps Boston's 311 crews moving</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.png" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="description" content="Name a goal for Boston's 311 crews. Bat-Terry flips it, listens for predators and finds the flyway.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -180,7 +183,7 @@ svg.i .w { fill: var(--wheel); }
 #hi { position: absolute; z-index: 9; font: italic 400 15px var(--display); color: var(--ink2); text-align: center; width: 140px; pointer-events: none; opacity: 0; transition: opacity .6s var(--ease); }
 #hi.on { opacity: 1; }
 #terryhit { position: absolute; z-index: 31; width: 64px; height: 108px; border: 0; background: transparent; cursor: pointer; border-radius: 12px; }
-#skipbtn { position: fixed; z-index: 60; right: 24px; bottom: 12px; height: 36px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.4); background: rgba(20,23,28,.8); backdrop-filter: blur(8px); color: #fff; font: 500 13px var(--ui); cursor: pointer; }
+#skipbtn { position: fixed; z-index: 60; right: 24px; bottom: 76px; height: 36px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.4); background: rgba(20,23,28,.8); backdrop-filter: blur(8px); color: #fff; font: 500 13px var(--ui); cursor: pointer; }
 /* owner 7 Nov: Skip answers the click at once: it presses in, says "Skipping" with a spinner while the chase catches up, then goes */
 #skipbtn { display: inline-flex; align-items: center; gap: 8px; transition: transform .12s ease, background .2s ease, box-shadow .2s ease; }
 #skipbtn::after { content: ""; width: 12px; height: 12px; background: currentColor; -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M2 3.5v9l6-4.5zM8.5 3.5v9l6-4.5z'/></svg>") center / contain no-repeat; mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M2 3.5v9l6-4.5zM8.5 3.5v9l6-4.5z'/></svg>") center / contain no-repeat; transition: transform .2s ease; }
