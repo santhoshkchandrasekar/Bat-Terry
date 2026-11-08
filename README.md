@@ -131,17 +131,20 @@ flowchart LR
 
 ## How to run
 
-**The notebook** (no raw data needed; the processed data is committed):
+**The notebook** (no raw data needed; the processed data is committed). It is committed fully run, so it can be read
+as is. To run it again, use **Python 3.12 or 3.13**: newer versions can't yet install the pinned packages (a clean run
+on Python 3.15 failed on `pydantic-core`; see `docs/reproduce.md`).
 
 ```bash
 python3 -m pip install -r requirements.txt
 mkdir -p config && printf "OPENAI_API_KEY=...\n" > config/llm.local   # gitignored, optional
-python3 notebooks/build_notebook.py
-cd notebooks && python3 -m nbconvert --to notebook --execute --inplace Boston311_Terry.ipynb
+cd notebooks && python3 -m nbconvert --to notebook --execute --output test_run.ipynb Boston311_Terry.ipynb
 ```
 
-Without a key, every model cell shows its last saved run. §6.5 and §6.6 need Node 18 or newer. A full live run takes a
-few minutes and a few hundred `gpt-4o-mini` calls (under $1).
+This writes the run to `test_run.ipynb` and leaves the submitted notebook untouched. Without a key, every model cell
+shows its last saved run. §6.5 and §6.6 need Node 18 or newer. A full live run takes a few minutes and a few hundred
+`gpt-4o-mini` calls (under $1). `notebooks/build_notebook.py` regenerates the notebook from its source and **overwrites**
+`Boston311_Terry.ipynb` without outputs; use it only when changing the notebook, then re-run it with `--inplace`.
 
 **The page, locally.** `python3 deploy/build.py` writes the whole site to `deploy/site/`; serve it with
 `python3 -m http.server -d deploy/site 8000` and open http://localhost:8000 (without the Netlify function, Ping answers
