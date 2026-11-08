@@ -204,7 +204,9 @@ Full assumptions and limitations are in §10 of the notebook.
   messages. Cells whose output comes from a model at run time are marked **[LLM output]**.
 * **Images.** The hero photos (Boston at dusk and at night), the projector photos and the hilltop footer photos are
   AI-generated images we made with ChatGPT.
-* **Coding assistant.** We used an AI coding assistant to help us write better code and to build the front end.
+* **Coding assistant.** We used an AI coding assistant throughout. It helped write much of the code (the data pipeline,
+  simulator, optimizer, the GenAI layer and the web page) and drafted much of the notebook's explanatory text. We set the
+  direction, made the modeling decisions, and reviewed and checked everything.
 * **Demo video.** The same coding assistant helped edit the demo video and code its animations. The narration is our own
   voice. The background music was generated with Sonilo.
 
