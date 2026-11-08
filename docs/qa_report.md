@@ -69,3 +69,25 @@ The "Live" label showed in Ping on Edge and Firefox, so the live model was on du
 ## Suggestion
 
 - **Spanish input gets English replies.** Terry understood the Spanish message, but asked "Which Centre, Jamaica Plain, Roslindale or West Roxbury?" in English. A Spanish-speaking resident might get stuck there. Consider replying in the resident's language, or offering a Spanish / English choice.
+
+
+## Re-test
+
+Checked by Pradyuman Turlapati on November 8, 2026, on the live site after a hard refresh, in Firefox (Windows) and iPhone 17 (Safari). On iPhone, tapping the Netlify badge showed no "Hide this badge" option, so the iPhone checks were done with the badge visible.
+
+| # | Check | Result |
+| --- | --- | --- |
+| 1 | Firefox: page behind stays still (trackpad and arrow keys) | **Fail.** All three tabs and the 2025 plan pop-up pass. The demo video still fails: scrolling while it is open moves the planner behind it, and after closing it the Who built me page is see-through over the planner, with mixed text. Screenshot: `firefox-retest-demo-overlap.png` |
+| 2 | iPhone portrait: Dusk / Night switch visible and works | Pass |
+| 3 | iPhone: ‹ Boston at the bottom left on all three tabs | Pass |
+| 4 | iPhone: nothing cut off on the right | Pass. Home headline, month labels, 311 chart and legend all fit |
+| 5 | iPhone: Close doesn't cover the plan title | Pass. The badge no longer covers "$679k" either |
+| 6 | iPhone landscape: home text clear of the headline, 311 chart | Pass. The 311 bars vary in height and show all four colors. Note: in landscape, the date line and the month dots no longer show on the home page |
+
+### New issue
+
+- **iPhone portrait, 2025 plan pop-up:** the table stops at June and can't be swiped sideways. In the first test it could be swiped. Landscape still swipes. Screenshot: `iphone-retest-plan-table-cutoff.jpeg`
+
+### Small note
+
+- The flying bat passes over the pop-up's description text for a moment.
