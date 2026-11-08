@@ -39,8 +39,10 @@ html.ld-tab #ld-stage { pointer-events: auto; visibility: visible; }
 #ld-stage h2 em { font-style: italic; color: var(--l-tone); }
 #ld-stage .tz-c { text-align: center; margin-left: auto; margin-right: auto; max-width: none; }
 #ld-stage .tz-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: clamp(30px, 5vw, 90px); align-items: center; }
-#ld-stage .tz-back { position: absolute; left: var(--ld-edge); bottom: 26px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 2px; background: none; border: 0; cursor: pointer;
-  font: 500 13px var(--ui); color: var(--l-paper2); opacity: 0; transition: opacity .5s var(--ease) .6s, color .3s; }
+#ld-stage .tz-back { position: fixed; left: var(--ld-edge); bottom: 22px; z-index: 6; display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px 7px 10px; cursor: pointer;
+  background: rgba(20,11,12,.62); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border: 1px solid rgba(245,236,223,.16); border-radius: 999px;
+  font: 500 13px var(--ui); color: var(--l-paper2); opacity: 0; pointer-events: none; transition: opacity .5s var(--ease) .6s, color .3s; }
+html.ld-tab #ld-stage .tz-back { pointer-events: auto; }
 html.ld-tab #ld-stage .tz-back { opacity: 1; }
 #ld-stage .tz-back svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 #ld-stage .tz-back:hover { color: #fff; }
@@ -147,7 +149,17 @@ html.ld-tab #ld-stage .tz-back { opacity: 1; }
   .tz-crew .tz-lead { width: auto; justify-self: stretch; }
   .tz-tie { display: none; }
   .tz-nums { flex-wrap: wrap; }
+  #ld-stage .tz-split > * { min-width: 0; }
+  #ld-stage .tz-tb { padding-bottom: 96px; }
 }
+/* phones: the tab pages fit the width */
+@media (max-width: 640px) {
+  #ld-stage { top: calc(var(--ld-t, 22px) + 92px); }
+  .tz-legend { grid-template-columns: repeat(2, minmax(0, 1fr)); justify-content: stretch; gap: 14px 18px; }
+  .tz-legend b { font-size: 21px; }
+}
+/* Safari draws the bars' grow-in wrong (scaled SVG rects): there they simply appear */
+html.tz-wk .tz-chart rect { transform: none; transition: none; }
 @media (prefers-reduced-motion: reduce) {
   #ld-stage .tz-rv, #landing .ld-photo, #landing .ld-sky, #landing .ld-eve, .tz-node, .tz-chart rect { transition: none !important; }
   .tz-orbit { animation: none; }

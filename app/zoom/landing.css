@@ -161,10 +161,10 @@ html.op-run .ld-terry-top { opacity: 0; }
 /* the 2025 plan, opened over the landing */
 #landing .ld-plan { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 24px; background: rgba(10,6,7,.6); opacity: 0; visibility: hidden; transition: opacity .5s var(--ease), visibility 0s linear .5s; }
 #landing .ld-plan.open { opacity: 1; visibility: visible; transition: opacity .5s var(--ease); }
-#landing .ld-ledger { position: relative; width: min(1180px, 100%); max-height: calc(100vh - 48px); overflow: auto; padding: 30px 34px 26px 70px; background: var(--l-sheet); color: var(--l-sheet-ink); border-radius: 2px; box-shadow: 0 30px 80px -30px rgba(0,0,0,.7); transform: translateY(16px); transition: transform .6s var(--ease); }
+#landing .ld-ledger { position: relative; overscroll-behavior: contain; width: min(1180px, 100%); max-height: calc(100vh - 48px); overflow: auto; padding: 30px 34px 26px 70px; background: var(--l-sheet); color: var(--l-sheet-ink); border-radius: 2px; box-shadow: 0 30px 80px -30px rgba(0,0,0,.7); transform: translateY(16px); transition: transform .6s var(--ease); }
 #landing .ld-plan.open .ld-ledger { transform: none; }
 #landing .ld-ledger::before { content: ""; position: absolute; top: 0; bottom: 0; left: 42px; width: 5px; border-left: 1px solid var(--l-margin); border-right: 1px solid var(--l-margin); }
-#landing .ld-ledger h2 { margin: 0; font: 400 28px/1.1 var(--display); }
+#landing .ld-ledger h2 { margin: 0; padding-right: 96px; font: 400 28px/1.1 var(--display); }
 #landing .ld-ledger .sub { margin: 6px 0 18px; max-width: 70ch; font-size: 13px; color: var(--l-sheet-ink2); }
 #landing .ld-x { position: absolute; top: 18px; right: 20px; height: 32px; padding: 0 14px; border: 1px solid var(--l-rule2); border-radius: 16px; background: none; color: var(--l-sheet-ink); font: 600 12px var(--ui); cursor: pointer; }
 #landing .ld-lt { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
@@ -191,4 +191,42 @@ html.op-run #landing .ld-terry { opacity: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   #landing *, #landing *::before, #landing *::after { transition: none !important; animation: none !important; }
+}
+
+/* smaller screens: the header stays on one line */
+@media (max-width: 1000px) {
+  #landing .ld-brand .sub { display: none; }
+  #landing .ld-brand .nm, #landing .ld-link { white-space: nowrap; }
+}
+/* phones: the header takes two rows (brand and theme, then the three tabs), the line wraps, the plan sheet narrows */
+@media (max-width: 640px) {
+  #landing .ld-nav { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 14px; height: auto; }
+  #landing .ld-navr { display: contents; }
+  #landing .ld-brand { grid-column: 1 / 3; grid-row: 1; }
+  #landing .ld-brand .sub { display: none; }
+  #landing .ld-navr .seg { grid-column: 3; grid-row: 1; justify-self: end; }
+  #landing .ld-link { grid-row: 2; white-space: nowrap; font-size: 12.5px; justify-self: center; }
+  #landing .ld-link:first-of-type { justify-self: start; }
+  #landing .ld-link:nth-of-type(3) { justify-self: end; }
+  #landing .ld-sky { top: clamp(150px, 21vh, 190px); right: var(--ld-edge); }
+  #landing .ld-line { font-size: clamp(36px, 10.5vw, 46px); }
+  #landing .ld-eve { width: calc(100vw - 2 * var(--ld-edge)); bottom: 40px; }
+  #landing .ld-sit { white-space: normal; font-size: 19px; }
+  #landing .ld-year span i { display: none; }
+  #landing .ld-year span:nth-of-type(3n+2) i { display: block; }
+  #landing .ld-plan { padding: 10px; }
+  #landing .ld-ledger { max-height: calc(100vh - 20px); max-height: calc(100dvh - 20px); padding: 22px 16px 20px 30px; }
+  #landing .ld-ledger::before { left: 14px; }
+  #landing .ld-ledger h2 { font-size: 24px; }
+  #landing .ld-x { top: 14px; right: 12px; }
+}
+/* phones on their side: the line sits under the headline instead of over it */
+@media (max-height: 500px) and (max-width: 1000px) {
+  #landing .ld-sky { top: 84px; }
+  #landing .ld-line { font-size: clamp(30px, 7vh, 40px); }
+  #landing .ld-see { margin-top: 14px; padding: 9px 16px 9px 18px; }
+  #landing .ld-eve { bottom: 14px; }
+  #landing .ld-date, #landing .ld-year { display: none; }
+  #landing .ld-sit { font-size: 17px; }
+  #landing .ld-go { margin-top: 2px; }
 }

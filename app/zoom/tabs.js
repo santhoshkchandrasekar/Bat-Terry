@@ -5,6 +5,7 @@
 (function () {
   "use strict";
   const doc = document, html = doc.documentElement, root = doc.getElementById("landing");
+  { const ua = navigator.userAgent; if (/AppleWebKit/.test(ua) && !/Chrome\/|Chromium|Edg\//.test(ua)) html.classList.add("tz-wk"); }
   if (!root) return;
   const TEAM = [
     { role: "Wing Lead", name: "Santhoshkumar Chandrasekar", link: "https://iamsanthosh.com", scope: "GenAI system, data, simulator and design", lead: true },
@@ -153,10 +154,23 @@
   root.querySelector(".ld-brand").addEventListener("click", () => hide());
   addEventListener("keydown", e => { if (e.key !== "Escape") return; if (filmOpen()) { e.stopPropagation(); closeFilm(); return; } if (cur) { e.stopPropagation(); hide(); } }, true);
   addEventListener("resize", () => { if (cur) placeInd(links.find(l => KEYS[l.dataset.sheet] === cur)); });
-  // while a tab is open the page must not scroll under it (a document scroll would carry the landing into the planner):
-  // the stage scrolls itself when it has more to show, and nothing else moves
-  const hold = e => { if (!cur || filmOpen()) return; const inStage = stage.contains(e.target) && stage.scrollHeight > stage.clientHeight + 2; e.stopImmediatePropagation(); if (!inStage && e.cancelable) e.preventDefault(); };
+  // while a tab, the film or the 2025 plan is open the page must not scroll under it (a document scroll would carry the landing
+  // into the planner): only the open layer scrolls, when it has more to show, and nothing else moves
+  const planOpen = () => doc.querySelector("#landing .ld-plan.open");
+  const locked = () => cur || filmOpen() || planOpen();
+  const layer = () => filmOpen() ? null : planOpen() ? planOpen().querySelector(".ld-ledger") : cur ? stage : null;
+  const scroller = t => { const b = layer(); return b && t && b.contains(t) && b.scrollHeight > b.clientHeight + 2 ? b : null; };
+  const hold = e => { if (!locked()) return; if (cur || filmOpen()) e.stopImmediatePropagation(); if (!scroller(e.target) && e.cancelable) e.preventDefault(); };
   addEventListener("wheel", hold, { capture: true, passive: false });
   addEventListener("touchmove", hold, { capture: true, passive: false });
+  const KSTEP = { ArrowDown: 60, ArrowUp: -60, PageDown: .85, PageUp: -.85, " ": .85, End: 1e6, Home: -1e6 };
+  addEventListener("keydown", e => {
+    const K = e["key"], step = KSTEP[K]; if (step === undefined || !locked()) return;
+    const a = doc.activeElement, tag = (a && a.tagName) || "";
+    if (/^(INPUT|TEXTAREA|SELECT|VIDEO)$/.test(tag) || (a && a.isContentEditable) || (K === " " && /^(BUTTON|A)$/.test(tag))) return;
+    e.preventDefault(); e.stopImmediatePropagation();
+    const b = layer(); if (!b) return;
+    const dy = Math.abs(step) < 1 ? step * b.clientHeight : step; b.scrollBy({ top: K === " " && e.shiftKey ? -dy : dy });
+  }, true);
   window.TerryTabs = { show, hide, cur: () => cur };
 })();
