@@ -6,7 +6,7 @@
   "use strict";
   if (window.terryHost && window.terryHost.use) return;
   const EP = "/api/llm";
-  window.TerryHost = { model: "GPT-4o mini", note: "Questions you type are sent to OpenAI to answer them." };
+  window.TerryHost = { model: "GPT-6.1 Sol", note: "Questions you type are sent to OpenAI to answer them." };
   const fail = (code, message) => { const e = new Error(message || code); e.code = code; e.message = message || code; return e; };
   async function call(body, signal) {
     let r;
@@ -29,9 +29,11 @@
     opts = opts || {};
     const tools = Array.isArray(opts.tools) ? opts.tools : [], msgs = toMsgs(input);
     const spec = tools.map(t => ({ type: "function", function: { name: t.name, description: String(t.description || "").slice(0, 1000), parameters: t.inputSchema || { type: "object", properties: {} } } }));
+    let prev = null;   // the previous round's response id: the function chains a tool round to it (it holds the model's reasoning)
     for (let round = 0; round < 10; round++) {
       if (opts.signal && opts.signal.aborted) throw fail("cancelled");
-      const j = await call({ messages: msgs, tools: spec.length ? spec : undefined, json: !!wantJson }, opts.signal), m = j && j.message;
+      const j = await call({ messages: msgs, tools: spec.length ? spec : undefined, json: !!wantJson, prev: prev || undefined }, opts.signal), m = j && j.message;
+      prev = (j && j.id) || null;
       if (!m) throw fail("upstream_error");
       if (m.tool_calls && m.tool_calls.length) {
         msgs.push({ role: "assistant", content: m.content || null, tool_calls: m.tool_calls });

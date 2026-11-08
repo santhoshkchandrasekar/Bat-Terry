@@ -140,7 +140,7 @@ A test, not the page: the Ping vocabulary step in `b1808-steps.cjs` read the doc
 ## 8. Known and left as they are
 
 - The Netlify function's limits are read, then written. Two requests at the same instant can both pass just under a cap, so the site can overshoot by one round per simultaneous visitor. The daily dollar cap still bounds it.
-- The function forwards any prompt that starts like one of the page's own. Anyone could use it as a small model proxy, up to the per-visitor and daily dollar caps (defaults: 120 rounds, $1 a day).
+- The function forwards any prompt that starts like one of the page's own. Anyone could use it as a small model proxy, up to the per-visitor and daily dollar caps (defaults: 60 rounds, $3 a day).
 - The guide's own model call (when live answers are on) does not take the viewer's signal; if a viewer's question and a guide line run at once, Terry's chat memory records them in finishing order. Rare and harmless to the plan.
 - After a chase, the goal box takes focus back; that is deliberate (the next goal is the next step).
 

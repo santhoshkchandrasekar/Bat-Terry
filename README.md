@@ -104,7 +104,7 @@ flowchart LR
   ESC -- "simulator as a tool" --> SIM
   ENG --> UI
   TERRY --> UI
-  LLM{{"Language model in the page<br/>gpt-4o-mini via /api/llm on Netlify"}} -. "Ping Terry, intake,<br/>flip and escape wording, alerts" .-> UI
+  LLM{{"Language model in the page<br/>gpt-6.1-sol via /api/llm on Netlify"}} -. "Ping Terry, intake,<br/>flip and escape wording, alerts" .-> UI
   OPENAI{{"OpenAI gpt-4o-mini"}} -. "intake, flip, hunt,<br/>report writing" .-> NB
   INT -- "saved answers for<br/>the resident stream" --> UI
   REP --> DOC[["docs/analysis_report.md"]]
@@ -193,8 +193,9 @@ Full assumptions and limitations are in §10 of the notebook.
 
 ## AI use
 
-* **Language model in the page.** The page uses OpenAI `gpt-4o-mini` through the site's own Netlify function, which holds
-  the key. The model reads goals, alerts and
+* **Language model in the page.** The page uses OpenAI `gpt-6.1-sol` (low reasoning effort) through the site's own Netlify
+  function, which holds the key. The notebook's live Ping evaluation (§6.6) was run on `gpt-4o-mini`, before the site moved
+  to `gpt-6.1-sol`. The model reads goals, alerts and
   questions, writes the flip and escape wording, names predators for the data to test, routes resident reports and
   answers Ping Terry with tools over the plan. It never supplies a number: the engine computes every figure and a
   guardrail checks the ones the model writes.

@@ -2,7 +2,7 @@
 
 The hosted site is the page in `app/` plus `host.js`, which gives the page the two capabilities it uses:
 
-- **sample**: GPT-4o mini, through the site's one function, `/api/llm`.
+- **sample**: GPT-6.1 Sol (OpenAI Responses API, low reasoning effort), through the site's one function, `/api/llm`.
 - **downloads**: a plain browser download.
 
 The OpenAI key lives only in Netlify's environment, never in the page.
@@ -11,18 +11,18 @@ The OpenAI key lives only in Netlify's environment, never in the page.
 
 | Limit | Default | Netlify variable |
 |---|---|---|
-| Whole site, per UTC day | $1.00 of model spend | `TERRY_DAY_USD` |
-| One visitor, per UTC day | 120 model rounds (a Ping question is 2 to 6 rounds; a chase is about 5) | `TERRY_VISITOR_CALLS` |
+| Whole site, per UTC day | $3.00 of model spend | `TERRY_DAY_USD` |
+| One visitor, per UTC day | 60 model rounds (a Ping question is 2 to 6 rounds; a chase is about 5) | `TERRY_VISITOR_CALLS` |
 
 The function keeps the page cheap and safe to share:
 
 - **Prompts:** it forwards only prompts the page itself writes.
 - **Origin:** it refuses requests from other websites.
-- **Model:** it always uses `gpt-4o-mini` with at most 900 output tokens.
+- **Model:** it always uses `gpt-6.1-sol` at low reasoning effort, with at most 4,000 output tokens (reasoning included). A tool round is chained to the previous response, which holds the model's reasoning.
 
 Over a limit, the page answers from its own rules. Ping says "Today's live answers are used up". Nothing breaks.
 
-At GPT-4o mini prices ($0.15 in, $0.60 out per million tokens), one model round of a Ping question costs about half a cent, so $1 a day covers roughly 40 to 100 questions.
+At GPT-6.1 Sol prices ($2 in, $10 out per million tokens), a Ping question costs about 3 cents (about 8,300 input tokens a question, measured), so $3 a day covers roughly 100 questions.
 
 ## Deploy from GitHub (no tools on your computer)
 
