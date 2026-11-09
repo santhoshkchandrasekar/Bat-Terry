@@ -91,3 +91,15 @@ Checked by Pradyuman Turlapati on November 8, 2026, on the live site after a har
 ### Small note
 
 - The flying bat passes over the pop-up's description text for a moment.
+
+
+## Re-test 2 (Nov 8, 2026)
+
+Checked only the 2 items Santhosh fixed, after a hard refresh.
+
+| # | Check | Browser / device | Result |
+|---|---|---|---|
+| 1 | Scroll and arrow keys while demo video is open: page behind stays still, nothing see-through after closing | Firefox (Windows) | Pass |
+| 2 | 2025 plan table swipes sideways in portrait, months after June visible | iPhone 17 Safari, Private tab | Pass |
+
+Both previous fails are now fixed. No new issues found.
