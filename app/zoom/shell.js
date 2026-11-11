@@ -146,7 +146,7 @@
         return { w: pw, h: Math.max(420, vh - 58) };
       }
       if (L.state === "open") {
-        const maxw = wide() ? 330 : 300, ow = Math.max(220, Math.min(maxw, room));
+        const maxw = wide() ? 330 : 300, ow = Math.min(maxw, w - 40);   // a hover-open sheet floats over the page, so it takes its full width instead of squeezing into the gutter
         const hh = cfg.height ? cfg.height(L) : Math.min(620, vh - 60);
         return { w: ow, h: Math.max(cfg.minH || 420, Math.min(hh, vh - 130)) };
       }

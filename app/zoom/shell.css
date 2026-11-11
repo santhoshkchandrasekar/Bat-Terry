@@ -43,6 +43,12 @@
   .leaf[data-side="left"][data-state] .lf-label { left: 74%; } .leaf[data-side="right"][data-state] .lf-label { left: auto; right: 74%; }
 }
 .leaf[data-state="open"], .leaf[data-state="pinned"] { --tilt: 0deg; }
+/* while the sheet shape is showing (opening, open, and the moment it folds back) the leaf hangs straight and fully in frame,
+   so it never tucks or tilts with the sheet cap showing; and a strip across the top keeps the pointer "on" the leaf while it
+   slides in from the edge, so a hover from the tucked position does not fall off and close it again */
+.leaf[data-shape="sheet"][data-side] { --tuck: 0px; --tilt: 0deg; }
+.leaf[data-state="open"]::before { content: ""; position: absolute; top: -64px; height: 110px; width: 76px; pointer-events: auto; }
+.leaf[data-side="left"][data-state="open"]::before { left: -14px; } .leaf[data-side="right"][data-state="open"]::before { right: -14px; }
 @media (prefers-reduced-motion: no-preference) {
   .leaf[data-state="rest"] .lf-blade { animation: lfsway 6s ease-in-out infinite; }
   .leaf[data-side="right"][data-state="rest"] .lf-blade { animation-delay: -3s; }
@@ -377,7 +383,7 @@
 
 /* item 5: while the plan plays (html.spot) the leaves and the dock step back to .35 and stop taking input.
    Host-level opacity: the glass blur goes flat for the few seconds it plays, which a 90% fill hides. */
-.leaf { transition: width .36s var(--unfurl), height .36s var(--unfurl), transform .42s var(--unfurl), opacity .3s var(--settle); }
+.leaf { transition: width .36s var(--unfurl), height .36s var(--unfurl), transform .42s var(--unfurl), opacity .3s var(--settle), left .42s var(--unfurl), right .42s var(--unfurl); }
 .dock { transition: width .32s var(--unfurl), margin-left .32s var(--unfurl), transform .28s var(--settle), opacity .3s var(--settle); }
 html.spot .leaf, html.spot .dock, html.spot .dock-handle { opacity: .35; pointer-events: none; }
 html.spot .leaf *, html.spot .dock * { pointer-events: none !important; }
@@ -386,6 +392,9 @@ html.spot .leaf *, html.spot .dock * { pointer-events: none !important; }
 
 /* an open sheet starts under the nav so the brand and the Day and Night toggle stay visible and clickable */
 .leaf[data-state="open"] { top: 64px; }
+/* ...and its string still runs up to the top edge, so the open sheet hangs from the same place as the leaf */
+.leaf[data-state="open"]::after { content: ""; position: absolute; left: 50%; top: -64px; width: 2.4px; height: 66px; margin-left: -1.2px; background: #6E4A2C; border-radius: 1px; pointer-events: none; }
+:root[data-theme="night"] .leaf[data-state="open"]::after { background: #8A6440; }
 
 /* ================================================================== fix round: nothing on the projector or the sheets is cut, faded or overlapping */
 /* the title bar on a small cloth: the crumbs shrink and truncate, the controls stay whole and inside the cloth */
