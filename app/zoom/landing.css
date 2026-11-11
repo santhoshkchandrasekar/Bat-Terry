@@ -230,3 +230,9 @@ html.op-run #landing .ld-terry { opacity: 0; }
   #landing .ld-sit { font-size: 17px; }
   #landing .ld-go { margin-top: 2px; }
 }
+/* phones and small tablets: only the table scrolls sideways, the title and the department names stay in place */
+@media (max-width: 1000px) {
+  #landing .ld-ledger { overflow-x: hidden; }
+  #landing .ld-ledger .ld-lt { display: block; max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+  #landing .ld-lt tr > :first-child { position: sticky; left: 0; z-index: 1; background: var(--l-sheet); box-shadow: 8px 0 8px -8px rgba(0,0,0,.22); }
+}
