@@ -1,6 +1,5 @@
-/* Section rail: a slim glass capsule of section icons, centered in the margin between the screen edge and the section on
-   screen; it glides as that margin changes and never sits up among the branch. Hovering widens it on both sides into a
-   labelled list. Each entry makes the same move as Ping's "go to ..." (TerryGuide.go), so the rail and Ping always agree.
+/* Section rail: a slim glass capsule of section icons at the left edge of the screen; it never sits up among the branch.
+   Hovering widens it into a labelled list. Each entry makes the same move as Ping's "go to ..." (TerryGuide.go), so the rail and Ping always agree.
    Entries that only exist after a chase stay faded. Laptops only (rail.css hides it on phones and narrow windows). */
 (function () {
   "use strict";
@@ -33,17 +32,16 @@
   let raf = 0;
   function update() {
     raf = 0; if (getComputedStyle(nav).display === "none") return;
-    const mid = innerHeight * 0.45; let best = null, bestScore = 1e12, frameLeft = null;
+    const mid = innerHeight * 0.45; let best = null, bestScore = 1e12;
     for (const x of ITEMS) {
       const e = x.el(), r = e && e.getBoundingClientRect(), live = !!(r && r.height > 0);
       btn(x.key).classList.toggle("later", !!x.needsChase && !live);
       if (!live) continue;
       // the smallest section that covers the reading line wins (a sub-section beats the block it sits in)
       const covers = r.top <= mid && r.bottom >= mid, score = covers ? r.height : 1e6 + Math.min(Math.abs(r.top - mid), Math.abs(r.bottom - mid));
-      if (score < bestScore) { bestScore = score; best = x.key; const f = x.frame ? x.frame() : e; frameLeft = f.getBoundingClientRect().left; }
+      if (score < bestScore) { bestScore = score; best = x.key; }
     }
     nav.querySelectorAll("button").forEach(b => { const on = b.dataset.k === best; b.classList.toggle("here", on); if (on) b.setAttribute("aria-current", "location"); else b.removeAttribute("aria-current"); });
-    if (frameLeft !== null) nav.style.setProperty("--cx", Math.max(35, Math.round(frameLeft / 2)) + "px");
     // vertically centered, but never up among the branch and the rig: at the top of the page it starts level with the projector
     // cloth, and it always stays clear of the Ping dock at the bottom
     const h = nav.offsetHeight, fab = $("#fab"), ft = fab ? fab.getBoundingClientRect().top : -1e4;

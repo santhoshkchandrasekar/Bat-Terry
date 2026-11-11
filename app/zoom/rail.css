@@ -1,9 +1,9 @@
 /* Section rail: a slim glass capsule of section icons in the left margin (laptops only); the logic is rail.js */
-#srail { --w: 46px; --cx: 60px; position: fixed; top: 50%; z-index: 20; box-sizing: border-box;
-  left: max(12px, calc(var(--cx) - var(--w) / 2)); width: var(--w); padding: 8px 0; border-radius: 23px; overflow: hidden;
+#srail { --w: 46px; position: fixed; top: 50%; z-index: 20; box-sizing: border-box;
+  left: 14px; width: var(--w); padding: 8px 0; border-radius: 23px; overflow: hidden;
   background: rgba(32,20,17,.5); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%);
   border: 1px solid rgba(255,244,230,.16); box-shadow: inset 0 1px 0 rgba(255,244,230,.08), 0 12px 32px -14px rgba(0,0,0,.5);
-  transition: left .5s cubic-bezier(.2,.8,.2,1), width .34s cubic-bezier(.2,.8,.2,1), background .3s, opacity .3s; font: 500 13px/1 var(--ui, system-ui); }
+  transition: width .34s cubic-bezier(.2,.8,.2,1), background .3s, opacity .3s; font: 500 13px/1 var(--ui, system-ui); }
 #srail:hover, #srail:focus-within { --w: 220px; background: rgba(32,20,17,.62); }
 #srail button { display: flex; align-items: center; width: 220px; height: 38px; padding: 0; border: 0; background: none; cursor: pointer;
   color: rgba(255,244,230,.78); font: inherit; text-align: left; white-space: nowrap; transition: color .2s; }
@@ -19,6 +19,15 @@
 #srail button.here .lb { font-weight: 600; }
 #srail button.later { color: rgba(255,244,230,.34); cursor: default; }
 #srail button.later .lb::after { content: "  after a chase"; font-size: 11px; font-weight: 400; }
+/* Dusk: a light frosted pill with ink icons (Night keeps the dark glass) */
+:root:not([data-theme="night"]) #srail { background: rgba(255,248,238,.58); border-color: rgba(255,255,255,.7);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 10px 28px -12px rgba(60,30,15,.45); }
+:root:not([data-theme="night"]) #srail:hover, :root:not([data-theme="night"]) #srail:focus-within { background: rgba(255,248,238,.84); }
+:root:not([data-theme="night"]) #srail button { color: rgba(46,28,20,.66); }
+:root:not([data-theme="night"]) #srail button:hover, :root:not([data-theme="night"]) #srail button:focus-visible,
+:root:not([data-theme="night"]) #srail button.here { color: #2B1A13; }
+:root:not([data-theme="night"]) #srail button.here .ic::before { background: rgba(46,28,20,.1); box-shadow: inset 0 0 0 1px rgba(46,28,20,.16); }
+:root:not([data-theme="night"]) #srail button.later { color: rgba(46,28,20,.3); }
 html.rail-hide #srail { opacity: 0; pointer-events: none; }
 html.ld-on #srail { opacity: 0; pointer-events: none; }
 html.spot #srail { opacity: .35; pointer-events: none; }
