@@ -30,6 +30,38 @@ city's real request types.
   department on routable ones).
 * **Inspectional Services:** its lateness is mostly inspection and legal process, not crew count. More crews won't fix it.
 
+## Under the hood
+
+The bat is the interface. Underneath it is a forecast, a simulator and an optimizer that compute every number, and a
+language model that is only allowed to word things and route them.
+
+1. **Data.** Boston 311 records for 2022 to 2024, four departments. One trap shaped the pipeline: the raw timestamps mix
+   two formats, and default parsing silently dropped 29% to 44% of the dates in two departments. Every timestamp is now
+   parsed explicitly and checked.
+2. **Forecast, chosen by backtest.** Four methods (seasonal average, seasonal naive, damped growth, Holt-Winters)
+   forecast 2024 from 2022 and 2023. A seasonal average re-leveled to the latest year won in three of four departments,
+   at 7.3% to 14.0% monthly MAPE. The more useful finding was the shape of the error: the annual miss is about as large as
+   the monthly one (Transportation 7.5% against 7.3%), so the risk is a whole-year level shift. No forecaster removes a
+   shift it can't see coming, so the plan is built to absorb it instead.
+3. **Simulator.** A day-level model replays 2024's real requests into 2025, scaled to the forecast, each with its real
+   target date. Crews close the earliest-due work first, under every rule in the brief, and requests still open on
+   31 December are charged, so no department can look good by pushing work into 2026. A full year runs in about 15 ms.
+4. **Optimizer.** Our first plan, optimized on the point forecast, broke at +5% demand: Transportation's on-time rate fell
+   from 99% to 17% at +10%. The final plans minimize expected cost over demand ×0.86, ×1.00 and ×1.14 (weights 1/6, 2/3,
+   1/6), a spread calibrated from the backtest. The recommended plan costs $15.62M expected against $21.81M for keeping
+   January's crews, and stays at least 90% on time across that whole range.
+5. **The same model in the browser.** `app/live/engine.js` ports the simulator and optimizer to JavaScript and matches
+   the Python within 0.5% (`node app/live/validate.mjs`), so every figure on the page is computed, not stored text.
+6. **The language model, on a leash.** It never supplies a number. The intake assistant retrieves from the city's 124
+   real routing targets and may only choose among them: 82.5% right request type on 200 held-out messages written by a
+   different model. Across 24 goal flips it invented 0 request types. Ping Terry may only state figures that trace to a
+   tool result, a cited glossary chunk or the page's own state, or the sentence is rewritten and then removed: 42 of 42
+   live answers passed. With no model at all, the page still works from rules.
+
+**Limits.** One city and two years of history to learn from. Crews are the only lever; costs and capacities are the
+brief's assumptions. The equity map compares like-for-like request types but is not population-normalized. The intake's
+89% (after one fix) was measured on the same set that suggested the fix, so 82.5% is the honest number.
+
 ## The page
 
 Open it, scroll, name a goal, and press **Chase it**.
