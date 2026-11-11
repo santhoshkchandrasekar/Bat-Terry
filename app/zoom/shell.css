@@ -30,9 +30,18 @@
 
 /* ------------------------------------------------------------------ the leaf */
 .leaf { position: fixed; top: 0; z-index: 25; pointer-events: none; color: var(--lf-text); width: var(--w, 92px); height: calc(var(--h, 196px) + 22px);
-  transform-origin: 50% 0; transform: rotate(var(--tilt, 0deg)); transition: width .36s var(--unfurl), height .36s var(--unfurl), transform .42s var(--unfurl); }
-.leaf[data-side="left"] { left: 14px; --tilt: 5deg; }
-.leaf[data-side="right"] { right: 14px; --tilt: -5deg; }
+  transform-origin: 50% 0; transform: rotate(var(--tilt, 0deg)); transition: width .36s var(--unfurl), height .36s var(--unfurl), transform .42s var(--unfurl), left .42s var(--unfurl), right .42s var(--unfurl); }
+/* at rest a leaf hangs mostly out of frame: its stem (and the string it hangs from) stays on screen at the very edge, the blade
+   swings outward, and the label sits on the visible inner half. Hover, focus or a tap opens it fully into the frame. */
+.leaf[data-state="rest"] { --tuck: calc(var(--w, 108px) / 2 - 12px); }
+.leaf[data-side="left"] { left: calc(14px - var(--tuck, 0px)); --tilt: 9deg; }
+.leaf[data-side="right"] { right: calc(14px - var(--tuck, 0px)); --tilt: -9deg; }
+/* phones: further out and swung wider, so the goal bar and Chase it stay clear; any touch on the visible part opens it */
+@media (max-width: 700px) {
+  .leaf[data-state="rest"] { --tuck: calc(var(--w, 108px) / 2 - 2px); }
+  .leaf[data-side="left"] { --tilt: 15deg; } .leaf[data-side="right"] { --tilt: -15deg; }
+  .leaf[data-side="left"][data-state] .lf-label { left: 74%; } .leaf[data-side="right"][data-state] .lf-label { left: auto; right: 74%; }
+}
 .leaf[data-state="open"], .leaf[data-state="pinned"] { --tilt: 0deg; }
 @media (prefers-reduced-motion: no-preference) {
   .leaf[data-state="rest"] .lf-blade { animation: lfsway 6s ease-in-out infinite; }
@@ -82,6 +91,7 @@
 .lf-stembtn:hover { background: var(--lf-hover); color: var(--lf-text); }
 .lf-stembtn svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .lf-label { position: absolute; left: 58%; top: 56px; writing-mode: vertical-rl; font: 700 11px/1 var(--ui); letter-spacing: .14em; text-transform: uppercase; color: var(--lf-text2); pointer-events: none; transition: opacity .2s; white-space: nowrap; }
+.leaf[data-side="right"] .lf-label { left: auto; right: 58%; }
 .leaf[data-state="open"] .lf-label, .leaf[data-state="pinned"] .lf-label { opacity: 0; }
 .lf-count { position: absolute; left: calc(50% + 6px); top: 4px; min-width: 20px; height: 20px; padding: 0 5px; z-index: 4; box-shadow: 0 0 0 2px var(--lf-ring, rgba(255,255,255,.9)); border-radius: 11px; background: var(--lf-badge); color: var(--lf-badge-ink); font: 700 11.5px/20px var(--ui); text-align: center; pointer-events: none; transition: opacity .2s; }
 .lf-count[hidden] { display: none; }
