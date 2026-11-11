@@ -187,7 +187,8 @@
   // fold away, move, land: like the Chase it card (instant under reduced motion)
   async function move(to) {
     if (!build()) return; const tt = doc.querySelector("#terrytory"); if (!tt) return;
-    const target = to === "empty" ? tt.querySelector(".rbody.empty") : tt; if (!target) return;
+    if (to === "empty" && !tt.querySelector(".rbody.empty")) return;
+    const target = tt;   // always the foot of the page, under Echolocation (owner 11 Nov); "where" still says whether a chase has happened
     if (where === to && sec.parentNode === target) { render(); return; }
     if (sec.isConnected && !reduced()) { sec.classList.add("ldg-fold"); await new Promise(r => setTimeout(r, 380)); }
     where = to; render(); target.appendChild(secHead); target.appendChild(sec); sec.classList.remove("ldg-fold");

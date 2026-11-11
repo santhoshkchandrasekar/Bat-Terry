@@ -31,7 +31,8 @@
       </svg></div><h2 id="narrow-h">This one needs a bigger screen</h2>
       <p>Hi, I'm Terry. My projector, my ledger and my map of Boston need a laptop or a desktop to fit. Want me to send you the link, so you can open it there later?</p>
       <div class="nn-acts">${share ? `<button type="button" class="nn-go nn-share">Send me the link</button>` : `<a class="nn-go" href="${mail}">Email me the link</a>`}
-      <button type="button" class="nn-alt">Look around anyway</button></div></div>`;
+      <button type="button" class="nn-alt">Look around anyway</button></div>
+      <div class="nn-done" hidden><p class="nn-msg"></p><input class="nn-url" type="text" readonly aria-label="Link to Bat-Terry" value="${url().replace(/"/g, "&quot;")}"></div></div>`;
     const st = document.createElement("style");
     st.textContent = `#narrow-note{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;padding:16px;background:rgba(var(--shadow,27,25,22),.55);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
 #narrow-note .nn-card{max-width:380px;width:100%;padding:24px 22px 20px;border-radius:8px;background:var(--paper,#FFFDF9);color:var(--ink,#1B1916);box-shadow:0 18px 50px rgba(0,0,0,.3)}
@@ -41,7 +42,10 @@
 #narrow-note .nn-acts{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 #narrow-note .nn-go{display:inline-flex;align-items:center;height:40px;padding:0 18px;border:0;border-radius:20px;background:var(--ink,#1B1916);color:var(--paper,#FFFDF9);font:600 14px var(--ui,system-ui);cursor:pointer;text-decoration:none}
 #narrow-note .nn-alt{height:40px;padding:0 6px;border:0;background:none;color:var(--ink2,#4A453F);font:500 14px var(--ui,system-ui);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
-#narrow-note .nn-go:focus-visible,#narrow-note .nn-alt:focus-visible{outline:2px solid var(--focus,#2B5A86);outline-offset:3px}
+#narrow-note .nn-done{margin-top:16px;padding-top:14px;border-top:1px solid rgba(27,25,22,.12)}
+#narrow-note .nn-done p{margin:0 0 10px;font-size:14px}
+#narrow-note .nn-url{width:100%;box-sizing:border-box;height:38px;padding:0 12px;border:1px solid rgba(27,25,22,.2);border-radius:8px;background:#fff;color:var(--ink,#1B1916);font:14px var(--ui,system-ui)}
+#narrow-note .nn-go:focus-visible,#narrow-note .nn-alt:focus-visible,#narrow-note .nn-url:focus-visible{outline:2px solid var(--focus,#2B5A86);outline-offset:3px}
 #narrow-note .nn-top{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin:-8px 0 2px}
 #narrow-note .nn-top .nn-k{margin-bottom:12px}
 #narrow-note .nn-bat{width:160px;height:70px;flex:none;overflow:visible}
@@ -80,14 +84,25 @@
     const go = d.querySelector(".nn-go"), alt = d.querySelector(".nn-alt");
     const close = () => { seen = true; try { sessionStorage.setItem("terry.narrow", "1"); } catch (e) {} d.remove(); };
     const sh = d.querySelector(".nn-share");
+    d.querySelector(".nn-url").addEventListener("focus", e => e.target.select());
     if (sh) sh.addEventListener("click", async () => { try { await navigator.share({ title: "Bat-Terry", text: "Boston's 311 crew planner. Open it on a laptop or desktop.", url: url() }); close(); } catch (e) { /* closed the sheet: stay */ } });
-    else go.addEventListener("click", () => setTimeout(close, 300));
+    // the email draft needs a mail app on this device; without one (or inside a locked-down frame) the click goes nowhere.
+    // So the link is also copied, and the note stays open with the link shown, until "Look around anyway" (owner 11 Nov)
+    else go.addEventListener("click", () => {
+      const done = d.querySelector(".nn-done"), msg = d.querySelector(".nn-msg"), box = d.querySelector(".nn-url");
+      const say = ok => { msg.textContent = ok ? "Link copied. If my echoes couldn't reach your mail app, paste it into a note to yourself."
+                                              : "If my echoes couldn't reach your mail app, here's the link to copy."; done.hidden = false; };
+      const old = () => { try { box.focus(); box.select(); return document.execCommand("copy"); } catch (e) { return false; } };
+      done.hidden = false;
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url()).then(() => say(true), () => say(old()));
+      else say(old());
+    });
     alt.addEventListener("click", close);
-    const foc = [go, alt];
+    const foc = [go, alt, d.querySelector(".nn-url")];
     d.addEventListener("keydown", e => {
       const k = e.key;
       if (k === "Escape") close();
-      if (k === "Tab") { e.preventDefault(); const i = foc.indexOf(document.activeElement); foc[(i + (e.shiftKey ? foc.length - 1 : 1)) % foc.length].focus(); }
+      if (k === "Tab") { e.preventDefault(); const f = foc.filter(x => x && !x.closest("[hidden]")), i = f.indexOf(document.activeElement); f[(i + (e.shiftKey ? f.length - 1 : 1)) % f.length].focus(); }
     });
     setTimeout(() => go.focus(), 30);
   }

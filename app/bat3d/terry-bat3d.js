@@ -859,12 +859,16 @@
     }
 
     /* ---- main loop */
+    // while the opening film covers the page, only the opening's own Terry is drawn; the others keep moving exactly as before
+    // (so they are where they should be when the house lights come up) but skip the drawing, which is the expensive part
+    const docEl = document.documentElement, mine = !!container.closest("#opening");
+    const covered = () => !mine && docEl.classList.contains("op-run") && !docEl.classList.contains("op-lit");
     function frame(now) {
       raf = requestAnimationFrame(frame);
       if (!visible || frozen) { last = null; return; }
       let dt = last == null ? 1 / 60 : Math.min((now - last) / 1000, 0.05); last = now;
       dt *= st.speed; if (reduced && st.mode !== "hang") hangNow();
-      stepTweens(dt); update(dt); renderer.render(scene, camera);
+      stepTweens(dt); update(dt); if (!covered()) renderer.render(scene, camera);
     }
     const io = new IntersectionObserver(es => { visible = es[0].isIntersecting; }); io.observe(container);
     if (opts.hang || reduced) hangNow();

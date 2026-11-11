@@ -4,6 +4,7 @@
 (function () {
   "use strict";
   const $ = s => document.querySelector(s);
+  const part = s => { for (const b of document.querySelectorAll("#rbodies > .rbody")) { if (b.hidden) continue; const e = b.querySelector(s); if (e && e.getBoundingClientRect().height > 0) return e; } return null; };
   const I = {
     goal: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4.2"/><circle cx="12" cy="12" r="1.2" class="f"/>',
     projector: '<path d="M9 2.5 7.5 4.5M15 2.5l1.5 2"/><rect x="3" y="4.5" width="18" height="2.4" rx="1.2"/><path d="M4.8 6.9v10.6h14.4V6.9"/><path d="M7.8 14.5l2.9-3 2.3 2 3.4-3.6"/><path d="M12 17.5v2.2"/>',
@@ -15,33 +16,51 @@
     echo: '<circle cx="12" cy="2.8" r="1.3" class="f"/><path d="M9.3 5.4c1.6 1.3 3.8 1.3 5.4 0"/><path d="M6.8 7.8c3.1 2.4 7.3 2.4 10.4 0"/><path d="M2.8 14.2l6-2 6.4 2 6-2v7.8l-6 2-6.4-2-6 2z"/><path d="M8.8 12.2v7.8M15.2 14.2v7.8"/>',
   };
   const ITEMS = [
-    { key: "goal", label: "Goal", el: () => $("#goalform"), frame: () => $("#fab") },
+    { key: "goal", label: "Goal", el: () => { const f = $("#goalform"); return f && f.getBoundingClientRect().height > 0 ? f : $("#goalpill"); } },
     { key: "projector", label: "Projector", el: () => $("#fab") },
     { key: "machine", label: "Almanac & BUDGETerry", el: () => $("#almanac") },
-    { key: "fail", label: "Flip side", el: () => $("#failcard"), needsChase: true },
-    { key: "pred", label: "Predators", sub: true, el: () => $("#rbodies section.pred:not(.qs)"), needsChase: true },
-    { key: "fly", label: "Flyway", sub: true, el: () => $("#flysec"), needsChase: true },
-    { key: "ledger", label: "2025 crew plan", el: () => $("#ledger") },
+    { key: "fail", label: "Flip side", el: () => part(".tt-top") || $("#failcard"), needsChase: true },
+    { key: "pred", label: "Predators", sub: true, el: () => part("section.pred:not(.qs)"), needsChase: true },
+    { key: "fly", label: "Flyway", sub: true, el: () => { const f = part("section.flyp"); return f ? (f.closest(".tt-fadein") || f) : $("#flysec"); }, needsChase: true },
     { key: "echo", label: "Echolocation", el: () => $("#terrytory section.qs") },
+    { key: "ledger", label: "2025 crew plan", el: () => $("#ledger") },
   ];
   const nav = document.createElement("nav"); nav.id = "srail"; nav.setAttribute("aria-label", "Sections on this page");
-  nav.innerHTML = ITEMS.map(x => `<button type="button" data-k="${x.key}" aria-label="Go to ${x.label}" title="${x.label}"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true">${I[x.key]}</svg></span><span class="lb">${x.label}</span></button>`).join("");
+  nav.innerHTML = `<span class="lns" aria-hidden="true"></span>` + ITEMS.map(x => `<button type="button" data-k="${x.key}" aria-label="Go to ${x.label}" title="${x.label}"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true">${I[x.key]}</svg></span><span class="lb">${x.label}</span></button>`).join("");
   document.body.appendChild(nav);
-  const btn = k => nav.querySelector(`[data-k="${k}"]`);
-  nav.addEventListener("click", e => { const b = e.target.closest("button"); if (!b || b.classList.contains("later")) return; const G = window.TerryGuide; if (G && G.go) G.go(b.dataset.k); });
+  const btn = k => nav.querySelector(`[data-k="${k}"]`), lns = nav.querySelector(".lns");
+  nav.addEventListener("click", async e => {
+    const b = e.target.closest("button"); if (!b || b.classList.contains("later")) return;
+    const k = b.dataset.k, item = ITEMS.find(x => x.key === k), G = window.TerryGuide;
+    const r = G && G.go ? await G.go(k) : null;
+    // Ping could not take you (busy with something, or the spot moved): the rail scrolls there itself
+    if (!r || !r.ok) { const el = item && item.el(); if (el) el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" }); }
+  });
   let raf = 0;
   function update() {
     raf = 0; if (getComputedStyle(nav).display === "none") return;
-    const mid = innerHeight * 0.45; let best = null, bestScore = 1e12;
+    // every section that is properly in view is lit (most of a small one, or a good part of the screen for a tall one);
+    // when nothing is, the nearest one is. Lit icons that sit next to each other in the list are joined by a line.
+    const mid = innerHeight * 0.45, lit = []; let best = null, bestScore = 1e12;
     for (const x of ITEMS) {
       const e = x.el(), r = e && e.getBoundingClientRect(), live = !!(r && r.height > 0);
       btn(x.key).classList.toggle("later", !!x.needsChase && !live);
       if (!live) continue;
-      // the smallest section that covers the reading line wins (a sub-section beats the block it sits in)
-      const covers = r.top <= mid && r.bottom >= mid, score = covers ? r.height : 1e6 + Math.min(Math.abs(r.top - mid), Math.abs(r.bottom - mid));
-      if (score < bestScore) { bestScore = score; best = x.key; }
+      const seen = Math.max(0, Math.min(r.bottom, innerHeight) - Math.max(r.top, 0));
+      if (seen > 24 && seen >= Math.min(r.height * 0.6, innerHeight * 0.3)) lit.push(x.key);
+      const d = r.top <= mid && r.bottom >= mid ? 0 : Math.min(Math.abs(r.top - mid), Math.abs(r.bottom - mid));
+      if (d < bestScore) { bestScore = d; best = x.key; }
     }
-    nav.querySelectorAll("button").forEach(b => { const on = b.dataset.k === best; b.classList.toggle("here", on); if (on) b.setAttribute("aria-current", "location"); else b.removeAttribute("aria-current"); });
+    if (!lit.length && best) lit.push(best);
+    const keys = ITEMS.map(x => x.key), idx = lit.map(k => keys.indexOf(k)).sort((a, b) => a - b);
+    nav.querySelectorAll("button").forEach(b => { const on = lit.includes(b.dataset.k); b.classList.toggle("here", on); if (on && b.dataset.k === keys[idx[0]]) b.setAttribute("aria-current", "location"); else b.removeAttribute("aria-current"); });
+    // the joining line runs in the gaps between icons, from the first lit icon to the last, so it never crosses an icon
+    let segs = "";
+    if (idx.length > 1) for (let i = idx[0]; i < idx[idx.length - 1]; i++) {
+      const a = btn(keys[i]), b2 = btn(keys[i + 1]), y1 = a.offsetTop + a.offsetHeight / 2 + 11, y2 = b2.offsetTop + b2.offsetHeight / 2 - 11;
+      if (y2 > y1) segs += `<i style="top:${y1}px;height:${y2 - y1}px"></i>`;
+    }
+    if (lns.innerHTML !== segs) lns.innerHTML = segs;
     // vertically centered, but never up among the branch and the rig: at the top of the page it starts level with the projector
     // cloth, and it always stays clear of the Ping dock at the bottom
     const h = nav.offsetHeight, fab = $("#fab"), ft = fab ? fab.getBoundingClientRect().top : -1e4;

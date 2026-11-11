@@ -637,3 +637,13 @@ html.mx-open .dock, html.mx-open .dock-handle { z-index: 80; }
 
 :root:not([data-theme="night"]) { --lf-paper: #F8E6CB; --lf-hair: rgba(185,90,42,.45); }
 :root:not([data-theme="night"]) .leaf[data-shape="sheet"] .lf-capg { background: #F8E6CB; }
+
+/* Terrytory: while the first message is on its way, a small bat flaps beside a line of what Terry is doing */
+.tf-wait { display: flex; align-items: center; gap: 12px; padding: 16px 6px 8px; color: var(--lf-text2); font: italic 400 13px/1.4 var(--ui); }
+.tf-batw { flex: none; display: grid; place-items: center; width: 40px; height: 34px; animation: tf-bob 1.6s ease-in-out infinite; }
+.tf-bat { width: 38px; height: 38px; fill: currentColor; opacity: .9; transform-origin: 50% 38%; animation: tf-flap .42s ease-in-out infinite alternate; }
+.tf-wt.in { animation: tf-in .35s ease both; }
+@keyframes tf-flap { from { transform: scaleY(1); } to { transform: scaleY(.62) translateY(1px); } }
+@keyframes tf-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+@keyframes tf-in { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .tf-batw, .tf-bat, .tf-wt.in { animation: none; } }

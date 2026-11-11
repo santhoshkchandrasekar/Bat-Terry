@@ -251,12 +251,23 @@
       z.scene.pause(); z.scene.setDay(day + 0.5); return true;
     } catch (e) { console.warn("replay projector", e && e.message); return false; }
   }
+  // while the first message is on its way: a flapping bat and a few short lines, so the wait reads as work, not a stall
+  const WAIT = ["Opening the city's 311 inbox for the day", "Reading the first resident message", "Working out what they are asking for", "Picking the request type and the crew"];
+  const WAITBAT = "M12 7.4c-.5-.9-1.4-1.4-2-1.5l.3 1.6C8.3 6.8 5 5.5 2 6c1.6.9 2.5 2.4 2.6 4.2 1-.7 2.3-.8 3.3-.1.4-1.1 1.3-1.7 2.3-1.7.3 1.6 1 2.9 1.8 3.8.8-.9 1.5-2.2 1.8-3.8 1 0 1.9.6 2.3 1.7 1-.7 2.3-.6 3.3.1.1-1.8 1-3.3 2.6-4.2-3-.5-6.3.8-8.3 1.5l.3-1.6c-.6.1-1.5.6-2 1.5z";
+  let waitT = 0;
+  function startWait() {
+    stopWait(); const w = el("div", "tf-wait", `<span class="tf-batw" aria-hidden="true"><svg class="tf-bat" viewBox="0 0 24 24"><path d="${WAITBAT}"/></svg></span><span class="tf-wt"></span>`);
+    const t = w.querySelector(".tf-wt"); let k = 0; t.textContent = WAIT[0] + "...";
+    ui.feed.appendChild(w);
+    waitT = setInterval(() => { k = (k + 1) % WAIT.length; t.classList.remove("in"); void t.offsetWidth; t.textContent = WAIT[k] + "..."; t.classList.add("in"); }, 1700);
+  }
+  function stopWait() { clearInterval(waitT); waitT = 0; const w = ui && ui.feed && ui.feed.querySelector(".tf-wait"); if (w) w.remove(); }
   async function playStream(tilt) {
     if (streaming) { stopStream = true; return; }
     streaming = true; stopStream = false; setPlayUI(true);
-    tallyN = {}; renderTally(); ui.feed.textContent = ""; ui.banner.textContent = ""; surges = [];
+    tallyN = {}; renderTally(); ui.feed.textContent = ""; ui.banner.textContent = ""; surges = []; startWait();
     try {
-      const c = await Sh().ensure(), S = c.S; if (!S) { ui.feed.innerHTML = '<p class="tf-empty">Terry did not hear that. Try again.</p>'; return; }
+      const c = await Sh().ensure(), S = c.S; if (!S) { stopWait(); ui.feed.innerHTML = '<p class="tf-empty">Terry did not hear that. Try again.</p>'; return; }
       const day = replayDayNow(), msgs = S.batch(day, tilt.BTDT ? 30 : 20, tilt), routed = [], n = msgs.length; setDayUI("Replay", day);
       onScreen = await toProjector(day, tilt); ui.sample.textContent = sampleText(day, n, tilt); lastReplay = { day, n, tilt }; dayRouted = []; dayT = day; played = day;
       log(tilt.BTDT ? "Replayed a busy Transportation day" : "Played a day of messages", "stream");
@@ -265,7 +276,7 @@
       const pool = [worker(), worker(), worker()];
       for (let i = 0; i < n && !stopStream; i++) {
         while (!promises[i] && !stopStream) await sleep(30);
-        const r = await promises[i]; if (stopStream) break; routed.push(r); dayRouted.push(r);
+        const r = await promises[i]; if (stopStream) break; routed.push(r); dayRouted.push(r); stopWait();
         ui.feed.insertBefore(feedItem(r, i, n, !reduced()), ui.feed.firstChild);
         if (r.dept && !r.follow_up) { tallyN[r.dept] = (tallyN[r.dept] || 0) + 1; renderTally(); queueEnvelope(r.dept, day); }
         await sleep(Math.round(2400 / speed));
@@ -275,8 +286,8 @@
         const w = S.warn(day, routed, H().plan()), done = el("p", "tf-done", `<time class="tf-time">17:52</time><span>Day done. ${n} routed${w.alerts.length ? "." : ", every department within its usual share."}</span>`);
         ui.feed.insertBefore(done, ui.feed.firstChild); surgeAlerts(w, day);
       }
-    } catch (e) { ui.feed.innerHTML = '<p class="tf-empty">Terry did not hear that. Try again.</p>'; console.warn("stream", e && e.message); }
-    finally { streaming = false; onScreen = false; setPlayUI(false); envQ.length = 0; ui.hint.textContent = HINT; if (!ui.feed.children.length) ui.feed.innerHTML = '<p class="tf-empty">Press play to watch Terry route each message.</p>'; renderDay(); }
+    } catch (e) { stopWait(); ui.feed.innerHTML = '<p class="tf-empty">Terry did not hear that. Try again.</p>'; console.warn("stream", e && e.message); }
+    finally { stopWait(); streaming = false; onScreen = false; setPlayUI(false); envQ.length = 0; ui.hint.textContent = HINT; if (!ui.feed.children.length) ui.feed.innerHTML = '<p class="tf-empty">Press play to watch Terry route each message.</p>'; renderDay(); }
   }
   function showAnswerCard(text) {
     if (answerCardEl) answerCardEl.remove(); const c = el("div", "tf-ans"); c.innerHTML = `<p>${esc(text)}</p>`; c.appendChild(mkBtn("Clear", "tf-ghost", () => { c.remove(); answerCardEl = null; })); answerCardEl = c; ui.banner.parentNode.insertBefore(c, ui.banner);

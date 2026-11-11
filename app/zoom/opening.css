@@ -2,6 +2,9 @@
    Everything sits on one fixed layer above the page; the page loads underneath. */
 html.op-run, html.op-run body { overflow: hidden !important; }
 html.op-run .hero .brand { opacity: 0; }
+/* while the film fully covers the page, the page is laid out but not painted (its glass blurs and animations cost frames);
+   it paints again the moment the house lights start to come up (op-lit) or the film is skipped (op-land) */
+html.op-run:not(.op-lit):not(.op-land) :is(#page, .leaf, .dock, .dock-handle, #srail, #skipbtn) { visibility: hidden; }
 html.op-land .hero .brand { opacity: 1; transition: none; }
 
 #opening {
@@ -68,8 +71,8 @@ html.op-land .hero .brand { opacity: 1; transition: none; }
 #opening .op-stage { z-index: 3; }
 #opening .op-nm {
   position: absolute; left: 0; top: 0; white-space: nowrap; transform-origin: 0 0;
-  font-family: var(--display, "Newsreader", Georgia, "Times New Roman", serif); font-weight: 600; line-height: 1;
-  font-variant-ligatures: none; font-optical-sizing: auto; color: var(--op-cream); will-change: transform, opacity;
+  font-family: "Caveat Brush", var(--display, "Newsreader", Georgia, serif); font-weight: 400; line-height: 1;
+  font-variant-ligatures: none; color: var(--op-cream); will-change: transform, opacity;
 }
 #opening .op-sub, #opening .op-bt {
   position: absolute; left: 0; top: 0; white-space: nowrap; transform-origin: 0 0;

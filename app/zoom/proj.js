@@ -286,14 +286,14 @@
     async function submit(text) {
       text = String(text === undefined ? goalin.value : text).trim(); if (!text || goalBusy || running) return;
       if (introRunning) skipNow();
-      goalBusy = true; stickyChips = false; lockBox(true); gnote.textContent = ""; setChips([]);
+      goalBusy = true; stickyChips = false; lockBox(true); gnote.textContent = ""; setChips([]); goalform.classList.add("taking");   // it pulses at once, so the wait for Terry's reply is never a dead pause
       try {
         await ensure(); lastText = text; const r = await F.chat(text);
         if (r.kind === "question") { gnote.textContent = r.text; setChips((r.options || []).map(o => ({ label: o, opt: true, run: () => { goalin.value = o; submit(o); } }))); }
         else if (r.kind === "ready") { gnote.textContent = ""; goalBusy = false; if (r.then) thenText = r.then; await runGoal(r.goal); }   // r.then: a what-if typed in the same sentence, played in Ping after the chase (owner 7 Nov)
         else { gnote.textContent = r.text || "Tell me a goal, like: every Transportation request on time in November."; setChips(exChips()); }
       } catch (e) { gnote.textContent = "Something went wrong. Try again."; setChips(exChips()); console.warn("goal failed", e && e.message); }
-      finally { goalBusy = false; if (!running) { lockBox(false); goalin.focus({ preventScroll: true }); } }
+      finally { goalBusy = false; goalform.classList.remove("taking"); if (!running) { lockBox(false); goalin.focus({ preventScroll: true }); } }
     }
     goalform.addEventListener("submit", e => { e.preventDefault(); submit(); });
     // example chips appear on focus (or after a 300 ms hover) and stay while the field is empty
@@ -733,11 +733,11 @@
       const fr = rel(goalform), rolling = roll(true);
       if (!fast()) {
         if (scrollY > 40) glideY(() => 0, 500);
-        goalform.classList.add("echoing"); bat.echo && bat.echo();
+        goalform.classList.add("echoing", "taking"); bat.echo && bat.echo();
         for (let i = 0; i < 3 && !fast(); i++) { ping(fr.x + fr.w / 2, fr.y + fr.h / 2, 760, 170, 1500); await wait(380); }
         await wait(500);
       }
-      goalform.classList.remove("echoing"); hero.classList.add("working");
+      goalform.classList.remove("echoing", "taking"); hero.classList.add("working");
       let card = null;
       if (!fast()) {
         card = h("div", "chasecard", `<span class="cc-t"></span><svg class="i cc-i" aria-hidden="true"><use href="#i-light"/></svg>`); card.firstChild.textContent = F.goalText(goal);

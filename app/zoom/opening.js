@@ -86,7 +86,7 @@
     removeEventListener("keydown", onKey, true); removeEventListener("resize", onResize);
     try { bat && bat.destroy(); } catch (e) {}
     root.remove();
-    document.documentElement.classList.remove("op-run", "op-land");
+    document.documentElement.classList.remove("op-run", "op-land", "op-lit");
     api.active = false;
     document.dispatchEvent(new CustomEvent("terry:opening", { detail: "done" }));
   }
@@ -104,6 +104,14 @@
   root.addEventListener("pointerdown", e => { e.preventDefault(); finish(true); });
   root.addEventListener("click", e => { e.preventDefault(); finish(true); });
 
+  /* the wordmark's face: Caveat Brush, set a little larger than the old serif so the two read the same size */
+  const NAME_K = 27 / 22, BAT_CY = 10.25 / 24;     // BAT_CY: the bat glyph's body centre, as a share of its 24-unit box
+  function nameMetrics(px) {
+    const c = document.createElement("canvas").getContext("2d"); c.font = `400 ${px}px "Caveat Brush"`;
+    const m = c.measureText("B"), a = m.fontBoundingBoxAscent, d = m.fontBoundingBoxDescent;
+    if (!a) return { base: px * 0.83, cap: px * 0.66 };    // no font metrics: Caveat Brush's own
+    return { base: (px - (a + d)) / 2 + a, cap: m.actualBoundingBoxAscent };   // line-height 1: the content box is centred in the line
+  }
   /* layout (recomputed on resize) */
   let G = null;
   const range = document.createRange();
@@ -112,7 +120,7 @@
     const W = innerWidth, H = innerHeight;
     const F = clamp(Math.min(W * 0.068, H * 0.12), 54, 138), S = F / 22;
     const f = Math.min(F * 0.3, (W * 0.84) / 24.6);
-    el.nm.style.fontSize = F + "px"; el.bt.style.fontSize = f + "px"; el.cr.style.fontSize = f + "px"; el.sub.style.fontSize = f + "px"; el.ins.style.width = "";
+    const sN = F * NAME_K; el.nm.style.fontSize = sN + "px"; el.bt.style.fontSize = f + "px"; el.cr.style.fontSize = f + "px"; el.sub.style.fontSize = f + "px"; el.ins.style.width = "";
     el.nm.style.transform = el.bt.style.transform = el.sub.style.transform = "none"; el.nm.style.letterSpacing = "normal";
     const nmR = el.nm.getBoundingClientRect(), btR = el.bt.getBoundingClientRect(), subR = el.sub.getBoundingClientRect();
     const nmTxt = el.nm.firstChild, terryR = textRect(nmTxt, 4, 9);
@@ -122,15 +130,19 @@
     const ink = { n: { dx: nI.left - nmR.left, dy: nI.top - nmR.top, w: nI.width }, s: { dx: sI.left - subR.left, dy: sI.top - subR.top, w: sI.width } };
     const slotR = el.slot.getBoundingClientRect(), insR = el.ins.getBoundingClientRect(), crR = el.cr.getBoundingClientRect();
     const cx = W / 2, nameY = H * 0.5;
-    const nm = { x: cx - nmR.width / 2, y: nameY - F / 2, w: nmR.width, h: F };
+    // the name is set in Caveat Brush, NAME_K times the scale unit F (as in the header: 27px against the 22px the lockup was drawn for).
+    // Its B is centred on nameY; yT and yB are where the old 600 Newsreader box would sit with its cap top and its baseline
+    // on the new ones, so everything placed above or below the name keeps its distance from the letters themselves.
+    const fm = nameMetrics(sN), nmY = nameY - (fm.base - fm.cap / 2);
+    const nm = { x: cx - nmR.width / 2, y: nmY, w: nmR.width, h: sN, fs: sN, yT: nmY + fm.base - fm.cap - F * 0.055, yB: nmY + fm.base - F * 0.735 };
     const terryCx = nm.x + (terryR.left - nmR.left) + terryR.width / 2;
-    const logo = { s: 26 * S, x: nm.x - 3 * S - 26 * S, y: nameY - 13 * S };
+    const logo = { s: 26 * S, x: nm.x - 3 * S - 26 * S, y: nameY - 26 * S * BAT_CY };   // the bat's body on the middle of the B
     const bt = { w: btR.width, h: btR.height, x: terryCx - btR.width / 2 };
     // the line is laid out around where the word lands: straight under Terry, well below the name
     // the line is centred under the name; the word pops out under Terry and has to travel to its own place in it
-    const sub = { x: cx - subR.width / 2, y: nm.y + F * 1.5, w: subR.width, h: subR.height };
+    const sub = { x: cx - subR.width / 2, y: nm.yB + F * 1.5, w: subR.width, h: subR.height };
     const slot = { x: sub.x + (slotR.left - subR.left), y: sub.y + (slotR.top - subR.top), w: slotR.width, h: slotR.height };
-    bt.clip = nm.y + F * 0.86;                      // the name's lower edge: above it the word is hidden (behind the name)
+    bt.clip = nm.yB + F * 0.86;                      // the name's lower edge: above it the word is hidden (behind the name)
     bt.y0 = bt.clip - bt.h;                         // tucked behind the name
     bt.yOut = bt.clip + F * 0.06;                   // slid out of the drawer
     bt.yRest = slot.y;                              // where it lands, level: its own place in the line
@@ -139,7 +151,7 @@
     const ncx = cx, tcx = terryCx;
     const u = logo.s / 24, kMark = (u / MARK.unitK);
     const markAt = { x: logo.x + MARK.cx * u, y: logo.y + MARK.cy * u };
-    const eyesHome = { x: ncx, y: nm.y - F * 0.62 };
+    const eyesHome = { x: ncx, y: nm.yT - F * 0.62 };
     G = { cr, ink, W, H, F, S, f, cx, ncx, nameY, nm, terryCx: tcx, logo, sub, slot, bt, u, kMark, markAt, eyesHome, hoverY: H * 0.33, span: Math.min(W * 0.58, H * 1.0) };
     // the first Terry is big: about 58% of the width across the wings (his span is about 340 rig units)
     G.kBig = G.span / 340;
@@ -268,6 +280,7 @@
     const DK = CITY ? 0.87 : 1;   // with the city behind, the dark stops short of black (about an eighth of the skyline shows)
     op(el.dark, t < B.lit0 ? DK * lightsDown : DK * (1 - lightsUp));
     root.style.background = t < B.lit0 ? "" : `rgba(11,9,8,${(1 - lightsUp).toFixed(3)})`;
+    document.documentElement.classList.toggle("op-lit", t >= B.lit0 - 0.1);   // the page is about to show through: let it paint again
 
     // Terry, act one
     const actOneOn = bat && t >= B.enter - 0.05 && t <= B.down1 + 0.02;
@@ -326,11 +339,11 @@
     y += Math.sin((t - B.down1) * 2.2) * F * 0.02 * (1 - seg(t, B.pull0, B.hang));
     let r = 0, o = 1, blur = 0;
     // the pull: drift down around the word and hang under "Terry", turning upside down on the way
-    const hangX = G.bt.x + G.bt.w * HANG_U, hangY = G.nm.y + F * 1.2;
+    const hangX = G.bt.x + G.bt.w * HANG_U, hangY = G.nm.yB + F * 1.2;
     if (t >= B.pull0) {
       const u = eIO3(seg(t, B.pull0, B.hang));
       // around the end of the word, never across it
-      const cX = G.nm.x + G.nm.w + F * 1.0, cY = G.nm.y + F * 0.55, v = 1 - u;
+      const cX = G.nm.x + G.nm.w + F * 1.0, cY = G.nm.yB + F * 0.55, v = 1 - u;
       x = v * v * x + 2 * v * u * cX + u * u * hangX; y = v * v * y + 2 * v * u * cY + u * u * hangY; r = 180 * eIO3(seg(t, B.pull0 + 0.04, B.hang));
     }
     if (t >= B.hang) { x = hangX; y = hangY + dipAt(t); }
@@ -437,9 +450,9 @@
     let nScale = lerp(0.86, 1, ne), nOp = sstep(seg(t, B.name0, B.name0 + 0.5));
     const tight = lerp(-0.035, 0, ne);
     el.nm.style.letterSpacing = Math.abs(tight) < 0.0005 ? "normal" : tight.toFixed(4) + "em";
-    const nmW = nm.w + tight * F * 8;              // nine glyphs, eight gaps
+    const nmW = nm.w + tight * nm.fs * 8;              // nine glyphs, eight gaps
     const dip = t >= B.hang ? dipAt(t) * 0.55 : 0;
-    let nx = G.ncx - nmW * nScale / 2, ny = nm.y + (1 - nScale) * F / 2 + (1 - ne) * F * 0.08 + dip, ns = nScale;
+    let nx = G.ncx - nmW * nScale / 2, ny = nm.y + (1 - nScale) * nm.h / 2 + (1 - ne) * F * 0.08 + dip, ns = nScale;
     // the battery word: tucked behind the name, slides out like a drawer, drops with gravity and a slight tilt
     let bx = bt.x, by = bt.y0 + dip, bs = 1, br = 0, bo = t >= B.drawer0 ? 1 : 0, clipTop = 0;
     if (t >= B.drawer0) {
@@ -531,23 +544,28 @@
     op(el.bt, 0); op(el.flash, 0);
     const up = sstep(seg(t, 1.5, 2.0));
     op(el.dark, 1 - up); root.style.background = `rgba(11,9,8,${(1 - up).toFixed(3)})`;
+    document.documentElement.classList.toggle("op-lit", t >= 1.45);
     [el.nm, el.logo, el.sub].forEach(e => { e.style.opacity = (parseFloat(e.style.opacity) * (1 - up)).toFixed(3); });
   }
   const TR = 2.05;
 
-  /* clock */
+  /* clock: a single stalled frame advances the film by at most twice the machine's usual frame time (never under 50 ms), so a
+     busy moment slows Terry for a beat instead of making him jump ahead; a steadily slow machine still plays at real speed */
+  let filmMs = 0, prevNow = null, typ = 16.7;
   function tick(now) {
     if (ended) return;
     raf = requestAnimationFrame(tick);
-    if (paused) return;
-    if (t0 == null) t0 = now;
-    const t = (now - t0) / 1000 / slow;
+    if (paused) { prevNow = null; return; }
+    if (t0 == null) { t0 = now; filmMs = 0; prevNow = now; }
+    if (prevNow != null) { const d = now - prevNow; filmMs += Math.min(d, Math.max(50, 2 * typ)); typ += (Math.min(d, 250) - typ) * 0.1; }
+    prevNow = now;
+    const t = filmMs / 1000 / slow;
     if (reduced) { renderReduced(t); if (t >= TR) finish(false); return; }
     render(t);
     if (t >= B.end) finish(false);
   }
   api.seek = t => { paused = true; if (!G) layout(); if (reduced) renderReduced(t); else render(t); return t; };
-  api.play = () => { paused = false; t0 = null; };
+  api.play = () => { paused = false; t0 = null; prevNow = null; };
   api.now = () => curT;
 
   async function start() {
@@ -556,13 +574,24 @@
     if (!reduced && !bat) { finish(false); return; }       // no WebGL after all: straight to the page
     try {
       await Promise.race([
-        Promise.all([document.fonts.load(`600 100px Newsreader`), document.fonts.load(`400 40px "Instrument Sans"`)]).then(() => document.fonts.ready),
+        Promise.all([document.fonts.load(`400 100px "Caveat Brush"`), document.fonts.load(`400 40px "Instrument Sans"`)]).then(() => document.fonts.ready),
         new Promise(r => setTimeout(r, 1500)),
       ]);
     } catch (e) {}
+    // hold the first frame (the dark, blank projector) until the page underneath has done its heavy start-up, at most 1.2 s,
+    // so the flight does not share the machine with it
+    await quiet(1200);
     if (ended) return;
     layout(); render(0);
     raf = requestAnimationFrame(tick);
+  }
+  function quiet(capMs) {
+    return new Promise(res => {
+      const stop = performance.now() + capMs, ric = window.requestIdleCallback || (f => setTimeout(() => f({ timeRemaining: () => 50 }), 60));
+      let calm = 0;
+      const step = d => { calm = d.timeRemaining() > 30 ? calm + 1 : 0; if (calm >= 3 || performance.now() >= stop || ended) res(); else ric(step, { timeout: 150 }); };
+      ric(step, { timeout: 150 });
+    });
   }
   // the projector is up from the first frame; the clock starts once the page's scripts and the brand faces are in
   layout(); if (!reduced) render(0); else renderReduced(0);

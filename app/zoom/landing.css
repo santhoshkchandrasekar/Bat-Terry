@@ -53,7 +53,8 @@ html.op-run .ld-terry-top { opacity: 0; }
 #landing .ld-nav { position: absolute; left: var(--ld-edge); right: var(--ld-edge); top: var(--ld-t, 22px); height: 36px; z-index: 8; display: flex; align-items: center; justify-content: space-between; color: #fff; }
 #landing .ld-brand { display: flex; align-items: center; gap: 10px; }
 #landing .ld-brand svg.i { width: 26px; height: 26px; stroke: none; fill: currentColor; }
-#landing .ld-brand .nm { font: 600 22px/1 var(--display); font-variant-ligatures: none; }
+#landing .ld-brand .nm { font: 400 27px/1 "Caveat Brush", var(--display); font-variant-ligatures: none; white-space: nowrap; }
+#landing .ld-brand svg.i { transform: translateY(1.9px); }   /* the bat on the middle of the B */
 #landing .ld-brand .sub { font-size: 12.5px; opacity: 0; padding-left: 12px; border-left: 1px solid rgba(255,255,255,.4); }   /* the planner's tagline, as it sits there */
 #landing .ld-navr { display: flex; align-items: center; gap: 24px; }
 #landing .ld-link { position: relative; background: none; border: 0; padding: 4px 0; cursor: pointer; font: 500 13px var(--ui); color: #fff; }

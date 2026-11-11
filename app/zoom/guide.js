@@ -15,6 +15,9 @@
   const TOURKEY = "terry.toured";
   const sleep = ms => new Promise(r => setTimeout(r, ms));
   const vis = sel => [...doc.querySelectorAll(sel)].find(e => e.offsetParent !== null || getComputedStyle(e).position === "fixed") || null;
+  // the flip card and the flyway lose their ids once a chase settles: find them by what they are as well (owner 11 Nov)
+  const failEl = () => vis("#failcard") || vis("#rbodies section.plate.fail");
+  const flyEl = () => { const f = vis("#flysec"); if (f) return f; const p = vis("#rbodies section.flyp"); return p ? (p.closest(".tt-fadein") || p) : null; };
   const bud = () => { const s = $(".bud-socket"); return s ? s.parentElement : null; };
   const kit = () => root.TerryProj && root.TerryProj.kit;
   const Ping = () => root.TerryPing;
@@ -277,14 +280,14 @@
       say: () => { const A = root.TerryAlmanac; return `This is the projector: Boston's 311 crews for 2025, month by month, by department.${A && A.view ? ` It shows ${A.view}.` : ""} Each bar is the crews a month needs; hatched bars are behind, red ones are late.`; } },
     { key: "machine", name: "the Almanac machine and BUDGETerry", head: () => $("#almanac .alm-head") || $("#almanac"), abs: () => !$("#almanac .alm-head"), els: () => [unionEl([$("#almanac"), bud()].filter(Boolean))],
       say: () => { const A = root.TerryAlmanac, b = A && A.beats && A.beats[0]; return `The Almanac machine reads the screen out in up to three rows: when, how many, and what happens.${b && b.text ? ` Right now: ${first(b.text)}` : ""} BUDGETerry, the battery beside it, holds the year's crew budget and shows what the plan spends.`; } },
-    { key: "fail", name: "the failure card", head: () => vis("#failcard"), abs: () => true, els: () => [vis("#failcard")],
-      say: () => `This is your goal flipped: how it would fail. ${first(txt(vis("#failcard .t")), 180)} Below it are the predators that would cause it.` },
+    { key: "fail", name: "the failure card", head: () => failEl(), abs: () => true, els: () => [failEl()],
+      say: () => `This is your goal flipped: how it would fail. ${first(txt(failEl() && failEl().querySelector(".t")), 180)} Below it are the predators that would cause it.` },
     { key: "flipside", name: "The Flip Side", head: () => $("#terrytory .tt-head .fold-all"), els: () => [$("#terrytory")],
       say: () => `The Flip Side is where a chase lands: your goal turned into how it would fail, the predators that could cause it, and the flyway past them.${txt($("#ttsub")) ? ` Right now: ${txt($("#ttsub"))}` : ""}` },
     { key: "pred", name: "the predators", head: () => vis("#rbodies section.pred:not(.qs) .gh"), els: () => [vis("#rbodies section.pred:not(.qs)")],
       say: () => `Predators are what could make your goal fail. ${txt(vis("#heard")) ? txt(vis("#heard")) + ". " : ""}Each card says whether 2024's requests confirm it, and how Terry answers it.` },
-    { key: "fly", name: "the flyway", head: () => vis("#flysec .fw-h h2") || vis('[data-id="flysec"] .fw-h h2'), els: () => [vis("#flysec")],
-      say: () => `The flyway is the cheapest way past the predators: which crews to sign, and when. ${first(txt(vis("#flysec .fw-h .sub")), 160)}` },
+    { key: "fly", name: "the flyway", head: () => vis("#flysec .fw-h h2") || vis('[data-id="flysec"] .fw-h h2') || (flyEl() && flyEl().querySelector(".fw-h h2")), els: () => [flyEl()],
+      say: () => `The flyway is the cheapest way past the predators: which crews to sign, and when. ${first(txt(flyEl() && flyEl().querySelector(".fw-h .sub")), 160)}` },
     { key: "ledger", name: "the 2025 crew plan", head: () => $("#ldg-sec-h") || $("#ledger #ledger-h"), els: () => [$("#ledger")],
       say: () => { const L = root.TerryLedger, k = L && L.plan; return `This is the 2025 crew plan, kept like a ledger: crews hired and released each month, by department.${k ? ` You are reading the ${String(k).replace(/_/g, " ")} plan.` : ""} The tabs switch between Terry's four plans; Compare with puts a second one beside it.`; } },
     { key: "echo", name: "Echolocation", head: () => $("#qs-h"), els: () => [vis("#terrytory section.qs")],
