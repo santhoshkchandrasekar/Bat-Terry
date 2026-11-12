@@ -86,7 +86,7 @@
     removeEventListener("keydown", onKey, true); removeEventListener("resize", onResize);
     try { bat && bat.destroy(); } catch (e) {}
     root.remove();
-    document.documentElement.classList.remove("op-run", "op-land", "op-lit");
+    document.documentElement.classList.remove("op-run", "op-land", "op-lit", "op-warm", "op-bats");
     api.active = false;
     document.dispatchEvent(new CustomEvent("terry:opening", { detail: "done" }));
   }
@@ -157,7 +157,7 @@
     G.kBig = G.span / 340;
     G.e22 = null;                                   // eye positions at the end of the house lights (computed lazily)
   }
-  const onResize = () => { layout(); lastT = -1; if (paused) render(curT); };
+  const onResize = () => { layout(); HR = null; dvSet = false; lastT = -1; if (paused) render(curT); };
   addEventListener("resize", onResize);
 
   /* Terry */
@@ -254,7 +254,7 @@
   const mixCol = u => { const a = [251, 243, 226]; return `rgb(${a.map(c => Math.round(lerp(c, 255, u))).join(",")})`; };
 
   /* the film: everything as a function of t */
-  let curT = 0;
+  let curT = 0, HR = null, dvSet = false;
   function render(t) {
     curT = t; if (!G) layout();
     const { W, H, F } = G;
@@ -280,7 +280,10 @@
     const DK = CITY ? 0.87 : 1;   // with the city behind, the dark stops short of black (about an eighth of the skyline shows)
     op(el.dark, t < B.lit0 ? DK * lightsDown : DK * (1 - lightsUp));
     root.style.background = t < B.lit0 ? "" : `rgba(11,9,8,${(1 - lightsUp).toFixed(3)})`;
-    document.documentElement.classList.toggle("op-lit", t >= B.lit0 - 0.1);   // the page is about to show through: let it paint again
+    { const dE = document.documentElement;   // owner 11 Nov: the glide must not share its frames with the page's first paint
+      dE.classList.toggle("op-lit", t >= B.up0 - 0.85);     // the page paints again during the still hold, under the opaque film
+      dE.classList.toggle("op-warm", t >= B.up0 - 0.45);    // the page's 3D bats draw one frame there (shaders compile in the dark)
+      dE.classList.toggle("op-bats", t >= B.glide1); }      // and draw every frame once the lockup has landed (the room is still ~90% dark)
 
     // Terry, act one
     const actOneOn = bat && t >= B.enter - 0.05 && t <= B.down1 + 0.02;
@@ -502,7 +505,7 @@
     // house lights up: logo, name and line glide to the header (the battery word is already part of the line)
     let col = 0, flap = 0, dvO = 0;
     if (t >= B.up0) {
-      const R = headerRects(), u = eIO3(seg(t, B.up0, B.glide1)), uL = u, uN = u, uS = u;   // one move: the lockup travels as one piece
+      const R = HR || (HR = headerRects()), u = eIO3(seg(t, B.up0, B.glide1)), uL = u, uN = u, uS = u;   // one move: the lockup travels as one piece
       col = eIO3(seg(t, B.lit0, B.up1));
       // a few wing beats, easing out as it settles
       const fu = seg(t, B.up0, B.glide1); flap = 30 * Math.pow(1 - fu, 1.6) * Math.sin(Math.PI * 2 * 3 * eOut3(fu));
@@ -514,7 +517,7 @@
         if (R.landing) sOp *= 1 - eIO3(seg(t, B.up0, B.up0 + (B.glide1 - B.up0) * 0.7));   // the line fades where it is: the landing's headline takes over
         else { const tsS = R.sI.width / K.s.w; subX = lerp(sub.x, R.sI.left - K.s.dx * tsS, uS); subY = lerp(sub.y, R.sI.top - K.s.dy * tsS, uS); subS = lerp(1, tsS, uS);
         sOp = lerp(1, R.sOp, col); }
-        if (R.bw > 0) { const d = el.dv.style; d.left = R.s.left + "px"; d.top = R.s.top + "px"; d.width = R.bw + "px"; d.height = R.s.height + "px"; d.background = R.bc; dvO = u * col; }
+        if (R.bw > 0) { if (!dvSet) { dvSet = true; const d = el.dv.style; d.left = R.s.left + "px"; d.top = R.s.top + "px"; d.width = R.bw + "px"; d.height = R.s.height + "px"; d.background = R.bc; } dvO = u * col; }
       }
     }
     if (t >= B.up1) { nOp = 0; lOp = 0; sOp = 0; dvO = 0; }
@@ -544,7 +547,7 @@
     op(el.bt, 0); op(el.flash, 0);
     const up = sstep(seg(t, 1.5, 2.0));
     op(el.dark, 1 - up); root.style.background = `rgba(11,9,8,${(1 - up).toFixed(3)})`;
-    document.documentElement.classList.toggle("op-lit", t >= 1.45);
+    document.documentElement.classList.toggle("op-lit", t >= 1.45); document.documentElement.classList.toggle("op-warm", t >= 1.45); document.documentElement.classList.toggle("op-bats", t >= 1.45);
     [el.nm, el.logo, el.sub].forEach(e => { e.style.opacity = (parseFloat(e.style.opacity) * (1 - up)).toFixed(3); });
   }
   const TR = 2.05;

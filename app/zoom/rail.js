@@ -25,8 +25,9 @@
     { key: "echo", label: "Echolocation", el: () => $("#terrytory section.qs") },
     { key: "ledger", label: "2025 crew plan", el: () => $("#ledger") },
   ];
+  const CH = ["goal", "fail", "pred", "fly", "echo", "ledger"];   // the stages a skipped chase charges through, in order (Echolocation maps the goal too)
   const nav = document.createElement("nav"); nav.id = "srail"; nav.setAttribute("aria-label", "Sections on this page");
-  nav.innerHTML = `<span class="lns" aria-hidden="true"></span>` + ITEMS.map(x => `<button type="button" data-k="${x.key}" aria-label="Go to ${x.label}" title="${x.label}"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true">${I[x.key]}</svg></span><span class="lb">${x.label}</span></button>`).join("");
+  nav.innerHTML = `<span class="lns" aria-hidden="true"></span>` + ITEMS.map(x => `<button type="button" data-k="${x.key}" aria-label="Go to ${x.label}" title="${x.label}"><span class="ic"><svg class="base" viewBox="0 0 24 24" aria-hidden="true">${I[x.key]}</svg>${CH.includes(x.key) ? `<svg class="chg" viewBox="0 0 24 24" aria-hidden="true">${I[x.key].replace(/srail-mk/g, "srail-mk2")}</svg><i class="mn" aria-hidden="true"></i>` : ""}</span><span class="lb">${x.label}</span></button>`).join("");
   document.body.appendChild(nav);
   const btn = k => nav.querySelector(`[data-k="${k}"]`), lns = nav.querySelector(".lns");
   nav.addEventListener("click", async e => {
@@ -44,7 +45,7 @@
     const mid = innerHeight * 0.45, lit = []; let best = null, bestScore = 1e12;
     for (const x of ITEMS) {
       const e = x.el(), r = e && e.getBoundingClientRect(), live = !!(r && r.height > 0);
-      btn(x.key).classList.toggle("later", !!x.needsChase && !live);
+      btn(x.key).classList.toggle("later", !!x.needsChase && !live && !(C && CH.includes(x.key)));
       if (!live) continue;
       const seen = Math.max(0, Math.min(r.bottom, innerHeight) - Math.max(r.top, 0));
       if (seen > 24 && seen >= Math.min(r.height * 0.6, innerHeight * 0.3)) lit.push(x.key);
@@ -52,6 +53,7 @@
       if (d < bestScore) { bestScore = d; best = x.key; }
     }
     if (!lit.length && best) lit.push(best);
+    if (C) { lit.length = 0; CH.forEach(k => { if (C.full.has(k)) lit.push(k); }); }   // while charging, the lit icons are the charged ones, joined like cells
     const keys = ITEMS.map(x => x.key), idx = lit.map(k => keys.indexOf(k)).sort((a, b) => a - b);
     nav.querySelectorAll("button").forEach(b => { const on = lit.includes(b.dataset.k); b.classList.toggle("here", on); if (on && b.dataset.k === keys[idx[0]]) b.setAttribute("aria-current", "location"); else b.removeAttribute("aria-current"); });
     // the joining line runs in the gaps between icons, from the first lit icon to the last, so it never crosses an icon
@@ -69,5 +71,51 @@
     const L = $("#leaf-left"); document.documentElement.classList.toggle("rail-hide", !!L && L.dataset.state !== "rest");
   }
   const ask = () => { if (!raf) raf = requestAnimationFrame(update); };
+  /* The charge (owner 11 Nov). When a chase is skipped, the rail turns into the battery gauge for the work that is really left: each stage's
+     icon fills bottom up in the lit colour, and a charged icon stays lit while the next one fills. A stage that is waiting on the model
+     eases toward 85% and holds there (its true progress is unknown, so the gauge never claims it); the moment the stage is done it tops up.
+     Stages that finish in a blink still take a third of a second each, so the eye can follow. When the last one is full the gauge holds,
+     then fades back to the rail's usual self. */
+  let C = null, craf = 0;
+  const still = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function setQ(k, q) { const b = btn(k); b.style.setProperty("--q", q.toFixed(4)); }
+  function frame(now) {
+    craf = 0; if (!C) return;
+    const dt = Math.min(0.25, (now - (C.last || now)) / 1000); C.last = now;
+    const k = CH[C.i];
+    if (!k) { if (!C.doneAt) { C.doneAt = now; nav.classList.add("charged"); ask(); C.ok.forEach(f => f()); C.ok = []; } if (now - C.doneAt > 1100) return clear(); craf = requestAnimationFrame(frame); return; }
+    const b = btn(k); b.classList.add("charging");
+    let q = C.q[k] || 0;
+    if (C.real.has(k)) { const D = still() ? 120 : 260; if (!C.at[k]) C.at[k] = { t: now, q }; q = C.at[k].q + (1 - C.at[k].q) * Math.min(1, (now - C.at[k].t) / D); }   // done: tops up in a third of a second, on the clock
+    else q = q + (0.85 - q) * (1 - Math.exp(-dt / 1.5));                            // waiting: a steady charge that holds short of full
+    C.q[k] = q; setQ(k, q);
+    if (q >= 1) { b.classList.remove("charging"); b.classList.add("full"); C.full.add(k); C.i++; ask(); }
+    craf = requestAnimationFrame(frame);
+  }
+  function clear(instant) {
+    const c = C; C = null; if (c) c.ok.forEach(f => f()); if (craf) cancelAnimationFrame(craf); craf = 0;
+    nav.classList.remove("charged"); nav.classList.add("discharge");
+    const reset = () => { if (C) return; nav.classList.remove("chargemode", "discharge"); CH.forEach(k => { const b = btn(k); b.classList.remove("charging", "full"); b.style.removeProperty("--q"); }); ask(); };
+    if (instant || !c) reset(); else setTimeout(reset, 650);
+    ask();
+  }
+  window.TerryRail = {
+    begin(done) {
+      if (C) clear(true);
+      C = { real: new Set(done || []), q: {}, at: {}, i: 0, full: new Set(), last: 0, doneAt: 0, ok: [] };
+      CH.forEach(k => { const b = btn(k); b.classList.remove("charging", "full"); b.style.setProperty("--q", "0"); });
+      nav.classList.remove("discharge", "charged"); nav.classList.add("chargemode"); ask();
+      craf = requestAnimationFrame(frame);
+    },
+    mark(k) { if (C) C.real.add(k); },
+    end() {
+      if (!C) return Promise.resolve(); CH.forEach(k => C.real.add(k)); if (C.doneAt) return Promise.resolve();
+      const hid = getComputedStyle(nav).display === "none" || +getComputedStyle(nav).opacity < 0.05;   // nobody can see the gauge: never make them wait for it
+      if (hid) { clear(true); return Promise.resolve(); }
+      return new Promise(res => C.ok.push(res));
+    },   // resolves when the last cell reads full   // resolves when the last cell reads full
+    cancel() { if (C) clear(true); },
+    get charging() { return !!C; },
+  };
   addEventListener("scroll", ask, { passive: true }); addEventListener("resize", ask); setInterval(ask, 700); ask();
 })();

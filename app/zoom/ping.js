@@ -96,6 +96,21 @@
       fold();
     }, true);
     D.el.addEventListener("keydown", e => { if (e.key === "Tab") tabAt = Date.now(); if (e.key !== "Escape") return; e.stopPropagation(); fold(); });   // Escape folds the chat away; it stays until New chat
+    // owner 11 Nov: an answer is read, then the viewer moves on. Their own scrolling (wheel, touch, scroll keys; never the page scrolling
+    // itself for a tour) folds the thread back to the bar after a short distance, so an open answer never sits over the page. A tap reopens it.
+    { let run = 0, lastAt = 0;
+      const away = (e, d) => {
+        if (!D || D.el.dataset.mode !== "answer" || holdOpen() || dragIn) return;
+        const t = e.target; if (t && t.nodeType === 1 && D.el.contains(t)) return;   // scrolling the thread itself
+        if (D.el.contains(doc.activeElement)) return;                                   // typing a follow-up
+        const now = Date.now(); if (now - lastAt > 1200) run = 0; lastAt = now;
+        run += Math.abs(d); if (run > 220) { run = 0; fold(); }
+      };
+      addEventListener("wheel", e => away(e, e.deltaMode ? e.deltaY * 30 : e.deltaY), { passive: true, capture: true });
+      let ty = null; addEventListener("touchstart", e => { ty = e.touches[0] ? e.touches[0].clientY : null; }, { passive: true, capture: true });
+      addEventListener("touchmove", e => { const y = e.touches[0] ? e.touches[0].clientY : null; if (y !== null && ty !== null) { away(e, y - ty); ty = y; } }, { passive: true, capture: true });
+      addEventListener("keydown", e => { if (/^(PageDown|PageUp|ArrowDown|ArrowUp|Home|End| )$/.test(e.key) && !(e.target && /^(input|textarea|select)$/i.test(e.target.tagName))) away(e, 400); }, true);
+    }
     doc.addEventListener("keydown", e => {
       if (e.key !== "/" || e.ctrlKey || e.metaKey || e.altKey) return; const t = e.target; if (t && (/^(input|textarea|select)$/i.test(t.tagName) || t.isContentEditable)) return;
       e.preventDefault(); input.focus();

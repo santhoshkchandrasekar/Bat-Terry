@@ -125,7 +125,9 @@
   "use strict";
   const doc = root.document; if (!doc) return;
   const Bus = () => root.TerryBus, R = () => root.TerryRoost, Z = () => root.__zoom, P = () => root.TerryPlates;
-  const KEYS = ["fail", "pred", "fly", "ledger"], NAME = { fail: "The flip", pred: "Predators", fly: "The flyway", ledger: "The 2025 crew plan" };
+  const KEYS = ["fail", "pred", "fly", "ledger"], NAME = { fail: "The Flip", pred: "Predators", fly: "The Flyway", echo: "Echolocation", ledger: "The 2025 crew plan" };
+  // Echolocation is one section for every Roost (owner 11 Nov: a sub-section of The Flip Side): its fold is held here, not per Roost
+  let echoFold = false; const echoEl = () => doc.querySelector("#terrytory section.qs");
   const MON3 = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], MONF = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const reduced = () => { try { return matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { return false; } };
   const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -185,7 +187,7 @@
     const p = parts(body), f = R().foldOf(r.id);
     if (p.fail && !body.querySelector(".fold-hd")) {
       const hd = doc.createElement("div"); hd.className = "fold-hd"; hd.dataset.k = "fail";
-      hd.innerHTML = `${ctlBtn("fail", true)}<h3 class="fold-t">${NAME.fail}</h3>${sumBtn("fail", sumFail(r))}`; p.fail.before(hd);
+      hd.innerHTML = `${ctlBtn("fail", true)}<h3 class="fold-t"><span class="bw">Flip</span></h3>${sumBtn("fail", sumFail(r))}`; p.fail.before(hd);
     }
     const head = { pred: p.pred && p.pred.querySelector(".gh"), fly: p.fly && p.fly.querySelector(".fw-h") };
     for (const k of ["pred", "fly"]) { const hh = head[k]; if (!hh || hh.querySelector(".fold-chev")) continue;
@@ -225,6 +227,7 @@
   }
   const activeBody = () => [...doc.querySelectorAll("#rbodies > .rbody")].find(b => !b.hidden) || null;
   function toggle(k, fold, body) {
+    if (k === "echo") { const el = echoEl(); if (!el) return null; if (fold == null) fold = !echoFold; echoFold = fold; syncCtl(el, "echo", fold); animate(el, fold); return fold; }
     if (k === "ledger") { const id = ledgerOwner(); if (fold == null) fold = !R().foldOf(id).ledger; R().setFold(id, { ledger: fold }); setLedger(fold); return fold; }
     body = body || activeBody(); const r = roostOf(body); if (!r) return null;
     if (fold == null) fold = !R().foldOf(r.id)[k]; R().setFold(r.id, { [k]: fold }); set(body, k, fold); return fold;
@@ -233,6 +236,7 @@
   function present() {
     const b = activeBody(), r = roostOf(b), out = [];
     if (r && !b.querySelector("#tttop")) for (const k of ["fail", "pred", "fly"]) if (target(b, k)) out.push(k);
+    const Ec = echoEl(); if (Ec && Ec.offsetParent !== null) out.push("echo");
     const L = ledgerEl(); if (L && L.isConnected && (L.closest("#terrytory .rbody") ? !L.closest(".rbody").hidden : true)) out.push("ledger");
     return out;
   }
@@ -255,8 +259,8 @@
   }
   function syncAll() {
     const ks = present(), ids = ledgerOwner(), b = activeBody(), r = roostOf(b), f = r ? R().foldOf(r.id) : {}, fl = R().foldOf(ids);
-    const folded = k => (k === "ledger" ? !!fl.ledger : !!f[k]);
-    const TT = doc.querySelector("#terrytory"), rk = ks.filter(k => k !== "ledger");
+    const folded = k => (k === "ledger" ? !!fl.ledger : k === "echo" ? echoFold : !!f[k]);
+    const TT = doc.querySelector("#terrytory"), rk = ks.filter(k => k !== "ledger" && k !== "echo");
     if (TT) TT.classList.toggle("watching", rk.length > 0 && rk.every(folded));   // watch on screen: everything folded, the lines sit in one strip
     const box = doc.querySelector("#terrytory .fold-all"); if (!box) return;
     box.hidden = !ks.length;

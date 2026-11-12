@@ -6,6 +6,10 @@ html.op-run .hero .brand { opacity: 0; }
    it paints again the moment the house lights start to come up (op-lit) or the film is skipped (op-land) */
 html.op-run:not(.op-lit):not(.op-land) :is(#page, .leaf, .dock, .dock-handle, #srail, #skipbtn) { visibility: hidden; }
 html.op-land .hero .brand { opacity: 1; transition: none; }
+/* from the still hold the page paints again under the film, so its first paint never lands in the glide; its frosted glass waits
+   until the lockup has landed (op-bats): out of sight it would only re-blur the page every frame the glide is trying to draw */
+html.op-run:not(.op-bats):not(.op-land) :is(#page, .leaf, .dock, .dock-handle, #srail, #skipbtn),
+html.op-run:not(.op-bats):not(.op-land) :is(#page, .leaf, .dock, .dock-handle, #srail, #skipbtn) * { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
 
 #opening {
   --op-cream: #FBF3E2;

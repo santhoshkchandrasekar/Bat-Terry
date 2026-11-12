@@ -631,3 +631,141 @@ section.pred.is-folded { margin-top: 20px; } .is-folded > .flyp { margin-top: 20
 /* the hill always spans the window (owner 00:40): on screens wider than the photo it is drawn to the full width (cover), so its left
    edge never needs fading; only its top melts into the page */
 #ground img { left: 0; right: 0; width: 100%; -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 160px); mask-image: linear-gradient(to bottom, transparent 0, #000 160px); }
+
+/* ---------------------------------------------------------------- Echolocation, tidied (owner 11 Nov)
+   One type scale for the section: eyebrows 11px caps, the headline 22px serif, body 13px, lists 13.5 / 12.5px, footnotes 12 / 11.5px.
+   The map carries names only; the numbers live in the tooltip and the list beside it. */
+.qs-sheet .qside { gap: 20px; }
+.qs-sheet .qey, .qs-sheet .qlh, .qs-sheet .qgh { font: 600 11px/1 var(--ui); letter-spacing: .1em; text-transform: uppercase; color: var(--ink3); }
+.qtop { flex-wrap: wrap; row-gap: 10px; margin-bottom: -6px; }
+.qsegs { display: inline-flex; align-items: center; gap: 8px; }
+.qs-sheet .qhead { font-size: 22px; line-height: 1.32; }
+.qlede { display: grid; gap: 6px; }
+.qgoal { margin: 0; font: 400 13px/1.45 var(--ui); color: var(--ink2); }
+.qgoal::before { content: "Your goal: "; font-weight: 600; color: var(--ink); }
+.qs-sheet .qleg { gap: 12px; padding: 14px 0; }
+.qs-sheet .qlr { font-size: 12.5px; gap: 8px 16px; }
+.qs-sheet .qgroups { gap: 16px; }
+.qs-sheet .qg { gap: 6px 10px; }
+.qs-sheet .qgh { margin-bottom: 2px; }
+.qs-sheet .qn b { font-size: 13.5px; }
+.qs-sheet .qn span { font-size: 12.5px; line-height: 1.4; }
+.qempty { margin: 0; font: 400 13px/1.5 var(--ui); color: var(--ink2); }
+.qfoot { display: grid; gap: 6px; padding-top: 14px; border-top: 1px solid var(--line); }
+.qfoot .qnote { margin: 0; font: 400 12px/1.55 var(--ui); color: var(--ink2); }
+.qfoot .qsrc { margin: 0; font: 400 11.5px/1.35 var(--ui); color: var(--ink3); }
+.qzhint { top: 38px; max-width: none; white-space: nowrap; font: 400 11.5px/1 var(--ui); color: var(--ink3); }
+.ql text { letter-spacing: .005em; }
+/* the goal view: whole hexes tinted by lateness; too few requests is an outline; the chase's places are ringed */
+.w-thin { --q-c: var(--ink3); }
+.qh.w-thin .ring { fill: transparent; stroke-opacity: .45; stroke-dasharray: .16 .13; }
+.qmap .qh.cz .ring { stroke: var(--ink); stroke-width: .17; }
+.qmap .qh.cz-no .ring { stroke: var(--ink2); stroke-dasharray: .28 .2; }
+.qli.thin i { background: transparent; border: 1.5px dashed color-mix(in srgb, var(--ink3) 70%, transparent); box-sizing: border-box; }
+.qli.cz-ok i, .qli.cz-no i { background: transparent; box-sizing: border-box; border: 2px solid var(--ink); }
+.qli.cz-no i { border: 2px dashed var(--ink2); }
+.qs.goalview .qprev p { font-size: 20px; }
+/* the reporting table: its header row is one style (the first cell had the serif of the body rows) */
+.qs .who-t thead th:first-child { font: 600 10.5px/1.2 var(--ui); letter-spacing: .1em; text-transform: uppercase; color: var(--ink2); }
+
+/* the goal view, refined: a neighborhood the chase named is drawn as one outline along its edge */
+.qedge { fill: none; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
+.qedge.ok { stroke: var(--ink); stroke-width: .16; }
+.qedge.no { stroke: var(--ink2); stroke-width: .12; stroke-dasharray: .3 .22; opacity: .85; }
+/* its lists: one row per place: a swatch, the name with its count, the difference against what its mix predicts */
+.qs-sheet .qg.qrl { grid-template-columns: minmax(0, 1fr); gap: 0; }
+.qs-sheet .qg.qrl .qgh { margin-bottom: 6px; }
+.qs-sheet .qn.qr { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 9px 4px 9px 2px; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; }
+.qs-sheet .qg.qrl .qn.qr:first-of-type { border-top: 1px solid var(--line); }
+.qs-sheet .qn.qr > i { width: 10px; height: 10px; border-radius: 2px; background: var(--q-c); }
+.qs-sheet .qn.qr.w-thin > i { background: transparent; border: 1.5px dashed var(--ink3); box-sizing: border-box; }
+.qrn { display: grid; gap: 2px; min-width: 0; }
+.qs-sheet .qrn b { font: 600 13.5px/1.25 var(--ui); color: var(--ink); }
+.qs-sheet .qrn span { font: 400 12px/1.3 var(--ui); color: var(--ink3); font-variant-numeric: tabular-nums; }
+.qrv { font: 600 14px/1 var(--ui); font-variant-numeric: tabular-nums; color: var(--ink); }
+.qn.qr:is(.w-s1, .w-s2, .w-s3) .qrv { color: var(--short); }
+.qs-sheet .qn.qr:hover { background: var(--sunken); }
+.qs-sheet .qn.qr[aria-pressed="true"] { box-shadow: inset 3px 0 0 var(--ink); background: var(--sunken); }
+.qruled { margin: 0; font: 400 12.5px/1.5 var(--ui); color: var(--ink2); }
+.qruled span { font-weight: 600; color: var(--ink); }
+.qli.cz-ok i { border-width: 2px; } .qli.cz-no i { border-style: dashed; }
+
+/* a card's figure and its caption: the caption sits beside a short figure and drops below a long one, never squeezed to a sliver */
+.pp .key { flex-wrap: wrap; row-gap: 4px; }
+.pp .key .u { flex: 1 1 120px; min-width: 120px; }
+
+/* the left column: the map, then its legend and fine print; the right column is the answer (owner 11 Nov) */
+.qleft { display: grid; gap: 22px; align-content: start; min-width: 0; }
+.qunder { display: grid; gap: 14px; }
+.qunder .qleg { border-bottom: 0; padding-bottom: 0; }
+.qunder .qfoot { padding-top: 12px; }
+
+/* ---------------------------------------------------------------- Echolocation, formatted (owner 11 Nov)
+   The map and its key are one card; the answer beside it is open type with no rules between rows; the method note opens across both. */
+.qs-sheet { row-gap: 18px; }
+.qleft { gap: 0; border: 1px solid var(--line2); border-radius: 14px; overflow: hidden; align-self: start;
+  background: color-mix(in srgb, var(--raised, #fff) 55%, var(--paper-warm)); box-shadow: 0 1px 0 rgba(255,255,255,.4) inset, 0 10px 28px -22px rgba(40,20,10,.35); }
+.qleft .qmapw { padding: 16px 16px 10px; }
+.qleft .qzoom { left: 16px; top: 16px; } .qleft .qzhint { left: 16px; top: 54px; }
+.qunder { display: block; padding: 12px 16px 14px; background: color-mix(in srgb, var(--ink) 4%, transparent); border-top: 1px solid color-mix(in srgb, var(--ink) 7%, transparent); }
+.qunder .qleg { display: grid; gap: 9px; padding: 0; border: 0; }
+.qunder .qlr { gap: 6px 14px; font-size: 12px; color: var(--ink2); }
+.qunder .qlh { flex-basis: auto; margin-right: 4px; font: 600 10.5px/1 var(--ui); letter-spacing: .08em; text-transform: uppercase; color: var(--ink3); }
+.qunder .qli i { width: 12px; height: 12px; }
+/* the answer: no rules; space and type do the grouping */
+.qs-sheet .qgroups { gap: 24px; }
+.qs-sheet .qg.qrl .qgh { margin-bottom: 4px; }
+.qs-sheet .qn.qr, .qs-sheet .qg.qrl .qn.qr:first-of-type { border: 0; border-radius: 8px; padding: 7px 10px 7px 8px; margin: 0 -10px 0 -8px; }
+.qs-sheet .qn.qr:hover { background: color-mix(in srgb, var(--ink) 5%, transparent); }
+.qs-sheet .qn.qr[aria-pressed="true"] { background: color-mix(in srgb, var(--ink) 7%, transparent); box-shadow: none; }
+.qs-sheet .qn.qr[aria-pressed="true"] .qrn b { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
+.qs-sheet .qrv:empty { display: none; }
+.qruled { padding-top: 2px; }
+/* the method note: folded by default; open, it runs across the whole panel in two columns */
+.qmore { grid-column: 1 / -1; display: grid; gap: 10px; }
+.qmorebtn { justify-self: start; display: inline-flex; align-items: center; gap: 6px; padding: 4px 0; border: 0; background: none; cursor: pointer;
+  font: 600 12.5px/1 var(--ui); color: var(--ink2); }
+.qmorebtn svg { width: 14px; height: 14px; transition: transform .2s var(--ease, ease); }
+.qmorebtn[aria-expanded="true"] svg { transform: rotate(180deg); }
+.qmorebtn:hover span { text-decoration: underline; text-underline-offset: 3px; }
+.qmorebtn:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+.qmoretx .qfoot { display: block; padding: 0; border: 0; }
+.qmoretx .qnote { columns: 2; column-gap: 40px; font: 400 12.5px/1.6 var(--ui); color: var(--ink2); }
+.qmoretx .qsrc { margin-top: 8px; font: 400 11.5px/1.35 var(--ui); color: var(--ink3); }
+@media (max-width: 1100px) { .qmoretx .qnote { columns: 1; } }
+@media (prefers-reduced-motion: reduce) { .qmorebtn svg { transition: none; } }
+
+/* the card's own paper: the halos behind map text match it, so names and landmarks never sit in pale blobs */
+.qleft { --q-card: color-mix(in srgb, var(--raised, #fff) 55%, var(--paper-warm)); background: var(--q-card); }
+.qleft .qlm text, .qleft .ql text, .qleft .qdot text { stroke: var(--q-card); }
+/* the key: a label line, then its swatches */
+.qunder .qlr { flex-wrap: wrap; }
+.qunder .qlh { flex-basis: 100%; margin: 0 0 1px; }
+.qunder .qleg { gap: 11px; }
+/* the method note: two parts aligned under the two columns */
+.qmoretx:not([hidden]) { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(300px, 1fr); gap: 12px 36px; }
+.qmoretx .qm b { display: block; margin-bottom: 5px; font: 600 12.5px/1.3 var(--ui); color: var(--ink); }
+.qmoretx .qm p { margin: 0; font: 400 12.5px/1.6 var(--ui); color: var(--ink2); }
+.qmoretx .qm p.qsrc { margin-top: 6px; font-size: 11.5px; color: var(--ink3); }
+@media (max-width: 1100px) { .qmoretx:not([hidden]) { grid-template-columns: minmax(0, 1fr); } }
+
+/* section titles (owner 11 Nov): The Flip Side and The Ledger are the page's two sections and share one title style; the flip, the
+   predators, the flyway and Echolocation are its parts, each with a fold chevron and a 24px serif title */
+#ldg-sec-h { font: 400 46px/1 var(--display); letter-spacing: -.02em; color: var(--ink); }
+.ldg-section .gh { align-items: flex-end; }
+.ldg-section .heard { padding-bottom: 6px; }
+section.qs .qs-line { padding-left: 42px; }
+section.qs.is-folded .qs-line { display: none; }
+
+/* The Flip Side's head (owner 11 Nov): "The Flip Side" is the label; the goal on show is the title. Before any goal, the label is the title */
+#terrytory .tt-head h2 { font: 400 20px/1 var(--display); letter-spacing: 0; color: var(--ink2); }
+#terrytory .tt-head h2 .bw { color: var(--ink); opacity: .92; }
+#terrytory .tt-head .tt-sub { display: block; margin: 12px 0 0; max-width: 34ch; font: 400 34px/1.18 var(--display); font-style: normal; letter-spacing: -.012em; color: var(--ink); text-wrap: balance; }
+#terrytory .tt-head .tt-sub[hidden] { display: none; }
+#terrytory .tt-head:has(#ttsub[hidden]) h2 { font-size: 34px; letter-spacing: -.012em; color: var(--ink); }
+#ldg-sec-h { font-size: 34px; letter-spacing: -.012em; }
+/* the four parts' titles start at one x: The Flip's row had a narrower gap after its chevron */
+.fold-hd .fold-t { padding-left: 8px; }
+/* the credit line sits clear of the dock's resting bar */
+#ground p { bottom: 124px; }
+@media (max-width: 700px) { #terrytory .tt-head .tt-sub, #terrytory .tt-head:has(#ttsub[hidden]) h2, #ldg-sec-h { font-size: 26px; } }

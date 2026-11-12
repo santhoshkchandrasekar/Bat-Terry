@@ -35,3 +35,24 @@ html.ld-on #srail { opacity: 0; pointer-events: none; }
 html.spot #srail { opacity: .35; pointer-events: none; }
 @media (max-height: 680px) { #srail button, #srail .ic { height: 32px; } }
 @media (max-width: 900px), (hover: none) { #srail { display: none; } }
+
+/* The charge (rail.js, owner 11 Nov): a skipped chase charges the stage icons bottom up, like cells of a battery */
+#srail { --lit: #F2B66B; --lit-glow: rgba(242,182,107,.55); }
+:root:not([data-theme="night"]) #srail { --lit: #C4521C; --lit-glow: rgba(196,82,28,.38); }
+#srail .ic svg.chg { position: absolute; left: 50%; top: 50%; margin: -9px 0 0 -9px; color: var(--lit); stroke-width: 1.9; pointer-events: none;
+  clip-path: inset(calc((1 - var(--q, 0)) * 100%) 0 0 0); opacity: 0; transition: opacity .5s ease; }
+#srail .ic .mn { position: absolute; left: 50%; width: 20px; height: 1.5px; margin-left: -10px; border-radius: 1px; pointer-events: none; opacity: 0;
+  top: calc(50% - 9px + (1 - var(--q, 0)) * 18px); background: linear-gradient(90deg, transparent, var(--lit) 22%, var(--lit) 78%, transparent);
+  box-shadow: 0 0 6px 1px var(--lit-glow); transition: opacity .25s ease; }
+#srail.chargemode { opacity: 1 !important; }
+#srail.chargemode .ic svg.chg { opacity: 1; }
+#srail.chargemode button:is([data-k="goal"], [data-k="fail"], [data-k="pred"], [data-k="fly"], [data-k="echo"], [data-k="ledger"]):not(.full) svg.base { opacity: .5; }
+#srail.chargemode button.here { color: inherit; }
+#srail.chargemode button.charging .mn { opacity: .8; }
+#srail.chargemode button.full svg.base { opacity: 0; }
+#srail.chargemode button.full svg.chg { animation: srail-cell .42s cubic-bezier(.2,.8,.2,1); }
+@keyframes srail-cell { 0% { transform: scale(1); } 45% { transform: scale(1.18); } 100% { transform: scale(1); } }
+#srail.charged .lns i { box-shadow: 0 0 6px var(--lit-glow); }
+#srail.discharge .ic svg.chg { opacity: 0; }
+#srail.discharge svg.base { transition: opacity .5s ease; }
+@media (prefers-reduced-motion: reduce) { #srail.chargemode button.full svg.chg { animation: none; } #srail .ic .mn { display: none; } }

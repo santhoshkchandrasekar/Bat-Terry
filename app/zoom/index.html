@@ -17,10 +17,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=Caveat+Brush&family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="opening.css?v=47">
+<link rel="stylesheet" href="opening.css?v=48">
 <link rel="stylesheet" href="landing.css?v=84">
 <link rel="stylesheet" href="tabs.css?v=5">
-<script src="opening.js?v=47"></script>
+<script src="opening.js?v=48"></script>
 <script src="narrow.js?v=5"></script>
 <style>
 /* Terry visual system v2. Day is the default theme; Night is a toggle. The projector screen is a warm bulb in both themes:
@@ -130,7 +130,10 @@ svg.i .w { fill: var(--wheel); }
 .brand { display: flex; align-items: center; gap: 10px; }
 .brand svg.i { width: 26px; height: 26px; stroke: none; }
 .brand .nm { font: 400 27px/1 "Caveat Brush", var(--display); white-space: nowrap; }   /* the wordmark: Terry's own hand (owner 11 Nov) */
-.brand svg.i { transform: translateY(1.9px); }   /* the bat's body sits on the middle of the B, not the middle of the box */
+.brand svg.i { transform: translateY(1.9px); }
+/* Terry's vocabulary in Terry's hand (owner 11 Nov): only the bat words in a title (Flip Side, Flip, Predators, Flyway, Echolocation),
+   never body text, numbers or controls; a little larger than the serif beside it so the two read the same size, and a touch softer */
+.bw { font-family: "Caveat Brush", var(--display); font-weight: 400; font-size: 1.15em; letter-spacing: .005em; line-height: .9; opacity: .88; font-style: normal; }   /* the bat's body sits on the middle of the B, not the middle of the box */
 .brand .sub { font-size: 12.5px; opacity: .88; padding-left: 12px; border-left: 1px solid rgba(255,255,255,.4); }
 .navr { display: flex; align-items: center; gap: 10px; }
 .seg { display: inline-flex; padding: 3px; border-radius: 10px; gap: 2px; background: rgba(10,8,16,.5); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
@@ -210,6 +213,10 @@ svg.i .w { fill: var(--wheel); }
 #skipbtn:active { transform: scale(.94); }
 #skipbtn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 #skipbtn.skipping { pointer-events: none; background: rgba(20,23,28,.94); }
+#skipbtn.undo, #skipbtn.said { background: rgba(20,23,28,.62); border-color: rgba(255,255,255,.28); color: rgba(255,255,255,.88); animation: skipin .35s cubic-bezier(.2,.8,.2,1); }
+#skipbtn.undo::after { -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M4 3v10l9-5z'/></svg>"); mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M4 3v10l9-5z'/></svg>"); width: 10px; height: 10px; }
+#skipbtn.said { pointer-events: none; } #skipbtn.said::after { display: none; }
+@keyframes skipin { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 #skipbtn.skipping::after { display: none; }
 #skipbtn.skipping::before { content: ""; width: 12px; height: 12px; border-radius: 50%; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; animation: skspin .7s linear infinite; }
 @keyframes skspin { to { transform: rotate(360deg); } }
@@ -481,9 +488,9 @@ html.spot #legend { visibility: hidden; }
   #goalpill { animation: none; } .tt-top { transition: none; } .prog li.act .st { animation: none; } #why { animation: none; } #world.settled .c-idle { animation: none; }
 }
 </style>
-<link rel="stylesheet" href="screen.css?v=80">
-<link rel="stylesheet" href="roost.css?v=89">
-<link rel="stylesheet" href="ledger.css">
+<link rel="stylesheet" href="screen.css?v=81">
+<link rel="stylesheet" href="roost.css?v=94">
+<link rel="stylesheet" href="ledger.css?v=2">
 <link rel="stylesheet" href="almanac.css?v=3">
 <link rel="stylesheet" href="budgeterry.css">
 
@@ -563,7 +570,7 @@ html.spot #legend { visibility: hidden; }
 </div>
 <button type="button" id="skipbtn" hidden>Skip</button>
 <script src="bus.js"></script>
-<script src="roost.js?v=85"></script>
+<script src="roost.js?v=87"></script>
 <script src="engine.js"></script>
 <script src="levels.js"></script>
 <script src="art.js?v=84"></script>
@@ -571,7 +578,7 @@ html.spot #legend { visibility: hidden; }
 <script>document.body.insertAdjacentHTML("afterbegin", TerryArt.sprite());</script>
 <script src="terry-bat.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="terry-bat3d.js?v=3"></script>
+<script src="terry-bat3d.js?v=5"></script>
 <script src="terry.js"></script>
 <script src="stream.js"></script>
 <script src="flyover.js?v=2"></script>
@@ -583,23 +590,23 @@ html.spot #legend { visibility: hidden; }
 <script src="scene.js"></script>
 <script src="plates.js?v=4"></script>
 <script src="compare.js"></script>
-<script src="proj.js?v=75"></script>
+<script src="proj.js?v=79"></script>
 <script src="app.js?v=74"></script>
 <link rel="stylesheet" href="shell.css?v=93">
-<link rel="stylesheet" href="rail.css?v=5">
+<link rel="stylesheet" href="rail.css?v=7">
 <aside id="leaf-left"></aside><aside id="leaf-right"></aside><div id="dock"></div>
 <script src="shell.js?v=3"></script>
 <script src="territory.js?v=2"></script>
 <script src="ticket.js"></script>
-<script src="quiet.js?v=64"></script>
+<script src="quiet.js?v=69"></script>
 <script src="plan2025.js"></script>
 <script src="ledger.js?v=66"></script>
 <script src="terms.js"></script>
-<script src="ping.js?v=5"></script>
+<script src="ping.js?v=6"></script>
 <script src="pull.js"></script>
 <script src="budget.js"></script>
 <script src="budgeterry.js"></script>
 <script src="almanac.js?v=2"></script>
 <script src="nav.js"></script>
 <script src="guide.js?v=63"></script>
-<script src="rail.js?v=4"></script>
+<script src="rail.js?v=6"></script>

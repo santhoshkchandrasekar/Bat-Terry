@@ -160,3 +160,7 @@
 .bat-loader .bl-t { font: 500 13px/1.3 var(--ui); color: var(--ink2); }
 @media (prefers-reduced-motion: reduce) { #stage.pv-dim { transition: opacity 0s linear .25s, filter 0s linear .25s; } .bat-loader.pv { transition: opacity 0s linear .25s; } }
 .bat-loader.pv .bl-t { white-space: nowrap; bottom: -2px; }
+
+/* the pull's tooltip opens under the ring (owner 11 Nov): above it, it sat on the plan's legend at the bottom of the screen */
+#pullzone .pr-tip { bottom: auto; top: calc(100% + 8px); transform: translate(-50%, -4px); }
+#pullzone.tipon .pr-tip { transform: translate(-50%, 0); }

@@ -116,9 +116,54 @@
     const wait = ms => new Promise(res => { if (SK.on || reduced()) return res(); const t = setTimeout(() => { SK.ws.delete(fn); res(); }, ms / sp()); const fn = () => { clearTimeout(t); res(); }; SK.ws.add(fn); });
     const skipNow = () => { SK.on = true; for (const f of [...SK.ws]) f(); SK.ws.clear(); if (Zm() && Zm().planRunning) Zm().skipPlan(); };
     // owner 7 Nov: the button shows the click landed (the chase may still need a moment to finish its sums), and resets when it hides
-    skipbtn.addEventListener("click", () => { if (skipbtn.classList.contains("skipping")) return; skipbtn.classList.add("skipping"); skipbtn.textContent = "Skipping"; skipbtn.setAttribute("aria-busy", "true"); }, true);
-    try { new MutationObserver(() => { if (skipbtn.hidden && skipbtn.classList.contains("skipping")) { skipbtn.classList.remove("skipping"); skipbtn.textContent = "Skip"; skipbtn.removeAttribute("aria-busy"); } }).observe(skipbtn, { attributes: true, attributeFilter: ["hidden"] }); } catch (e) {}
+    // owner 11 Nov: in a chase the corner button is "Skip to the answer"; after an answer it offers the chase back for next time
+    skipbtn.addEventListener("click", e => {
+      if (skipbtn.classList.contains("undo")) { e.stopImmediatePropagation(); instantPref(false); skipbtn.classList.remove("undo"); skipbtn.classList.add("said"); skipbtn.textContent = "The chase plays next time"; clearTimeout(undoT); undoT = setTimeout(() => { skipbtn.hidden = true; }, 1800); return; }
+      if (skipbtn.classList.contains("skipping") || skipbtn.classList.contains("said")) { e.stopImmediatePropagation(); return; }
+      skipbtn.classList.add("skipping"); skipbtn.textContent = running && !prog.has("fly") ? "Getting the answer" : "Skipping"; skipbtn.setAttribute("aria-busy", "true");
+    }, true);
+    try { new MutationObserver(() => { if (skipbtn.hidden) { skipbtn.classList.remove("skipping", "undo", "said"); skipbtn.textContent = "Skip"; skipbtn.removeAttribute("aria-busy"); } }).observe(skipbtn, { attributes: true, attributeFilter: ["hidden"] }); } catch (e) {}
     skipbtn.addEventListener("click", skipNow);
+    // ------------------------------------------------------------ skip to the answer (owner 11 Nov)
+    // A skipped chase drops the theatre but not the thinking: Terry still waits for the model's flip, and the section rail charges like a
+    // battery through the real stages (goal, flip, predators, flyway, plan) while he does. The answer lands on the flyway, with one line in
+    // the dock. A viewer who skips once gets answers straight away for the rest of the visit, and can ask for the chase back.
+    let jumped = false, answered = false, undoT = 0, prog = new Set();
+    const instantPref = v => { try { if (v === undefined) return sessionStorage.getItem("terry.instant") === "1"; if (v) sessionStorage.setItem("terry.instant", "1"); else sessionStorage.removeItem("terry.instant"); } catch (e) {} return false; };
+    const RL = () => root.TerryRail;
+    const pm = k => { prog.add(k); if (jumped && RL()) RL().mark(k); };
+    function jump(auto) {
+      if (jumped || !running || prog.has("fly")) return; jumped = true;   // a chase can start while his hello is still finishing: running is what counts
+      if (!auto) instantPref(true);
+      if (!SK.on) skipNow();
+      if (!skipbtn.classList.contains("skipping")) { skipbtn.classList.add("skipping"); skipbtn.textContent = "Getting the answer"; skipbtn.setAttribute("aria-busy", "true"); }
+      if (RL()) RL().begin([...prog]);
+      $("#live").textContent = "Skipping to the answer.";
+    }
+    skipbtn.addEventListener("click", () => { if (running) jump(false); });
+    addEventListener("keydown", e => {   // Esc skips a chase too, as it does the intro (never while typing, never once the plan is playing)
+      if (e.key !== "Escape" || !running || jumped || skipbtn.hidden || prog.has("fly")) return;
+      const t = e.target; if (t && t.closest && t.closest("input, textarea, [contenteditable], .rbody, #dock")) return;
+      skipbtn.click();
+    });
+    // the answer, where the eye should land: the flyway, whole and clear of the dock, plus one line from Terry
+    function landAnswer() {
+      const body = bodyOf(activeId()) || document, f = body.querySelector("section.flyp"), sec = f && (f.closest(".tt-fadein") || f);
+      if (sec) { const dk = $("#dock"), room = (dk && dk.offsetHeight ? Math.min(innerHeight, dk.getBoundingClientRect().top) : innerHeight) - 16, r = rel(sec);
+        scrollTo({ top: Math.max(0, r.y - Math.max(90, Math.min(140, (room - r.h) / 2))), behavior: reduced() ? "auto" : "smooth" }); }
+      // the answer in one line, read off the page itself: the verdict, the decision (who to sign, by when) and the bill
+      const G = root.TerryGuide, q = k => sec && sec.querySelector(k), t = n => (n && n.textContent || "").replace(/\s+/g, " ").trim(), dot = x => x.replace(/[.\s]+$/, "") + ".";
+      const sign = sec ? [...sec.querySelectorAll("li.step")].find(li => /^sign/i.test(t(li.querySelector(".t")))) : null;
+      const dd = sign && t(sign.querySelector(".d")).toLowerCase().replace(/(^|\s)([a-z])/g, (m, s1, c) => s1 + c.toUpperCase());
+      const act = sign && t(sign.querySelector(".s")) ? `${t(sign.querySelector(".s")).replace(/[.\s]+$/, "")}${dd ? " by " + dd : ""}.` : "";
+      const tot = q(".bill .tot"), bill = tot ? `${t(tot.querySelector(".k"))} ${t(tot.querySelector(".v"))}, ${t(q(".bill .for"))}.` : (t(q(".bill .for")) ? dot(t(q(".bill .for")).replace(/^for /, "For ")) : "");
+      const line = [t(q(".verdict h2")) && dot(t(q(".verdict h2"))), act, bill].filter(Boolean).join(" ") || dot(t(f && f.querySelector(".fw-h .sub")));
+      if (G && G.say && line) G.say(`Here is the answer. ${line}`, { q: "What is the answer?" });
+      $("#live").textContent = line ? `The answer: ${line}` : "The answer is ready.";
+      // the chase is one click away for next time
+      clearTimeout(undoT); skipbtn.classList.remove("skipping", "said"); skipbtn.removeAttribute("aria-busy"); skipbtn.classList.add("undo"); skipbtn.textContent = "Watch the chase next time"; skipbtn.hidden = false;
+      undoT = setTimeout(() => { if (skipbtn.classList.contains("undo")) skipbtn.hidden = true; }, 8000);
+    }
     // follow: the camera eases toward a moving target every frame (the card in Terry's feet) until stopped (owner 7 Nov)
     function follow(fn) { if (SK.on || reduced()) return () => {}; let on = true;
       let last = performance.now();
@@ -203,8 +248,10 @@
     }
     async function release(hx, hy) { if (gone) return; await idle(); if (bat.mode() === "hang") { bat.setHome(hx === undefined ? pos.x - 40 : hx, hy === undefined ? pos.y + 130 : hy); await bounded(bat.flip(), 5000); } }   // generous: a slow frame rate must not cut the take-off short
     async function hang(x, y, instant) {
-      if (gone) return; await idle(); pos = { x, y };
-      if (instant || reduced() || SK.on) { bat.setBranch(x, y); bat.hangNow(); return; }
+      if (gone) return;
+      if (SK.on) { pos = { x, y }; bat.setBranch(x, y); bat.hangNow(); return; }   // skipping: he is simply there, never waited for mid-flight
+      await idle(); pos = { x, y };
+      if (instant || reduced()) { bat.setBranch(x, y); bat.hangNow(); return; }
       if (bat.mode() === "hang") await release();
       bat.setBranch(x, y); await bounded(bat.flip(), 7000);
       if (bat.mode() !== "hang") { bat.setBranch(x, y); bat.hangNow(); }   // a slow GPU never leaves him mid-air
@@ -330,7 +377,7 @@
     const bus = (e, p) => { try { if (Bus) Bus.emit(e, p); } catch (err) { console.warn("bus", e, err && err.message); } };
     const roosts = () => (root.TerryState && root.TerryState.roosts) || [];
     const activeId = () => (root.TerryState && root.TerryState.activeRoost) || null;
-    TT.innerHTML = `<div class="tt-head"><div><h2 class="disp">The Flip Side</h2><p class="tt-sub" id="ttsub"></p></div><div class="rail" id="rail" role="tablist" aria-label="Roosts"></div></div><div id="rbodies"></div>`;
+    TT.innerHTML = `<div class="tt-head"><div><h2 class="disp"><span class="bw">Flip Side</span></h2><p class="tt-sub" id="ttsub"></p></div><div class="rail" id="rail" role="tablist" aria-label="Roosts"></div></div><div id="rbodies"></div>`;
     const rbodies = $("#rbodies"), rail = $("#rail"), ttsub = $("#ttsub");
     let live = null, building = false;
     const mkBody = () => { const b = h("div", "rbody"); rbodies.appendChild(b); return b; };
@@ -342,9 +389,17 @@
       const g = r.goal || {}, ms = (g.months || []).slice().sort((a, b) => a - b), mo = !ms.length || ms.length === 12 ? "2025" : ms.length === 1 ? MON[ms[0] - 1].slice(0, 3) : `${MON[ms[0] - 1].slice(0, 3)} to ${MON[ms[ms.length - 1] - 1].slice(0, 3)}`;
       return `${deptName(g.scope)}, ${mo}, ${Math.round((g.target || 0) * 100)}%`;
     }
-    function ttEmpty() { rbodies.textContent = ""; const b = mkBody(); b.classList.add("empty"); b.innerHTML = `<div class="plate tt-empty"><span class="disp">Nothing chased yet</span>Give Terry a goal. His predators and the flyway land here. Until then, this is the plan he starts from.</div>`; live = null; building = false; renderRail(); }
+    // Echolocation follows the chase on show (owner 11 Nov): the goal, its department and months, and the places its predators named
+    function echoGoal(g, fl) {
+      const Qm = root.TerryQuiet; if (!Qm || !Qm.goal) return;
+      if (!g) { Qm.goal(null); return; }
+      const z = Zm(), i = z && z.info, dn = g.scope === "CITY" ? "The four departments" : (i && i[g.scope] && i[g.scope].name) || "This department";
+      const preds = ((fl && fl.predators) || []).map(p => ({ hood: p.hypothesis && p.hypothesis.neighborhood, verdict: p.evidence && p.evidence.verdict, label: p.hypothesis && p.hypothesis.name })).filter(p => p.hood);
+      try { Qm.goal({ scope: g.scope, months: g.months, hood: g.hood || null, deptName: dn, goalText: F && F.goalText ? F.goalText(g) : "", preds }); } catch (e) { console.warn("echo goal", e && e.message); }
+    }
+    function ttEmpty() { echoGoal(null); rbodies.textContent = ""; const b = mkBody(); b.classList.add("empty"); b.innerHTML = `<div class="plate tt-empty"><span class="disp">Nothing chased yet</span>Give Terry a goal. His predators and the flyway land here. Until then, this is the plan he starts from.</div>`; live = null; building = false; renderRail(); }
     function renderRail() {
-      const rs = roosts(), act = building ? null : activeId(); { const r0 = rs.length === 1 && !building ? rs[0] : null, gt = r0 && F && F.goalText ? String(F.goalText(r0.goal)) : ""; ttsub.textContent = gt ? gt.replace(/\.?$/, ".") : ""; ttsub.hidden = !gt; }
+      const rs = roosts(), act = building ? null : activeId(); { const r0 = building ? null : (rs.find(x => x.id === act) || (rs.length === 1 ? rs[0] : null)), g0 = building ? GOAL : r0 && r0.goal, gt = g0 && F && F.goalText ? String(F.goalText(g0)) : ""; ttsub.textContent = gt ? gt.replace(/\.?$/, ".") : ""; ttsub.hidden = !gt; }   // owner 11 Nov: the goal is the Flip Side's title
       rail.hidden = rs.length < 2; rail.textContent = "";
       const VW = { escaped: ["", "Escaped"], already: ["", "Already safe"], partial: ["w", "Partly"], unreachable: ["b", "No exit left"] };
       rs.forEach(r => { const v = VW[r.verdict] || VW.partial;
@@ -376,7 +431,7 @@
         <div class="flipx"><section class="plate m fail load" id="failcard" aria-label="The flip"><button type="button" class="xb" aria-label="Close this plan">${ic("x")}</button><div class="rules" aria-hidden="true"></div>
           <div class="tag" aria-hidden="true"><span class="string"></span><span class="label">${esc(String(F.goalText(goal)).replace(/\.$/, ""))}</span><span class="cap">your goal, hung Terry's way</span></div>
           <div class="t"><p class="date">Terry, 31 December 2025</p><p class="disp say">Turning your goal upside down</p></div></section><aside class="ev" id="evcard" hidden></aside></div></div>
-        <section class="pred"><header class="guide"><div class="gh"><h2 class="disp">Predators Terry heard</h2><span class="heard" id="heard"></span><span class="stamps" id="stamps" role="group" aria-label="Filter the predators by verdict"></span></div><p class="ptally" id="ptally" hidden></p></header>
+        <section class="pred"><header class="guide"><div class="gh"><h2 class="disp"><span class="bw">Predators</span></h2><span class="heard" id="heard"></span><span class="stamps" id="stamps" role="group" aria-label="Filter the predators by verdict"></span></div><p class="ptally" id="ptally" hidden></p></header>
         <div class="board"><div class="pgrid cards" id="pgrid">${skelCard().repeat(5)}</div></div></section><div id="flysec"></div>`;
       requestAnimationFrame(() => $("#tttop").classList.add("work"));
     }
@@ -586,7 +641,7 @@
           <div class="perch fly"><span class="l">Flyway${multi && wk ? `<small>weakest: ${esc(wk.escape.name)}</small>` : ""}</span><span class="bar"><i style="background:${fly >= tgt ? "var(--work)" : "var(--short)"}" data-w="${Math.round(fly * 1000) / 10}"></i></span><span class="v num">${pctG(fly, tgt)}</span></div></div>
         <nav class="vnext" aria-label="Next steps"><button type="button" data-n="ping">${ic("sonar")}<span>Ping Terry a what-if</span></button><button type="button" data-n="cmp">${ic("arrow")}<span>Compare with the original plan</span></button><button type="button" data-n="hear">${ic("search")}<span>Hear what Boston is saying</span></button></nav></section>
         <aside class="bill" aria-label="Terry's bill">${billHtml}</aside></div>`;
-      sec.innerHTML = `<section class="flyp" aria-label="The flyway"><header class="fw-h"><h2 class="disp">The flyway</h2><span class="sub">${esc(subT)}</span>${changed ? `<button type="button" class="btn" data-a="orig"><i class="dot-og"></i>${ic("arrow", "", "transform:scaleX(-1)")}<span>Original plan</span></button>` : ""}</header>
+      sec.innerHTML = `<section class="flyp" aria-label="The Flyway"><header class="fw-h"><h2 class="disp"><span class="bw">Flyway</span></h2><span class="sub">${esc(subT)}</span>${changed ? `<button type="button" class="btn" data-a="orig"><i class="dot-og"></i>${ic("arrow", "", "transform:scaleX(-1)")}<span>Original plan</span></button>` : ""}</header>
         <div class="fw"><div class="sky" role="img" aria-label="${esc(skyLabel)}" style="${skyBg}"><div class="sunglow" style="left:${dp}%"></div><div class="stars" style="--from:${f1(Math.min(96, dp + 14))}%"></div><div class="sun" style="left:${dp}%"></div>${SKYL}${lineSvg}${owls}${terry}${marks}</div>
         <div class="months" aria-hidden="true">${ticks}${mlab}</div><ol class="steps">${stepsHtml}</ol></div></section>
         ${endHtml}`;
@@ -783,7 +838,9 @@
 
     // ------------------------------------------------------------ the flip: loading, then the Terrytory with the real numbers
     async function runGoal(goal) {
-      running = true; bus("proj:busy", { reason: "chase" }); ringsShow(false); GOAL = goal; SK.on = false; X = FL = null; lockBox(true); skipbtn.hidden = false; GVspec = null;
+      running = true; bus("proj:busy", { reason: "chase" }); ringsShow(false); GOAL = goal; SK.on = false; X = FL = null; lockBox(true); GVspec = null;
+      clearTimeout(undoT); jumped = answered = false; prog = new Set(["goal"]); skipbtn.classList.remove("skipping", "undo", "said"); skipbtn.removeAttribute("aria-busy"); skipbtn.textContent = "Skip to the answer"; skipbtn.hidden = false;
+      if (instantPref()) jump(true);   // skipped before in this visit: straight to the answer
       const G = root.TerryGuide; GM = G ? G.chaseMode() : "none"; gone = false; gS = null; flyOffP = null;
       const z = Zm(), text = F.goalText(goal); let failed = null;
       // owner 7 Nov (sync): he says what he is doing as he takes the card, not 16 s later
@@ -814,7 +871,7 @@
       if (glive()) {   // he lets go of the machine and hangs below the printed card
         const fcE = $("#failcard"); G.spot([fcE]); const gl = glideY(() => rel(fcE).y - 150, 900), r = rel(fcE); const hg = hang(r.x + r.w * .5, r.y + r.h + 2); await gl; const tl = tell("This is the flip: how your goal fails if nothing changes. Last year's record is on the card."); await hg; await tl; await gS.wait(1800);   // the card in view, then the words
       }
-      const fh = failHtml(FL, goal), fc = $("#failcard"); fc.classList.remove("load"); fc.querySelector(".t").innerHTML = fh.t; fc.classList.add("tt-fadein"); { const ev = $("#evcard"), eh = evidenceHtml(FL, goal); if (ev && eh) { ev.innerHTML = eh; ev.hidden = false; ev.classList.add("tt-fadein"); countData(ev); } }
+      const fh = failHtml(FL, goal), fc = $("#failcard"); fc.classList.remove("load"); fc.querySelector(".t").innerHTML = fh.t; fc.classList.add("tt-fadein"); pm("fail"); { const ev = $("#evcard"), eh = evidenceHtml(FL, goal); if (ev && eh) { ev.innerHTML = eh; ev.hidden = false; ev.classList.add("tt-fadein"); countData(ev); } }
       if (!guided && !SK.on) await wait(2800);   // owner 7 Nov: a later (plain) chase holds on the flip so it can be read, before the predators
       stepDone(1); void secs;
       // 3: listen. One predator card per ping
@@ -839,16 +896,17 @@
         const said = !N ? "I heard no predators for this goal in the 2024 records." : `These are the predators I heard: ${N} way${N === 1 ? "" : "s"} this goal could fail. ${cf ? `${cf} held up in the 2024 records (confirmed)` : "None held up in the 2024 records"}${rj ? `, ${rj} did not (rejected)` : ""}. The confirmed ones are what my flyway has to beat.`;
         if (ps) { G.spot([ps]); await glideY(() => rel(ps).y - 110, 900); }   // scroll and highlight together, then the words (owner 7 Nov)
         await G.present(gS, [ps], said); await gS.wait(2600); G.hush(); }
-      stepDone(2, `${N} heard`); stepStart(3); await wait(900); stepDone(3);
+      pm("pred"); stepDone(2, `${N} heard`); stepStart(3); await wait(900); stepDone(3);
       // 5: the flyway
       stepStart(4); almStep("SEARCHING \u00b7 the cheapest way past the predators"); { const t0 = performance.now(); await Promise.all([escP.then(() => mark("escape:resolved", t0)), wait(900)]); }
       if (failed || !X) return abortGoal();
-      stepDone(4); failLineHtml(fc, FL, X, GOAL); answerAll(live, X, GOAL, FL.predators);
+      stepDone(4); failLineHtml(fc, FL, X, GOAL); answerAll(live, X, GOAL, FL.predators); echoGoal(GOAL, FL); pm("echo");
       const rs = R && R.create(GOAL, { flip: FL, escape: X, goalText: F.goalText(GOAL) });
       if (rs) { live.dataset.r = rs.id; live.dataset.n = rs.n; live._X = X; R.log({ kind: "heard", roostId: rs.id, label: `Heard ${N} predator${N === 1 ? "" : "s"}`, restore: { roostId: rs.id } }); R.log({ kind: "flyway", roostId: rs.id, label: "Found the flyway", restore: { roostId: rs.id } }); }
-      const fw = flywaySection(X, N); await wait(250);
+      const fw = flywaySection(X, N); pm("fly"); await wait(250);
       if (GM === "full" && glive()) { const fs = $("#flysec"); if (fs) { G.spot([fs]); await glideY(() => rel(fs).y - 110, 800); } else G.unspot(); await playFlyway(fw); await gS.wait(700); await G.present(gS, [$("#flysec")], "This is how I\u2019d fly past them to reach your goal."); await gS.wait(3000); G.hush(); }
       else { if (!guided || !glive()) { const fs = $("#flysec"); if (fs) glideY(() => { const r = rel(fs), dk = document.querySelector("#dock"), room = (dk && dk.offsetHeight ? Math.min(innerHeight, dk.getBoundingClientRect().top) : innerHeight) - 16; return r.y - Math.max(90, (room - r.h) / 2); }, 800); } await playFlyway(fw); }   // the whole flyway in view, clear of the dock (owner 7 Nov; it used to show only its top half)
+      if (jumped && !answered) { answered = true; pm("ledger"); const full = RL() && RL().end(); if (full) await Promise.race([full, sleep(1800)]); landAnswer(); }   // the gauge reads full, then the page goes to the answer   // the plan is filed with the Roost above: the answer is complete
       await wait(900);
       await finish();
     }
@@ -876,6 +934,7 @@
       if (live) { live.remove(); live = null; } building = false;
       const keep = R && R.get(activeId());
       if (keep) { const bd = bodyOf(keep.id); if (bd) showBody(bd); hero.classList.add("has-goal"); goalform.hidden = true; gchips.hidden = true; gnote.hidden = true; addBtn.hidden = false; renderRail(); projectRoost(keep); } else ttEmpty();
+      if (RL()) RL().cancel(); jumped = false;
       lockBox(false); running = false; ringsShow(true); skipbtn.hidden = true; SK.on = false; bus("proj:idle", { reason: "abort" });
     }
     // the projector waits on a plan (owner 08:35): the cloth's contents dim, the bat loader shows a caption (only after 250 ms, by a CSS
@@ -902,18 +961,20 @@
         return GM === "full" && gS && gS.live() && G && G.say ? () => G.say(`Here is my plan for ${dn}, playing out on the screen. Each +N pill is a crew I add, and a hatched bar is behind, but not late.`, { q: "What is the screen showing?" }) : null; })();
       if (screenLine) { const G = root.TerryGuide; if (G && G.say) G.say("That is the plan. Let me roll the screen down and play it for you.", { q: "What is happening in the chase?" }); }   // the 20 s back to the screen are not silent (owner 7 Nov)
       if (fixB && !gone) { const bp = barPt(), gl = glideY(() => rel(screen).y + 30, 900); if (!(bat.mode() === "hang" && Math.hypot(pos.x - bp.x, pos.y - bp.y) < 6)) await hang(bp.x, bp.y); await gl; await idle(); fix(false); }
-      await glideY(() => rel(screen).y + 30, 900); await wait(300);
+      if (!jumped) { await glideY(() => rel(screen).y + 30, 900); await wait(300); }
       pvWait("Visualizing the Flyway\u2026"); const pv0 = performance.now();   // the loader shows as the screen comes down, where the viewer is looking
       hangFollow = true; await Promise.all([roll(false), (async () => { await wait(300); hangFollow = false; const pp = homePt(); await release(pp.x, pp.y); })()]);
-      hangFollow = false; skipbtn.hidden = false; await glideY(() => rel(screen).y + 30, 500);
+      hangFollow = false; if (!jumped) { skipbtn.classList.remove("skipping"); skipbtn.removeAttribute("aria-busy"); skipbtn.textContent = "Skip"; skipbtn.hidden = false; await glideY(() => rel(screen).y + 30, 500); }
       { const bp = branchPt(); await hang(bp.x, bp.y); }   // Terry flies to his perch (no jump cut), then perches at the right end of the branch, clear of the toolbar, before the plan plays
       { const left = 1300 - (performance.now() - pv0); if (left > 0 && !SK.on && !reduced()) await wait(left); }   // long enough to be seen
       if (screenLine) screenLine();   // the screen is down and the plan starts playing: now he says what it shows (owner 7 Nov)
-      await goalView(); skipbtn.hidden = true;
+      await goalView(); if (!answered) skipbtn.hidden = true;
       // owner 7 Nov: once the plan has played, how to explore it (a plain scroll moves the page; Ctrl + scroll or a pinch zooms the screen)
       if (screenLine && gS && gS.live() && !SK.on) { const G = root.TerryGuide; if (G && G.say) G.say("The screen has three zoom levels: the whole city for the year, one department, then one month. Click a department or a month to go in, or pinch over the screen (Ctrl + scroll with a mouse). The minus button or Esc steps back out. Anything unclear? Just ask me here.", { q: "How do I explore the screen?" }); }
       await toHome(); if (flyOffP) await flyOffP; gone = false; if (gS) { gS.end(); gS = null; } fix(false);
+      pm("ledger"); const late = jumped && !answered; jumped = false; if (late && RL()) RL().end();
       lockBox(false); running = false; ringsShow(true); SK.on = false; bus("proj:idle", { reason: "chase" });   // no "That is one flyway" note any more (owner 22:07)
+      if (late) landAnswer(); answered = false;
       if (GM === "rm" && root.TerryGuide) root.TerryGuide.chaseRM();
     }
     // Terry speaks once, after the first Roost, and never again
@@ -1067,7 +1128,7 @@
     // re-project: the department view for the Roost's department with its plan applied, no replay of the chase
     async function projectRoost(r) {
       const z = Zm(); if (!z || running || !r.escape || !r.flip) return;
-      GOAL = r.goal; X = r.escape; FL = r.flip; const b = buildSpec(X, FL, GOAL); GVspec = b.spec; planX = b.pX; ontimeFor = null;
+      GOAL = r.goal; X = r.escape; FL = r.flip; echoGoal(GOAL, FL); const b = buildSpec(X, FL, GOAL); GVspec = b.spec; planX = b.pX; ontimeFor = null;
       z.skipPlan(); z.setRoostLabel("Roost " + r.n); showPlanCtl(true); await z.settled();
       const ds = GVspec.depts, d1 = ds.length === 1 ? ds[0] : null;
       if (d1 && (z.S.lvl !== 1 || z.S.d !== d1)) await z.goTo({ lvl: 1, d: d1, m: z.tightest(d1) }); else if (!d1 && z.S.lvl !== 0) await z.goTo({ lvl: 0 });
@@ -1100,7 +1161,7 @@
       moveTo(hx, hy, 2600); await wait(2300);
       if (!SK.on) { introbub.style.left = (hx + 120) + "px"; introbub.style.top = (hy - 36) + "px"; introbub.classList.add("on"); $("#live").textContent = "Hi, I'm Terry. I plan Boston's 311 crews."; bat.flap && bat.flap(); await wait(4800); }
       introbub.classList.remove("on"); await wait(300);
-      skipbtn.hidden = true; await toHome(SK.on); introRunning = false; seenSet(); SK.on = false;
+      if (!running) skipbtn.hidden = true; await toHome(SK.on); introRunning = false; seenSet(); if (!running) SK.on = false;   // a chase begun during the hello keeps its own skip state
     }
     async function start() {
       fitRig(); setTheme(themeGet()); mkBat(); setBatTheme(); placeHit();

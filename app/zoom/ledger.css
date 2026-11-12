@@ -101,3 +101,9 @@
 .ldg-section { margin: 96px 0 0; }
 #terrytory .ldg-section + .ledger, .ldg-section + .ledger { margin-top: 58px; }
 .rbody.empty .ldg-section { margin-top: 80px; }
+
+/* one small-caps style across the page (owner 11 Nov): the sans capitals every other label uses, in place of letter-spaced serif */
+.ldg-tab .lt-n { font: 600 11.5px/1 var(--ui); letter-spacing: .1em; text-transform: uppercase; font-variant: normal; }
+.ldg-cmp { font: 600 11px/1 var(--ui); letter-spacing: .1em; }
+.ledger .ldg-t thead th { font: 600 10.5px/1 var(--ui); letter-spacing: .1em; }
+.ledger .ldg-t tfoot th.ldg-d { font: 600 11px/1.2 var(--ui); letter-spacing: .1em; }

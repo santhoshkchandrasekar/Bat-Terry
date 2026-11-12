@@ -8,6 +8,9 @@
  *   TerryQuiet.open(scroll)            expand the card into the map
  *   TerryQuiet.highlight(names|null)   light those neighborhoods (Ping's map answers come in as ask:highlight {map: [...]})
  *   TerryQuiet.dot(entry)              a resident's ticket with a place: a dot at its neighborhood
+ *   TerryQuiet.goal(spec|null)         after a chase, the goal view (owner 11 Nov): each neighborhood tinted by how often the goal's
+ *                                      department ran late there in the goal's months of 2024, for its mix of request types, against the
+ *                                      city; the places the chase's predators named are outlined. Page data only (the 2024 cells).
  */
 (function (root) {
   "use strict";
@@ -25,6 +28,7 @@
   // fill scale by silence: hollow when quiet, full when loud, a middle hex at the norm
   const fillS = v => { const d = v - 1; if (Math.abs(d) <= BAND()) return .56; return d < 0 ? Math.max(.2, .5 - (Math.abs(d) - BAND()) * 1.6) : Math.min(.9, .66 + (d - BAND()) * 1.6); };
   let sec = null, card = null, sheet = null, G = null, hl = null, dotEntry = null, yr = 2024;
+  let GV = null, view = "city", pendingGoal;   // the goal view's numbers, and which view is on show ("goal" | "city")
   // the big map's view (owner 21:48): zoom k (1 = the whole city) about a centre; pan by dragging; labels keep their size on screen
   const Z = { k: 1, cx: null, cy: null, KMAX: 6 };
   function vb() { const g = geo(), W = g.x1 - g.x0, H = g.y1 - g.y0, w = W / Z.k, h = H / Z.k;
@@ -52,38 +56,117 @@
   const short = () => String(Q().headline || "").split(":")[0].replace(/\.?$/, ".");   // the data's headline, first clause only
   const NAMED = () => { const n = Q().named; return [].concat(n.quiet_well_served, n.slowest, n.both); };
 
+  // ------------------------------------------------------------ the goal view (owner 11 Nov)
+  // For the goal's department(s) and months: each neighborhood's late requests against what the city's late rate for the same request
+  // types predicts (observed / expected), lightly shrunk toward 1 like the city map (k = 40). A neighborhood with fewer than 40 requests
+  // in those months is judged on its full year; fewer than 40 in the year is too few to judge.
+  const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const DL = ["PWDx", "BTDT", "PARK", "ISD"], MIN_N = 40, K = 40;
+  function monthsText(ms) {
+    const m = [...new Set(ms || [])].sort((a, b) => a - b); if (!m.length || m.length === 12) return "2024";
+    const run = m.every((v, i) => !i || v === m[i - 1] + 1);
+    return (m.length === 1 ? MONTHS[m[0] - 1] : run ? `${MONTHS[m[0] - 1]} to ${MONTHS[m[m.length - 1] - 1]}` : m.map(v => MONTHS[v - 1]).join(", ").replace(/, ([^,]*)$/, " and $1")) + " 2024";
+  }
+  function goalMap(spec) {
+    const Z = root.__zoom, E = Z && Z.E, C = E && E.data && E.data.cells, EQ = Q(); if (!C || !EQ) return null;
+    const ds = new Set(spec.scope === "CITY" ? [0, 1, 2, 3] : [DL.indexOf(spec.scope)]); if (ds.has(-1)) return null;
+    const ms = spec.months && spec.months.length && spec.months.length < 12 ? new Set(spec.months) : null;
+    // city rates per (department, type), in the months and in the year; per neighborhood, requests and late per (department, type)
+    const cityM = new Map(), cityY = new Map(), hoodM = new Map(), hoodY = new Map(), add = (m, k, n, l) => { const v = m.get(k) || [0, 0]; v[0] += n; v[1] += l; m.set(k, v); };
+    let cn = 0, cl = 0;
+    for (const row of C.rows) {
+      if (!ds.has(row[0])) continue; const k = row[0] + ":" + row[1], inM = !ms || ms.has(row[3]);
+      add(cityY, k, row[4], row[5]); add(hoodY, row[2] + "|" + k, row[4], row[5]);
+      if (inM) { add(cityM, k, row[4], row[5]); add(hoodM, row[2] + "|" + k, row[4], row[5]); cn += row[4]; cl += row[5]; }
+    }
+    const judge = (hi, hood, city) => {   // observed and expected late for one neighborhood
+      let n = 0, obs = 0, exp = 0;
+      for (const [key, v] of hood) { const [h, k] = key.split("|"); if (+h !== hi) continue; const c = city.get(k); if (!c || !c[0]) continue; n += v[0]; obs += v[1]; exp += v[0] * c[1] / c[0]; }
+      return { n, obs, exp };
+    };
+    const by = {}, list = [];
+    EQ.neighborhoods.forEach((nb, i) => {
+      const hi = C.hoods.indexOf(nb.name); let j = hi < 0 ? { n: 0, obs: 0, exp: 0 } : judge(hi, hoodM, cityM), basis = ms ? "months" : "year";
+      if (j.n < MIN_N && ms && hi >= 0) { j = judge(hi, hoodY, cityY); basis = "year"; }
+      const thin = j.n < MIN_N || j.exp <= 0, rate = j.exp / Math.max(1, j.n);
+      const ratio = thin ? 1 : (j.obs + K * rate) / (j.exp + K * rate);
+      by[i] = { i, name: nb.name, short: nb.short || nb.name, n: j.n, late: j.obs / Math.max(1, j.n), r: ratio, thin, basis };
+      list.push(by[i]);
+    });
+    const judged = list.filter(x => !x.thin), band = BAND();
+    const top = judged.filter(x => x.r > 1 + band).sort((a, b) => b.r - a.r).slice(0, 3), low = judged.filter(x => x.r < 1 - band).sort((a, b) => a.r - b.r).slice(0, 2);
+    // the places the chase named (a predator with a neighborhood), confirmed or ruled out by the 2024 records
+    const named = new Map();
+    for (const p of spec.preds || []) {
+      const hn = p && p.hood; if (!hn) continue; const k = String(hn).toLowerCase();
+      const nb = EQ.neighborhoods.findIndex(n => n.name.toLowerCase() === k) >= 0 ? EQ.neighborhoods.findIndex(n => n.name.toLowerCase() === k) : EQ.neighborhoods.findIndex(n => n.name.toLowerCase().includes(k) || k.includes((n.short || n.name).toLowerCase()));
+      if (nb < 0) continue; const ok = p.verdict === "CONFIRMED", prev = named.get(nb);
+      if (!prev || ok) named.set(nb, { ok, label: p.label || "" });
+    }
+    return { spec, by, list, top, low, named, cityLate: cl / Math.max(1, cn), n: cn, dept: spec.deptName || "These departments", when: monthsText(spec.months),
+      thinCount: list.filter(x => x.thin).length };
+  }
+  const isGoal = () => view === "goal" && !!GV;
+  // the edge of a neighborhood: every hexagon side whose neighbour across it belongs elsewhere, drawn in the gap between hexagons
+  function outlines() {
+    const g = geo(), out = [];
+    for (const [nb, v] of GV.named) {
+      const own = g.hs.filter(h => h.nb === nb), key = (x, y) => Math.round(x * 20) + "," + Math.round(y * 20), have = new Set(own.map(h => key(h.x, h.y)));
+      let d = "";
+      for (const h of own) for (let i = 0; i < 6; i++) {
+        const a = HEX[i], b = HEX[(i + 1) % 6], mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
+        if (have.has(key(h.x + 2 * mx, h.y + 2 * my))) continue;
+        d += `M${(h.x + a[0]).toFixed(2)} ${(h.y + a[1]).toFixed(2)}L${(h.x + b[0]).toFixed(2)} ${(h.y + b[1]).toFixed(2)}`;
+      }
+      if (d) out.push(`<path class="qedge ${v.ok ? "ok" : "no"}" d="${d}"/>`);
+    }
+    return `<g class="qedges">${out.join("")}</g>`;
+  }
+  const gvTint = d => (d.thin ? "thin" : tint(d.r));
+  const gvLine = d => d.thin ? "too few requests to judge" : `late ${pct(d.r) < 1 ? "as often as expected" : `${pct(d.r)}% ${d.r < 1 ? "less" : "more"} often`}`;
+  function gvHead() {
+    const g = GV, t = g.top.map(x => x.short), when = g.when.replace(/ 2024$/, "");
+    const tail = g.when === "2024" ? "in 2024" : `in ${when} 2024`;
+    if (!t.length) return `${g.dept} ran late about evenly across Boston ${tail}, for the kinds of requests each place sends.`;
+    return `${g.dept} ran late most often in ${t.length > 1 ? t.slice(0, -1).join(", ") + " and " + t[t.length - 1] : t[0]} ${tail}.`;
+  }
+
   // the map as one SVG; big adds labels and per-hex titles
   function mapSvg(big) {
     const g = geo(), W = g.x1 - g.x0, H = g.y1 - g.y0, E = Q();
     const hexes = g.hs.map((h, k) => {
-      const t = tint(h.wait), nb = E.neighborhoods[h.nb], d = reduced() || !big ? 0 : Math.round((h.y - g.y0) / H * 520 + (k % 7) * 9);
-      const tip = "";
-      return `<g class="qh w-${t}" data-nb="${h.nb}" data-i="${k}"${d ? ` style="animation-delay:${d}ms"` : ""}>${tip}<path class="ring" d="${hexPath(h.x, h.y, .9)}"/><path class="core" d="${hexPath(h.x, h.y, fillS(h.sil) * .9)}"/></g>`;
+      const gd = isGoal() ? GV.by[h.nb] : null, t = gd ? gvTint(gd) : tint(h.wait), d = reduced() || !big ? 0 : Math.round((h.y - g.y0) / H * 520 + (k % 7) * 9);
+      const cz = "";
+      const core = gd ? (gd.thin ? 0 : .78) : fillS(h.sil);   // the goal view tints whole hexes: only lateness is on show
+      return `<g class="qh w-${t}${cz}" data-nb="${h.nb}" data-i="${k}"${d ? ` style="animation-delay:${d}ms"` : ""}><path class="ring" d="${hexPath(h.x, h.y, .9)}"/>${core ? `<path class="core" d="${hexPath(h.x, h.y, core * .9)}"/>` : ""}</g>`;
     }).join("");
     const V = big ? vb() : { x: g.x0, y: g.y0, w: W, h: H };
-    return `<svg class="qmap${big ? " big" : ""}" viewBox="${V.x.toFixed(2)} ${V.y.toFixed(2)} ${V.w.toFixed(2)} ${V.h.toFixed(2)}" ${big ? `role="img" aria-label="Echolocation: the equity map of Boston in hexagons, with Downtown, Logan Airport, Boston Harbor, the Charles River and Dorchester Bay marked. ${esc(E.headline)}"` : 'aria-hidden="true"'}><g class="qhs">${hexes}</g><g class="qlm"></g><g class="qlabels"></g><g class="qdot"></g></svg>`;
+    return `<svg class="qmap${big ? " big" : ""}${isGoal() ? " gview" : ""}" viewBox="${V.x.toFixed(2)} ${V.y.toFixed(2)} ${V.w.toFixed(2)} ${V.h.toFixed(2)}" ${big ? `role="img" aria-label="Echolocation: ${isGoal() ? `your goal's map of Boston in hexagons. ${esc(gvHead())}` : `the equity map of Boston in hexagons, with Downtown, Logan Airport, Boston Harbor, the Charles River and Dorchester Bay marked. ${esc(E.headline)}`}"` : 'aria-hidden="true"'}><g class="qhs">${hexes}</g>${isGoal() ? outlines() : ""}<g class="qlm"></g><g class="qlabels"></g><g class="qdot"></g></svg>`;
   }
   // labels for the named neighborhoods (and any highlighted ones), nudged apart; drawn in map units, sized for the rendered width
   function drawLabels(svg) {
     const L = svg.querySelector(".qlabels"); if (!L) return; const g = geo(), r = svg.getBoundingClientRect(), u = vb().w / Math.max(200, r.width);   // map units per pixel, for the current view
-    const want = new Set(NAMED()); if (hl) hl.forEach(n => want.add(n));
+    const want = new Set(hl ? [...hl] : []), must = new Set(want);
+    (isGoal() ? GV.top.map(x => x.name).concat([...GV.named].filter(([, v]) => v.ok).map(([i]) => Q().neighborhoods[i].name), GV.low.map(x => x.name)) : NAMED()).forEach(n => want.add(n));
+    if (isGoal()) GV.top.forEach(x => must.add(x.name)); else NAMED().forEach(n => must.add(n));   // the city view keeps all six of its named places
+    const order = [...want];
     const boxes = [], out = [], hit = (x, y, w, h) => boxes.some(b => x < b.x + b.w && x + w > b.x && y < b.y + b.h && y + h > b.y);
     if (dotEntry) { const d = g.nbs.find(n => n.name === dotEntry.place.neighborhood); if (d) boxes.push({ x: d.x - 80 * u, y: d.y + 10 * u, w: 72 * u, h: 16 * u }); }   // the ticket's "your report" tag
     { const M = svg.querySelector(".qlm"); if (M) { M.innerHTML = g.lms.map(l => { const w = l.t.length * 6.4 * u, h = 13 * u; boxes.push({ x: l.x - w / 2, y: l.y - h * .8, w, h }); return `<text class="${l.k}" x="${l.x.toFixed(2)}" y="${l.y.toFixed(2)}" text-anchor="middle" style="font-size:${(11.5 * u).toFixed(3)}px">${esc(l.t)}</text>`; }).join(""); } }
-    const ls = g.nbs.filter(n => want.has(n.name)), dots = ls.map(n => ({ x: n.x - 4 * u, y: n.y - 4 * u, w: 8 * u, h: 8 * u }));
+    const ls = g.nbs.filter(n => want.has(n.name)).sort((a, b) => order.indexOf(a.name) - order.indexOf(b.name)), dots = ls.map(n => ({ x: n.x - 4 * u, y: n.y - 4 * u, w: 8 * u, h: 8 * u }));
     boxes.push(...dots);
-    ls.sort((a, b) => a.y - b.y).forEach(n => {
-      const l2 = `${callsTxt(n.silence)} · ${lateTxt(n.wait)}`, w = Math.max(n.short.length * 7.6, l2.length * 5.7) * u, h = 28 * u;
+    ls.forEach(n => {
+      const w = n.short.length * 7.4 * u, h = 16 * u;   // one line: the name (owner 11 Nov: the map was crowded)
       // beside the dot first (the side with more room), then the other side, above, below; never far from the dot
       const east = n.x > (g.x0 + g.x1) / 2, R = { x: n.x + 9 * u, y: n.y - 13 * u }, Lf = { x: n.x - 9 * u - w, y: n.y - 13 * u };
       const cands = (east ? [R, Lf] : [Lf, R]).concat([{ x: n.x - w / 2, y: n.y - 9 * u - h }, { x: n.x - w / 2, y: n.y + 9 * u }, { x: R.x, y: R.y + 20 * u }, { x: Lf.x, y: Lf.y + 20 * u }, { x: R.x, y: R.y - 20 * u }, { x: Lf.x, y: Lf.y - 20 * u }]);
       const self = dots[ls.indexOf(n)], others = () => boxes.filter(b => b !== self);
-      let pick = cands.find(c => c.x >= g.x0 && c.x + w <= g.x1 + 40 * u && !others().some(b => c.x < b.x + b.w && c.x + w > b.x && c.y < b.y + b.h && c.y + h > b.y)) || cands[0];
+      let pick = cands.find(c => c.x >= g.x0 && c.x + w <= g.x1 + 40 * u && !others().some(b => c.x < b.x + b.w && c.x + w > b.x && c.y < b.y + b.h && c.y + h > b.y));
+      if (!pick) { if (!must.has(n.name)) return; pick = cands[0]; }
       const { x, y } = pick; boxes.push({ x, y, w, h }); void hit;
       const on = !hl || hl.has(n.name), side = x > n.x ? x - 2 * u : x + w < n.x ? x + w + 2 * u : null, ly = y + h / 2 > n.y ? y : y + h;
       out.push(`<g class="ql${on ? "" : " off"}"><circle cx="${n.x.toFixed(2)}" cy="${n.y.toFixed(2)}" r="${(3 * u).toFixed(2)}"/>` + (side === null && Math.abs(ly - n.y) < 6 * u ? "" : `<line x1="${n.x.toFixed(2)}" y1="${n.y.toFixed(2)}" x2="${(side === null ? n.x : side).toFixed(2)}" y2="${(side === null ? ly : y + 8 * u).toFixed(2)}" stroke-width="${u.toFixed(3)}"/>`) +
-        `<text x="${x.toFixed(2)}" y="${(y + 11 * u).toFixed(2)}" style="font-size:${(12.5 * u).toFixed(3)}px;stroke-width:${(3.4 * u).toFixed(3)}px">${esc(n.short)}</text>` +
-        `<text class="s" x="${x.toFixed(2)}" y="${(y + 24 * u).toFixed(2)}" style="font-size:${(10.5 * u).toFixed(3)}px;stroke-width:${(3 * u).toFixed(3)}px">${esc(l2)}</text></g>`);
+        `<text x="${x.toFixed(2)}" y="${(y + 12 * u).toFixed(2)}" style="font-size:${(13 * u).toFixed(3)}px;stroke-width:${(3.6 * u).toFixed(3)}px">${esc(n.short)}</text></g>`);
     });
     L.innerHTML = out.join("");
   }
@@ -106,10 +189,26 @@
   const legend = () => `<div class="qleg" aria-label="Legend">
       <div class="qlr"><span class="qlh">How loudly it calls</span><span class="qli"><svg viewBox="-1 -1 2 2" aria-hidden="true"><path class="ring" d="${hexPath(0, 0, .9)}"/><path class="core" d="${hexPath(0, 0, .2 * .9)}"/></svg>quieter than the city</span><span class="qli"><svg viewBox="-1 -1 2 2" aria-hidden="true"><path class="ring" d="${hexPath(0, 0, .9)}"/><path class="core" d="${hexPath(0, 0, .9 * .9)}"/></svg>louder</span></div>
       <div class="qlr"><span class="qlh">How often it runs late, for its mix</span><span class="qli w-f3"><i></i>less often than expected</span><span class="qli w-n"><i></i>about as expected</span><span class="qli w-s3"><i></i>more often</span></div></div>`;
+  const legendGoal = () => `<div class="qleg" aria-label="Legend">
+      <div class="qlr"><span class="qlh">How often it ran late, for its mix of requests</span><span class="qli w-f3"><i></i>less often</span><span class="qli w-n"><i></i>about as expected</span><span class="qli w-s3"><i></i>more often</span><span class="qli thin"><i></i>too few to judge</span></div>
+      ${GV && GV.named.size ? `<div class="qlr"><span class="qlh">Places your chase named</span><span class="qli cz-ok"><i></i>confirmed by 2024</span><span class="qli cz-no"><i></i>ruled out</span></div>` : ""}</div>`;
+  const dv = d => d.thin ? "n/a" : pct(d.r) < 1 ? "even" : `${d.r > 1 ? "+" : "\u2212"}${pct(d.r)}%`;
+  const row = (d, extra) => `<button type="button" class="qn qr w-${gvTint(d)}" data-nb="${esc(d.name)}" aria-pressed="false" aria-label="${esc(d.short)}: ${esc(gvLine(d))}"><i aria-hidden="true"></i><span class="qrn"><b>${esc(d.short)}</b><span>${extra ? esc(extra) + " · " : ""}${d.thin ? "too few requests" : `${d.n.toLocaleString("en-US")} requests, ${Math.round(d.late * 100)}% late`}</span></span><span class="qrv">${dv(d)}</span></button>`;
+  function groupsGoal() {
+    const g = GV, nm = [...g.named.entries()];
+    const out = [];
+    if (g.top.length) out.push(["Ran late most", g.top.map(d => row(d))]);
+    if (g.low.length) out.push(["Ran late least", g.low.map(d => row(d))]);
+    const yes = nm.filter(([, v]) => v.ok), no = nm.filter(([, v]) => !v.ok);
+    if (yes.length) out.push(["Your chase named, and 2024 confirmed", yes.map(([i]) => row(g.by[i]))]);
+    const ruled = no.length ? `<p class="qruled"><span>Named, then ruled out by 2024:</span> ${no.map(([i]) => esc(g.by[i].short)).join(", ")}.</p>` : "";
+    if (!out.length) return `<p class="qempty">No neighborhood stood apart for this goal; every judged place ran late within 5% of what its mix predicts.</p>${ruled}`;
+    return `<div class="qgroups">${out.map(([t, rows]) => `<div class="qg qrl"><span class="qgh">${t}</span>${rows.join("")}</div>`).join("")}${ruled}</div>`;
+  }
   function groups() {
     const E = Q(), by = new Map(E.neighborhoods.map((n, i) => [n.name, Object.assign({ i }, yv(n))]));
     const G3 = [["Quiet but well served", E.named.quiet_well_served], ["Slowest for their mix", E.named.slowest], ["A little of both", E.named.both]];
-    return `<div class="qgroups">${G3.map(([t, ns]) => `<div class="qg"><span class="qgh">${t}</span>${ns.map(nm => { const n = by.get(nm); return n ? `<button type="button" class="qn" data-nb="${esc(n.name)}" aria-pressed="false"><b>${esc(n.short)}</b><span>${callsTxt(n.silence)}, ${lateTxt(n.wait)}</span></button>` : ""; }).join("")}</div>`).join("")}</div>`;
+    return `<div class="qgroups">${G3.map(([t, ns]) => `<div class="qg qrl"><span class="qgh">${t}</span>${ns.map(nm => { const n = by.get(nm); return n ? `<button type="button" class="qn qr w-${tint(n.wait)}" data-nb="${esc(n.name)}" aria-pressed="false"><i aria-hidden="true"></i><span class="qrn"><b>${esc(n.short)}</b><span>${callsTxt(n.silence)}, ${lateTxt(n.wait)}</span></span><span class="qrv"></span></button>` : ""; }).join("")}</div>`).join("")}</div>`;
   }
 
   const nPlaces = () => { const n = Q().named; return new Set([].concat(n.quiet_well_served, n.slowest, n.both)).size; };
@@ -130,7 +229,7 @@
     if (!tt.querySelector("#rbodies")) return false;
     sec = doc.createElement("section"); sec.className = "pred qs"; sec.setAttribute("aria-labelledby", "qs-h");
     const st = E.stats;
-    sec.innerHTML = `<header class="guide"><div class="gh"><h2 class="disp" id="qs-h">Echolocation</h2><span class="heard">${E.stats.neighborhoods} neighborhoods, ${E.year} requests</span></div><p class="qs-line">Boston, mapped by who calls and who waits.</p></header>
+    sec.innerHTML = `<header class="guide"><div class="gh"><button type="button" class="fold-chev" data-fold="echo" aria-expanded="true" aria-label="Fold Echolocation">${root.TerryArt && root.TerryArt.ic ? root.TerryArt.ic("chev", "fold-i") : ""}</button><h2 class="disp" id="qs-h"><span class="bw">Echolocation</span></h2><span class="heard">${E.stats.neighborhoods} neighborhoods, ${E.year} requests</span></div><p class="qs-line">Boston, mapped by who calls and who waits.</p></header>
       <div class="board"><div class="qrow">
         <button type="button" class="pp ok qs-card" aria-expanded="false" aria-controls="qs-sheet"><span class="art rust" aria-hidden="true"><svg viewBox="0 0 120 80" width="100%" height="100%"><use href="#r2-p-quiet"/></svg></span>
           <span class="where">Boston, by neighborhood</span><span class="nm">Quiet and slow</span>
@@ -140,6 +239,7 @@
       </div>${whoRow()}</div>`;
     tt.appendChild(sec);
     card = sec.querySelector(".qs-card");
+    if (pendingGoal !== undefined) { const pg = pendingGoal; pendingGoal = undefined; GV = pg ? goalMap(pg) : null; view = GV ? "goal" : "city"; if (GV) rerender(); }
     card.addEventListener("click", () => toggle());
     sec.querySelector(".qprev").addEventListener("click", () => toggle(true));
     paint();
@@ -157,29 +257,65 @@
     return `From 2023 to 2024, who calls quietly ${w(st.stable_silence)} (rank agreement ${st.stable_silence.toFixed(2)}) and who runs late ${w(st.stable_wait)} (${st.stable_wait.toFixed(2)}).`;
   }
   function setYear(y) {
-    if (y === yr || !sheet) return; yr = y; G = null;
-    sheet.querySelectorAll(".qyr button").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.y === yr)));
-    { const old = sheet.querySelector(".qmap.big"); if (old) old.outerHTML = mapSvg(true); }
-    sheet.querySelector(".qhead").textContent = headFor();
-    sheet.querySelector(".qgw").innerHTML = groups();
+    if (y === yr || !sheet) return; yr = y; view = "city"; rerender();   // the year belongs to the city view (the goal view is 2024's)
+  }
+  const seg = () => GV ? `<div class="qyr qview" role="group" aria-label="Map view"><button type="button" data-v="goal" aria-pressed="${view === "goal"}">Your goal</button><button type="button" data-v="city" aria-pressed="${view === "city"}">The city</button></div>` : "";
+  function sideHtml() {
+    if (isGoal()) {
+      const g = GV, st = Q().stats;
+      return `<div class="qtop"><p class="qey">Echolocation · your goal</p>${seg()}</div>
+        <div class="qlede"><p class="qhead disp">${esc(gvHead())}</p><p class="qgoal">${esc(g.spec.goalText || "")}</p></div><div class="qgw">${groupsGoal()}</div>`;
+    }
+    return `<div class="qtop"><p class="qey">Echolocation · the city</p><div class="qsegs">${seg()}<div class="qyr" role="group" aria-label="Year">${[2024, 2023].map(y => `<button type="button" data-y="${y}" aria-pressed="${y === yr}">${y}</button>`).join("")}</div></div></div>
+      <p class="qhead disp">${esc(headFor())}</p><div class="qgw">${groups()}</div>`;
+  }
+  // under the map: its legend and its fine print
+  function underHtml() { return isGoal() ? legendGoal() : legend(); }
+  // the method note, in two parts that sit under the two columns: how it is measured, and how far to trust it
+  function moreHtml() {
+    const st = Q().stats;
+    if (isGoal()) {
+      const g = GV;
+      return `<div class="qm"><b>How it is measured</b><p>${esc(g.dept)} requests in ${esc(g.when)}, each neighborhood against the city's late rate for the same request types (${Math.round(g.cityLate * 100)}% closed late citywide). A place with under ${MIN_N} requests in those months is judged on its full year${g.thinCount ? "; outlined hexagons had too few to judge" : ""}.</p></div>
+        <div class="qm"><b>How steady it is</b><p>Neighborhood lateness held fairly steady from 2023 to 2024 (rank agreement ${st.stable_wait.toFixed(2)}).</p><p class="qsrc">From: the page's 2024 records, the same ones the predators are tested against</p></div>`;
+    }
+    return `<div class="qm"><b>How it is measured</b><p>Calls are compared with the city for the same patrol-and-report problems; late is measured against the city rate for the same request types.</p></div>
+      <div class="qm"><b>How steady it is</b><p>${esc(heldLine())}</p><p class="qsrc">From: ${yr} resident requests, src/09_equity.py</p></div>`;
+  }
+  function wireSide() {
+    if (!sheet) return;
+    sheet.querySelectorAll(".qyr:not(.qview) button").forEach(b => b.addEventListener("click", () => setYear(+b.dataset.y)));
+    sheet.querySelectorAll(".qview button").forEach(b => b.addEventListener("click", () => setView(b.dataset.v)));
     sheet.querySelectorAll(".qn").forEach(b => b.addEventListener("click", () => { const n = b.dataset.nb; highlight(hl && hl.size === 1 && hl.has(n) ? null : [n]); }));
-    sheet.querySelector(".qsrc").textContent = `From: ${yr} resident requests, src/09_equity.py`;
+  }
+  // redraw everything that depends on the view: both maps, the side panel, the section's line and the preview's line
+  function rerender() {
+    G = null; if (!sec) return;
+    const pv = sec.querySelector(".qprev .qmap"); if (pv) pv.outerHTML = mapSvg(false);
+    const pt = sec.querySelector(".qprev p"); if (pt) pt.textContent = isGoal() ? gvHead() : short();
+    const ln = sec.querySelector(".qs-line"); if (ln) ln.textContent = isGoal() ? `Boston, mapped for your goal: where ${GV.dept} ran late in ${GV.when === "2024" ? "2024" : GV.when}.` : "Boston, mapped by who calls and who waits.";
+    sec.classList.toggle("goalview", isGoal());
+    if (sheet) { const old = sheet.querySelector(".qmap.big"); if (old) old.outerHTML = mapSvg(true); const un = sheet.querySelector(".qunder"); if (un) un.innerHTML = underHtml(); const mt = sheet.querySelector(".qmoretx"); if (mt) mt.innerHTML = moreHtml(); const sd = sheet.querySelector(".qside"); if (sd) { sd.innerHTML = sideHtml(); wireSide(); } }
     requestAnimationFrame(paint);
   }
+  function setView(v) { if (v === view || (v === "goal" && !GV)) return; view = v; if (v === "goal") yr = 2024; rerender(); }
+  function setGoal(spec) {
+    if (!sec) { pendingGoal = spec; return; }
+    GV = spec ? goalMap(spec) : null; view = GV ? "goal" : "city"; yr = 2024; rerender();
+  }
   function makeSheet() {
-    const E = Q(), st = E.stats;
+    const E = Q(), st = E.stats; void st; void E;
     sheet = doc.createElement("div"); sheet.className = "qs-sheet"; sheet.id = "qs-sheet";
     sheet.innerHTML = `<button type="button" class="xb" aria-label="Close Echolocation"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
-      <div class="qmapw">${mapSvg(true)}<div class="qtip" role="status" aria-live="polite"></div>
+      <div class="qleft"><div class="qmapw">${mapSvg(true)}<div class="qtip" role="status" aria-live="polite"></div>
         <div class="qzoom" role="group" aria-label="Map zoom"><button type="button" data-z="in" aria-label="Zoom in">+</button><button type="button" data-z="out" aria-label="Zoom out">&minus;</button><button type="button" data-z="fit" aria-label="Show the whole city">Fit</button></div>
-        <p class="qzhint">Zoom in, then drag to move. Ctrl + scroll or pinch also zooms.</p></div>
-      <div class="qside"><div class="qtop"><p class="qey">Echolocation, the equity map</p><div class="qyr" role="group" aria-label="Year">${[2024, 2023].map(y => `<button type="button" data-y="${y}" aria-pressed="${y === yr}">${y}</button>`).join("")}</div></div><p class="qhead disp">${esc(headFor())}</p>${legend()}<div class="qgw">${groups()}</div>
-        <p class="qnote">${esc(heldLine())} Late is measured against the city rate for the same request types.</p>
-        <p class="qsrc">From: ${yr} resident requests, src/09_equity.py</p></div>`;
+        <p class="qzhint">Ctrl + scroll or pinch to zoom</p></div><div class="qunder">${underHtml()}</div></div>
+      <div class="qside">${sideHtml()}</div>
+      <div class="qmore"><button type="button" class="qmorebtn" aria-expanded="false" aria-controls="qmoretx"><span>About these numbers</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="qmoretx" id="qmoretx" hidden>${moreHtml()}</div></div>`;
     sheet.querySelector(".xb").addEventListener("click", () => toggle(false));
-    wireMap(sheet.querySelector(".qmapw"));
-    sheet.querySelectorAll(".qyr button").forEach(b => b.addEventListener("click", () => setYear(+b.dataset.y)));
-    sheet.querySelectorAll(".qn").forEach(b => b.addEventListener("click", () => { const n = b.dataset.nb; highlight(hl && hl.size === 1 && hl.has(n) ? null : [n]); }));
+    wireMap(sheet.querySelector(".qmapw")); wireSide();
+    { const mb = sheet.querySelector(".qmorebtn"), mt = sheet.querySelector(".qmoretx");
+      mb.addEventListener("click", () => { const on = mb.getAttribute("aria-expanded") !== "true"; mb.setAttribute("aria-expanded", String(on)); mt.hidden = !on; }); }
     return sheet;
   }
 
@@ -220,6 +356,12 @@
     function hide() { tip.classList.remove("on"); }
     function show(h, e) {
       const g = geo(), d = g.hs[+h.dataset.i]; if (!d) return; const nb = Q().neighborhoods[d.nb], name = nb ? (nb.name || nb.short) : "Boston";
+      if (isGoal()) { const v = GV.by[d.nb]; if (!v) { hide(); return; }
+        const when = v.basis === "year" && GV.when !== "2024" ? "2024 (its full year: too few in the goal's months)" : GV.when;
+        tip.innerHTML = `<b>${esc(name)}</b>${v.thin ? `<span>Too few ${esc(GV.dept)} requests to judge</span>` : `<span>Ran ${gvLine(v).replace(/^late /, "late ")}, for its mix of requests</span><span>${Math.round(v.late * 100)}% of ${v.n.toLocaleString("en-US")} requests closed late</span>`}${GV.named.has(d.nb) ? `<span>${GV.named.get(d.nb).ok ? "Your chase named it; 2024 confirmed it" : "Your chase named it; 2024 ruled it out"}</span>` : ""}<i>${esc(GV.dept)}, ${esc(when)}. The whole neighborhood shares one value in this view.</i>`;
+        const r = wrap.getBoundingClientRect(); tip.classList.add("on"); const tw = tip.offsetWidth, th = tip.offsetHeight; let x = e.clientX - r.left + 14, y = e.clientY - r.top + 14;
+        if (x + tw > r.width - 4) x = e.clientX - r.left - tw - 14; if (y + th > r.height - 4) y = e.clientY - r.top - th - 14;
+        tip.style.transform = `translate(${Math.max(4, x).toFixed(0)}px,${Math.max(4, y).toFixed(0)}px)`; return; }
       const calls = pct(d.sil) < 1 ? "Calls 311 at the city's rate" : `Calls 311 ${pct(d.sil)}% ${d.sil < 1 ? "less" : "more"} than the city`;
       const late = pct(d.wait) < 1 ? "Runs late as often as expected" : `Runs late ${pct(d.wait)}% ${d.wait < 1 ? "less" : "more"} often than expected`;
       tip.innerHTML = `<b>${esc(name)}</b><span>${calls}, for the same kinds of problem</span><span>${late}, for its mix of requests</span><i>${d.n.toLocaleString("en-US")} resident requests in this hexagon (about 250 m across), ${yr}</i>`;
@@ -252,6 +394,6 @@
     B.on("intake:routed", p => { const e = p && p.entry; if (e && e.place && e.place.neighborhood) dot(e); });
     let rz = 0; addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(paint, 150); });
   }
-  root.TerryQuiet = { open, toggle, highlight, dot, setYear: y => { if (open(false)) setYear(y); }, get year() { return yr; }, get isOpen() { return !!(sheet && sheet.isConnected); } };
+  root.TerryQuiet = { open, toggle, highlight, dot, goal: setGoal, setView, setYear: y => { if (open(false)) setYear(y); }, get year() { return yr; }, get view() { return view; }, get goalView() { return GV; }, get isOpen() { return !!(sheet && sheet.isConnected); } };
   if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", start); else start();
 })(typeof window !== "undefined" ? window : globalThis);

@@ -862,15 +862,18 @@
     // while the opening film covers the page, only the opening's own Terry is drawn; the others keep moving exactly as before
     // (so they are where they should be when the house lights come up) but skip the drawing, which is the expensive part
     const docEl = document.documentElement, mine = !!container.closest("#opening");
-    const covered = () => !mine && docEl.classList.contains("op-run") && !docEl.classList.contains("op-lit");
+    // the opening asks for one frame in its still hold (op-warm), so the first draw (shader compiles, uploads) never lands in the glide
+    const covered = () => !mine && docEl.classList.contains("op-run") && !docEl.classList.contains("op-bats") && !docEl.classList.contains("op-land");
+    let warmed = false;
     function frame(now) {
       raf = requestAnimationFrame(frame);
       if (!visible || frozen) { last = null; return; }
       let dt = last == null ? 1 / 60 : Math.min((now - last) / 1000, 0.05); last = now;
       dt *= st.speed; if (reduced && st.mode !== "hang") hangNow();
-      stepTweens(dt); update(dt); if (!covered()) renderer.render(scene, camera);
+      stepTweens(dt); update(dt); if (!covered()) renderer.render(scene, camera); else if (!warmed && docEl.classList.contains("op-warm")) { warmed = true; renderer.render(scene, camera); }
     }
-    const io = new IntersectionObserver(es => { visible = es[0].isIntersecting; }); io.observe(container);
+    // off screen the loop rests, so a sonar ring still in flight would wait there half-faded and show on return (owner 11 Nov): drop it
+    const io = new IntersectionObserver(es => { visible = es[0].isIntersecting; if (!visible) rings.forEach(r => { r.life = 0; r.m.visible = false; }); }); io.observe(container);
     if (opts.hang || reduced) hangNow();
     raf = requestAnimationFrame(frame);
 
