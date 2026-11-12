@@ -213,10 +213,22 @@ svg.i .w { fill: var(--wheel); }
 #skipbtn:active { transform: scale(.94); }
 #skipbtn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 #skipbtn.skipping { pointer-events: none; background: rgba(20,23,28,.94); }
-#skipbtn.undo, #skipbtn.said { background: rgba(20,23,28,.62); border-color: rgba(255,255,255,.28); color: rgba(255,255,255,.88); animation: skipin .35s cubic-bezier(.2,.8,.2,1); }
-#skipbtn.undo::after { -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M4 3v10l9-5z'/></svg>"); mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M4 3v10l9-5z'/></svg>"); width: 10px; height: 10px; }
+#skipbtn.undo, #skipbtn.said, #skipbtn.watch { background: rgba(20,23,28,.62); border-color: rgba(255,255,255,.28); color: rgba(255,255,255,.88); animation: skipin .35s cubic-bezier(.2,.8,.2,1); }
+#skipbtn.undo:not(.nx-skip)::after, #skipbtn.watch::after { -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M4 3v10l9-5z'/></svg>"); mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M4 3v10l9-5z'/></svg>"); width: 10px; height: 10px; }
 #skipbtn.said { pointer-events: none; } #skipbtn.said::after { display: none; }
 @keyframes skipin { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+/* owner 12 Nov: each pill reads as its own thing at a glance. "Watch Terry chase" glows in the rail's charging amber (the chase is
+   being skipped while the battery charges; this brings it back) and breathes slowly; "Getting the answer" spins in the same amber;
+   the next-time offers are quieter, with a faint cool halo: a setting for later, not an action now */
+#skipbtn.watch { background: rgba(24,20,17,.86); border-color: rgba(242,182,107,.62); color: #FBEBD3; box-shadow: 0 0 0 1px rgba(242,182,107,.10), 0 0 16px -3px rgba(242,182,107,.42); animation: skipin .35s cubic-bezier(.2,.8,.2,1), skglow 2.8s ease-in-out .35s infinite; }
+#skipbtn.watch::after { background: #F2B66B; }
+#skipbtn.watch:hover { background: rgba(28,24,20,.94); box-shadow: 0 0 0 1px rgba(242,182,107,.18), 0 0 20px -2px rgba(242,182,107,.55); }
+@keyframes skglow { 0%, 100% { box-shadow: 0 0 0 1px rgba(242,182,107,.10), 0 0 16px -3px rgba(242,182,107,.42); } 50% { box-shadow: 0 0 0 1px rgba(242,182,107,.16), 0 0 22px -2px rgba(242,182,107,.58); } }
+html #skipbtn.skipping::before { border-top-color: #F2B66B; }
+#skipbtn.undo { box-shadow: 0 0 14px -4px rgba(186,208,255,.30); color: rgba(255,255,255,.8); }
+#skipbtn.undo:hover { color: #fff; box-shadow: 0 0 16px -3px rgba(186,208,255,.42); }
+#skipbtn .nx { margin-left: -4px; color: #EEF3FF; text-shadow: 0 0 7px rgba(186,208,255,.75), 0 0 16px rgba(186,208,255,.35); }
+@media (prefers-reduced-motion: reduce) { #skipbtn.watch { animation: none; } }
 #skipbtn.skipping::after { display: none; }
 #skipbtn.skipping::before { content: ""; width: 12px; height: 12px; border-radius: 50%; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; animation: skspin .7s linear infinite; }
 @keyframes skspin { to { transform: rotate(360deg); } }
@@ -590,7 +602,7 @@ html.spot #legend { visibility: hidden; }
 <script src="scene.js"></script>
 <script src="plates.js?v=4"></script>
 <script src="compare.js"></script>
-<script src="proj.js?v=79"></script>
+<script src="proj.js?v=81"></script>
 <script src="app.js?v=74"></script>
 <link rel="stylesheet" href="shell.css?v=93">
 <link rel="stylesheet" href="rail.css?v=7">

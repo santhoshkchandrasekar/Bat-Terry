@@ -117,12 +117,17 @@
     const skipNow = () => { SK.on = true; for (const f of [...SK.ws]) f(); SK.ws.clear(); if (Zm() && Zm().planRunning) Zm().skipPlan(); };
     // owner 7 Nov: the button shows the click landed (the chase may still need a moment to finish its sums), and resets when it hides
     // owner 11 Nov: in a chase the corner button is "Skip to the answer"; after an answer it offers the chase back for next time
+    // owner 12 Nov: while Terry chases, the button always offers the other way to see it ("Skip to the answer" / "Watch Terry chase"),
+    // back and forth as often as wanted; once the answer is on its way it reads "Getting the answer"; after the chase it offers the other
+    // way for next time, and stays until the viewer scrolls or starts another chase
     skipbtn.addEventListener("click", e => {
-      if (skipbtn.classList.contains("undo")) { e.stopImmediatePropagation(); instantPref(false); skipbtn.classList.remove("undo"); skipbtn.classList.add("said"); skipbtn.textContent = "The chase plays next time"; clearTimeout(undoT); undoT = setTimeout(() => { skipbtn.hidden = true; }, 1800); return; }
+      if (skipbtn.classList.contains("undo")) { e.stopImmediatePropagation(); const skipNext = skipbtn.classList.contains("nx-skip"); instantPref(skipNext); clearNext(); skipbtn.classList.add("said"); skipbtn.textContent = skipNext ? "Straight to the answer next time" : "The chase plays next time"; undoT = setTimeout(() => { skipbtn.hidden = true; }, 1800); return; }
+      if (skipbtn.classList.contains("watch")) { e.stopImmediatePropagation(); unjump(); return; }
       if (skipbtn.classList.contains("skipping") || skipbtn.classList.contains("said")) { e.stopImmediatePropagation(); return; }
+      if (running && !jumped && !prog.has("fly")) return;   // jump() sets the label: the answer is coming, the chase can be had back
       skipbtn.classList.add("skipping"); skipbtn.textContent = running && !prog.has("fly") ? "Getting the answer" : "Skipping"; skipbtn.setAttribute("aria-busy", "true");
     }, true);
-    try { new MutationObserver(() => { if (skipbtn.hidden) { skipbtn.classList.remove("skipping", "undo", "said"); skipbtn.textContent = "Skip"; skipbtn.removeAttribute("aria-busy"); } }).observe(skipbtn, { attributes: true, attributeFilter: ["hidden"] }); } catch (e) {}
+    try { new MutationObserver(() => { if (skipbtn.hidden) { clearNext(); skipbtn.classList.remove("skipping", "undo", "said", "watch", "nx-skip"); skipbtn.textContent = "Skip"; skipbtn.removeAttribute("aria-busy"); } }).observe(skipbtn, { attributes: true, attributeFilter: ["hidden"] }); } catch (e) {}
     skipbtn.addEventListener("click", skipNow);
     // ------------------------------------------------------------ skip to the answer (owner 11 Nov)
     // A skipped chase drops the theatre but not the thinking: Terry still waits for the model's flip, and the section rail charges like a
@@ -131,15 +136,34 @@
     let jumped = false, answered = false, undoT = 0, prog = new Set();
     const instantPref = v => { try { if (v === undefined) return sessionStorage.getItem("terry.instant") === "1"; if (v) sessionStorage.setItem("terry.instant", "1"); else sessionStorage.removeItem("terry.instant"); } catch (e) {} return false; };
     const RL = () => root.TerryRail;
-    const pm = k => { prog.add(k); if (jumped && RL()) RL().mark(k); };
+    const pm = k => { prog.add(k); if (jumped && RL()) RL().mark(k); if (k === "fly" && jumped && !answered) btnBusy(); };
     function jump(auto) {
       if (jumped || !running || prog.has("fly")) return; jumped = true;   // a chase can start while his hello is still finishing: running is what counts
       if (!auto) instantPref(true);
       if (!SK.on) skipNow();
-      if (!skipbtn.classList.contains("skipping")) { skipbtn.classList.add("skipping"); skipbtn.textContent = "Getting the answer"; skipbtn.setAttribute("aria-busy", "true"); }
+      btnWatch();
       if (RL()) RL().begin([...prog]);
       $("#live").textContent = "Skipping to the answer.";
     }
+    // the chase back, from where it is: the theatre resumes (the model is not asked again), and the rest of the visit plays in full
+    function unjump() {
+      if (!jumped || answered || !running || prog.has("fly")) return;
+      jumped = false; instantPref(false); SK.on = false; if (RL()) RL().cancel();
+      btnSkip(); $("#live").textContent = "Watching Terry chase.";
+    }
+    function btnSkip() { clearNext(); skipbtn.classList.remove("skipping", "watch", "said"); skipbtn.removeAttribute("aria-busy"); skipbtn.textContent = "Skip to the answer"; skipbtn.hidden = false; }
+    function btnWatch() { clearNext(); skipbtn.classList.remove("skipping", "said"); skipbtn.removeAttribute("aria-busy"); skipbtn.classList.add("watch"); skipbtn.textContent = "Watch Terry chase"; skipbtn.hidden = false; }
+    function btnBusy() { skipbtn.classList.remove("watch", "undo", "nx-skip", "said"); skipbtn.classList.add("skipping"); skipbtn.textContent = "Getting the answer"; skipbtn.setAttribute("aria-busy", "true"); skipbtn.hidden = false; }
+    // after a chase: the other way, for next time; it stays until the viewer scrolls (wheel, touch, keys) or starts another chase
+    let nextOn = false;
+    function offerNext(skipNext) {
+      clearNext(); skipbtn.classList.remove("skipping", "said", "watch"); skipbtn.removeAttribute("aria-busy");
+      skipbtn.classList.add("undo"); skipbtn.classList.toggle("nx-skip", !!skipNext); skipbtn.innerHTML = `${skipNext ? "Skip to the answer" : "Watch the chase"} <span class="nx">next time</span>`; skipbtn.hidden = false;   // owner 12 Nov: "next time" glows
+      nextOn = true; setTimeout(() => { if (nextOn) { addEventListener("wheel", hideNext, { passive: true }); addEventListener("touchmove", hideNext, { passive: true }); addEventListener("keydown", hideNextKey); } }, 600);
+    }
+    function clearNext() { clearTimeout(undoT); if (!nextOn) return; nextOn = false; removeEventListener("wheel", hideNext); removeEventListener("touchmove", hideNext); removeEventListener("keydown", hideNextKey); skipbtn.classList.remove("undo", "nx-skip"); }
+    function hideNext() { if (!nextOn) return; clearNext(); skipbtn.hidden = true; }
+    function hideNextKey(e) { if (/^(PageUp|PageDown|ArrowUp|ArrowDown|Home|End| )$/.test(e.key)) hideNext(); }
     skipbtn.addEventListener("click", () => { if (running) jump(false); });
     addEventListener("keydown", e => {   // Esc skips a chase too, as it does the intro (never while typing, never once the plan is playing)
       if (e.key !== "Escape" || !running || jumped || skipbtn.hidden || prog.has("fly")) return;
@@ -161,8 +185,7 @@
       if (G && G.say && line) G.say(`Here is the answer. ${line}`, { q: "What is the answer?" });
       $("#live").textContent = line ? `The answer: ${line}` : "The answer is ready.";
       // the chase is one click away for next time
-      clearTimeout(undoT); skipbtn.classList.remove("skipping", "said"); skipbtn.removeAttribute("aria-busy"); skipbtn.classList.add("undo"); skipbtn.textContent = "Watch the chase next time"; skipbtn.hidden = false;
-      undoT = setTimeout(() => { if (skipbtn.classList.contains("undo")) skipbtn.hidden = true; }, 8000);
+      offerNext(false);
     }
     // follow: the camera eases toward a moving target every frame (the card in Terry's feet) until stopped (owner 7 Nov)
     function follow(fn) { if (SK.on || reduced()) return () => {}; let on = true;
@@ -839,7 +862,7 @@
     // ------------------------------------------------------------ the flip: loading, then the Terrytory with the real numbers
     async function runGoal(goal) {
       running = true; bus("proj:busy", { reason: "chase" }); ringsShow(false); GOAL = goal; SK.on = false; X = FL = null; lockBox(true); GVspec = null;
-      clearTimeout(undoT); jumped = answered = false; prog = new Set(["goal"]); skipbtn.classList.remove("skipping", "undo", "said"); skipbtn.removeAttribute("aria-busy"); skipbtn.textContent = "Skip to the answer"; skipbtn.hidden = false;
+      jumped = answered = false; prog = new Set(["goal"]); btnSkip();
       if (instantPref()) jump(true);   // skipped before in this visit: straight to the answer
       const G = root.TerryGuide; GM = G ? G.chaseMode() : "none"; gone = false; gS = null; flyOffP = null;
       const z = Zm(), text = F.goalText(goal); let failed = null;
@@ -968,7 +991,7 @@
       { const bp = branchPt(); await hang(bp.x, bp.y); }   // Terry flies to his perch (no jump cut), then perches at the right end of the branch, clear of the toolbar, before the plan plays
       { const left = 1300 - (performance.now() - pv0); if (left > 0 && !SK.on && !reduced()) await wait(left); }   // long enough to be seen
       if (screenLine) screenLine();   // the screen is down and the plan starts playing: now he says what it shows (owner 7 Nov)
-      await goalView(); if (!answered) skipbtn.hidden = true;
+      await goalView(); if (!answered && !jumped) offerNext(true); else if (!answered) skipbtn.hidden = true;
       // owner 7 Nov: once the plan has played, how to explore it (a plain scroll moves the page; Ctrl + scroll or a pinch zooms the screen)
       if (screenLine && gS && gS.live() && !SK.on) { const G = root.TerryGuide; if (G && G.say) G.say("The screen has three zoom levels: the whole city for the year, one department, then one month. Click a department or a month to go in, or pinch over the screen (Ctrl + scroll with a mouse). The minus button or Esc steps back out. Anything unclear? Just ask me here.", { q: "How do I explore the screen?" }); }
       await toHome(); if (flyOffP) await flyOffP; gone = false; if (gS) { gS.end(); gS = null; } fix(false);
