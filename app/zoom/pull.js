@@ -111,7 +111,6 @@
       if (!reduced()) ring.classList.add("filling");
       g.timer = setTimeout(() => { g.armed = true; ring.classList.remove("filling"); ring.classList.add("full", "armed"); zone.classList.add("hold"); pulse(); }, HOLD_MS);
     }
-    function stopHold() { if (g) { clearTimeout(g.timer); g.armed = false; } ring.classList.remove("filling", "full", "armed"); zone.classList.remove("hold"); }
     zone.addEventListener("pointerdown", e => {
       if (e.pointerType === "mouse" && e.button !== 0) return;
       if (S.locked) { e.preventDefault(); nudge(); return; }

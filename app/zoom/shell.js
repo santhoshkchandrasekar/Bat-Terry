@@ -96,10 +96,6 @@
       <path class="lf-rib" d="${v.rib}"/>${v.sides.map(x => `<path class="lf-vein" d="${x}"/>`).join("")}
       <path class="lf-edge" d="${d}"/><path class="lf-hi" d="${d}" transform="translate(0.4 0.5)"/></svg>`;
   }
-  function sheetArt() {
-    const d = pathOf(sheetPts()); let v = "";
-    return `<svg class="lf-art lf-art-s" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path class="lf-tint" d="${d}"/><path class="lf-rib" d="M50 0L50 11M50 94L50 100"/><path class="lf-edge" d="${d}"/><path class="lf-hi" d="${d}" transform="translate(0.4 0.5)"/></svg>`;
-  }
   const ICON = {
     sonar: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><path d="M8.2 8.2a5.4 5.4 0 0 0 0 7.6M15.8 8.2a5.4 5.4 0 0 1 0 7.6M5.3 5.3a9.5 9.5 0 0 0 0 13.4M18.7 5.3a9.5 9.5 0 0 1 0 13.4"/></svg>',
     leaf: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19C5 10 10 4.5 19.5 4.5 19.5 14 14.5 19 5 19Z"/><path d="M5 19 14 10.5"/><circle cx="16.8" cy="16.8" r=".9" fill="currentColor" stroke="none"/><circle cx="19.2" cy="13.6" r=".9" fill="currentColor" stroke="none"/><circle cx="13.2" cy="18.9" r=".9" fill="currentColor" stroke="none"/></svg>',

@@ -5,8 +5,6 @@
 .plate { position: relative; background: var(--raised); border-radius: 10px; box-shadow: 0 1px 0 rgba(var(--shadow),.05), 0 10px 30px -22px rgba(var(--shadow),.35); color: var(--ink); }
 :root[data-theme="night"] .plate { box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 10px 30px -22px rgba(0,0,0,.8); }
 .plate.m::before { content: ""; position: absolute; left: 26px; top: 0; bottom: 0; width: 1px; background: var(--line); pointer-events: none; }
-.pln { font: 700 11px var(--ui); letter-spacing: .14em; color: var(--ink3); text-transform: uppercase; white-space: nowrap; }
-.plate.m > .pln { position: absolute; left: 5px; bottom: 14px; writing-mode: vertical-rl; transform: rotate(180deg); }
 .tt-empty.plate { padding: 36px 28px; text-align: center; color: var(--ink2); } .tt-empty .disp { display: block; font-size: 22px; color: var(--ink); margin-bottom: 6px; }
 
 /* stamps */
@@ -17,7 +15,6 @@
 .hrule { display: block; } .pen { display: block; margin-top: 6px; }
 
 /* the failure plate */
-.mtr { height: 6px; border-radius: 3px; background: var(--sunken); overflow: hidden; display: flex; margin-top: 10px; } .mtr i { display: block; height: 100%; background: var(--work); width: 0; transition: width 1.2s var(--ease); } .mtr b { flex: 1; background: var(--short); }
 .ear { position: absolute; right: 0; top: 0; width: 0; height: 0; border-style: solid; border-width: 0 28px 28px 0; border-color: transparent var(--tint) transparent transparent; pointer-events: none; }
 .ear::after { content: ""; position: absolute; right: -28px; top: 0; width: 0; height: 0; border-style: solid; border-width: 28px 0 0 28px; border-color: transparent transparent transparent var(--sunken); }
 .xb { position: absolute; right: 12px; top: 12px; width: 28px; height: 28px; padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; color: var(--ink3); background: transparent; cursor: pointer; z-index: 2; }
@@ -78,7 +75,6 @@
 #addroost .tt { position: absolute; left: calc(100% + 10px); top: 50%; transform: translateY(-50%); white-space: nowrap; padding: 6px 12px; border-radius: 999px; background: #14171C; color: #fff; font: 500 13px var(--ui); opacity: 0; pointer-events: none; transition: opacity .15s; }
 #addroost:hover .tt, #addroost:focus-visible .tt { opacity: 1; } #addroost:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 .goal.unfurl { animation: unfurl .36s var(--ease) both; transform-origin: 22px 50%; } @keyframes unfurl { from { transform: scale(.14, .66); opacity: 0; border-radius: 40px; } to { transform: none; opacity: 1; } }
-.hero.adding .hero-copy h1 { opacity: 1; pointer-events: auto; }
 
 /* chase card on its way into the plate: paper, no tint */
 .chasecard.fail { background: var(--raised); color: var(--ink); border-color: transparent; border-radius: 10px; } .chasecard.fail .cc-i { color: var(--short); }
@@ -105,7 +101,6 @@
 .crail button { width: 34px; height: 34px; border-radius: 10px; background: rgba(255,255,255,.7); border: 1px solid var(--screen-edge); display: grid; place-items: center; color: #444C59; cursor: pointer; padding: 0; } .crail button:hover { background: #fff; } .crail button svg.i { width: 16px; height: 16px; }
 .crail .note { margin-left: auto; font: 500 13px var(--ui); color: var(--work); }
 .dstrip { position: absolute; display: flex; } .dstrip span { height: 22px; display: grid; place-items: center; font: 500 12.5px var(--ui); color: #626B79; cursor: default; } .dstrip span.up { color: var(--work); } .dstrip span.dn { color: var(--short); } .dstrip span.w { background: var(--pred-wash); border-radius: 3px; }
-.dlab { position: absolute; font: 700 11px var(--ui); letter-spacing: .1em; text-transform: uppercase; color: #626B79; white-space: nowrap; }
 /* the compare plate */
 .diff { padding: 22px 24px 20px 44px; } .diff table { width: 100%; border-collapse: collapse; font: 400 13.5px var(--ui); margin-top: 12px; }
 .diff th { font: 700 11px var(--ui); letter-spacing: .08em; text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); color: var(--ink2); } .diff td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: middle; } .diff td:first-child { color: var(--ink2); width: 200px; } .diff tr:last-child td { border: 0; }
@@ -114,7 +109,7 @@
 .diff .same { font: 400 12.5px var(--ui); color: var(--ink2); margin: 12px 0 0; }
 .verd.cmpoff { display: none; }
 
-@media (prefers-reduced-motion: reduce) { .rbody.xit, .rbody.xin, .sheet, .fail.asking .cfm, #addroost, .goal.unfurl, .pp.in { animation: none; } .flyp .st, .flyp .line i, .costp .bar2, .mtr i, .tab { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .rbody.xit, .rbody.xin, .sheet, .fail.asking .cfm, #addroost, .goal.unfurl, .pp.in { animation: none; } .flyp .st, .flyp .line i, .tab { transition: none; } }
 @media (min-width: 1560px) { .fail .hl { font-size: 48px; } }
 
 /* the nav Ask button is retired: the dock replaces it */
@@ -145,7 +140,7 @@ body.cmp-on #scene { visibility: hidden; }
 /* owner 7 Nov: the escape plan spans the window under the evidence, Terry-and-owl art on its left, the full answer in two columns */
 .sheet .sh4 { grid-column: 1 / -1; display: grid; grid-template-columns: 210px minmax(0, 1fr); column-gap: 26px; align-items: stretch; margin-top: 6px; padding-top: 16px; border-top: 1px solid var(--line); }
 .sheet .escart { display: block; width: 100%; height: 100%; min-height: 120px; align-self: stretch; border-radius: 3px; --fill: color-mix(in srgb, var(--work) 13%, transparent); }
-.escart, .pp-esc { --esc-owl: var(--pred, #B4532A); --esc-ink: #2B2328; --esc-bat: #241C20; --esc-path: var(--work); }
+.escart { --esc-owl: var(--pred, #B4532A); --esc-ink: #2B2328; --esc-bat: #241C20; --esc-path: var(--work); }
 :root[data-theme="night"] .escart { --esc-bat: #F1E9DC; --esc-ink: #1E1A18; }
 .sheet .esc-t { min-width: 0; }
 .sheet .sh4.long .note.ans { columns: 2 300px; column-gap: 34px; column-rule: 1px solid var(--line); }
@@ -175,7 +170,6 @@ body.cmp-on #scene { visibility: hidden; }
 /* 3. the evidence sheet: inset, in the page not on it */
 .sheet { margin: 0 0 0 56px; padding: 20px 24px 18px; display: grid; grid-template-columns: 4fr 3.6fr 2.4fr; gap: 12px 28px; overflow: hidden; position: relative; border: 1px solid var(--line); border-radius: 6px; background: color-mix(in srgb, var(--raised) 70%, var(--bg)); color: var(--ink); animation: shopen .24s var(--ease-out) both; margin-top: 8px; margin-bottom: 8px; }
 @keyframes shopen { from { opacity: 0; transform: translateY(-6px); } }
-.sheet > .pln { grid-column: 1 / -1; font: 700 11px var(--ui); letter-spacing: .1em; color: var(--ink3); }
 .sheet .xb { right: 12px; top: 12px; }
 .sheet .cap { max-width: none; }   /* owner 7 Nov: the footer runs the full width */
 .sheet, .lf-scroll { scrollbar-color: var(--line2) transparent; }
@@ -202,8 +196,6 @@ body.cmp-on #scene { visibility: hidden; }
 
 /* the failure card: Terry's line, then the literal facts */
 @media (prefers-reduced-motion: reduce) { .fail p.sub.fnd span::after { animation: none; } }
-/* plate numbers are not shown; the plate structure stays */
-.pln { display: none !important; }
 .dot-og { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--ink3); margin-right: 6px; vertical-align: 1px; }
 
 @media (max-width: 1916px) { #ground img { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 160px); mask-image: linear-gradient(to bottom, transparent 0, #000 160px); } }
@@ -212,9 +204,6 @@ body.cmp-on #scene { visibility: hidden; }
 .vnext { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 10px; }
 .vnext button { display: inline-flex; align-items: center; gap: 8px; padding: 2px 0; border: 0; background: none; color: var(--hire); font: 500 13px var(--ui); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 .vnext button svg.i { width: 16px; height: 16px; } .vnext button:hover { text-decoration-thickness: 2px; }
-#tsays { position: fixed; z-index: 40; right: 24px; top: 96px; width: 300px; padding: 14px 40px 14px 16px; border-radius: 14px; background: #FBF3E2; color: #1B1916; box-shadow: 0 16px 36px -14px rgba(0,0,0,.5); font: 400 13.5px/1.4 var(--ui); opacity: 0; transform: translateY(-6px); transition: opacity .3s var(--ease), transform .3s var(--ease); }
-#tsays.on { opacity: 1; transform: none; } #tsays b { display: block; font: 500 20px/1.2 var(--display); margin-bottom: 4px; } #tsays button { position: absolute; right: 8px; top: 8px; width: 28px; height: 28px; border: 0; background: none; color: #4A453F; cursor: pointer; border-radius: 8px; }
-@media (prefers-reduced-motion: reduce) { #tsays { transition: none; } }
 .dstrip span { height: 20px !important; }
 
 /* ==== Roost 2, the flip: a hung note with the evidence pinned beside it ==== */
@@ -453,7 +442,6 @@ body.cmp-on #scene { visibility: hidden; }
 .qn { display: flex; flex-direction: column; gap: 2px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 6px; background: transparent; color: var(--ink); text-align: left; font: inherit; cursor: pointer; }
 .qn b { font: 600 13.5px/1.25 var(--ui); } .qn span { font: 12px/1.35 var(--ui); color: var(--ink2); }
 .qn:hover { background: var(--sunken); } .qn[aria-pressed="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); } .qn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-.qnote { margin: 0; font: 12.5px/1.5 var(--ui); color: var(--ink2); }
 .qsrc { margin: -8px 0 0; font: 11.5px/1.3 var(--ui); color: var(--ink3); }
 /* about 1280: the side column is too narrow for two cards a row, so the places run one a row, each on one or two short lines */
 @media (min-width: 1101px) and (max-width: 1400px) {
@@ -651,9 +639,6 @@ section.pred.is-folded { margin-top: 20px; } .is-folded > .flyp { margin-top: 20
 .qs-sheet .qn b { font-size: 13.5px; }
 .qs-sheet .qn span { font-size: 12.5px; line-height: 1.4; }
 .qempty { margin: 0; font: 400 13px/1.5 var(--ui); color: var(--ink2); }
-.qfoot { display: grid; gap: 6px; padding-top: 14px; border-top: 1px solid var(--line); }
-.qfoot .qnote { margin: 0; font: 400 12px/1.55 var(--ui); color: var(--ink2); }
-.qfoot .qsrc { margin: 0; font: 400 11.5px/1.35 var(--ui); color: var(--ink3); }
 .qzhint { top: 38px; max-width: none; white-space: nowrap; font: 400 11.5px/1 var(--ui); color: var(--ink3); }
 .ql text { letter-spacing: .005em; }
 /* the goal view: whole hexes tinted by lateness; too few requests is an outline; the chase's places are ringed */
@@ -698,7 +683,6 @@ section.pred.is-folded { margin-top: 20px; } .is-folded > .flyp { margin-top: 20
 .qleft { display: grid; gap: 22px; align-content: start; min-width: 0; }
 .qunder { display: grid; gap: 14px; }
 .qunder .qleg { border-bottom: 0; padding-bottom: 0; }
-.qunder .qfoot { padding-top: 12px; }
 
 /* ---------------------------------------------------------------- Echolocation, formatted (owner 11 Nov)
    The map and its key are one card; the answer beside it is open type with no rules between rows; the method note opens across both. */
@@ -729,10 +713,7 @@ section.pred.is-folded { margin-top: 20px; } .is-folded > .flyp { margin-top: 20
 .qmorebtn[aria-expanded="true"] svg { transform: rotate(180deg); }
 .qmorebtn:hover span { text-decoration: underline; text-underline-offset: 3px; }
 .qmorebtn:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
-.qmoretx .qfoot { display: block; padding: 0; border: 0; }
-.qmoretx .qnote { columns: 2; column-gap: 40px; font: 400 12.5px/1.6 var(--ui); color: var(--ink2); }
 .qmoretx .qsrc { margin-top: 8px; font: 400 11.5px/1.35 var(--ui); color: var(--ink3); }
-@media (max-width: 1100px) { .qmoretx .qnote { columns: 1; } }
 @media (prefers-reduced-motion: reduce) { .qmorebtn svg { transition: none; } }
 
 /* the card's own paper: the halos behind map text match it, so names and landmarks never sit in pale blobs */

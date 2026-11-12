@@ -27,7 +27,6 @@
   const sstep = u => u * u * (3 - 2 * u);
   const eOut3 = u => 1 - Math.pow(1 - u, 3), eOut5 = u => 1 - Math.pow(1 - u, 5);
   const eIO3 = u => (u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2);
-  const eIn2 = u => u * u;
   const frac = x => x - Math.floor(x);
 
   /* timeline (seconds) */
@@ -366,17 +365,6 @@
   // the word dips under his weight like a spring (damped), then lets go
   const dipAt = t => { if (t < B.hang) return 0; const s = t - B.hang, a = G.F * 0.07; return a * (1 - Math.exp(-s * 9) * Math.cos(s * 26)) * (1 - eIO3(seg(t, B.drawer0, B.drawer0 + 0.18))); };
   const drawerAt = t => eIO3(seg(t, B.drawer0, B.drawer1));
-  // gravity, then one small bounce (a quarter of the impact speed), then it lies still on its baseline
-  const fallDone = () => B.drop + Math.sqrt(2 * (G.bt.yRest - G.bt.yOut) / (2.2 * G.H));
-  const fallAt = t => {
-    if (t < B.drop) return 0;
-    const g = 2.2 * G.H, d = G.bt.yRest - G.bt.yOut, t1 = fallDone(), s = t - B.drop;
-    if (t <= t1) return 0.5 * g * s * s;
-    const v = 0.25 * g * (t1 - B.drop), s2 = t - t1, tb = 2 * v / g;
-    return s2 < tb ? d - (v * s2 - 0.5 * g * s2 * s2) : d;
-  };
-  const landed = () => { const t1 = fallDone(); return t1 + 2 * 0.25 * (t1 - B.drop); };
-  const tiltAt = t => 0;
   // the battery word. Terry hangs off its right end ("ery"): as it slides out of the name his weight tips it, right end down. It drops
   // that way, lands on its right corner, kicks up and rocks over (left end down a little, then back), and slides slowly to rest in
   // its own place in the line. The word turns about its middle (origin 50% 55%), so its corners are worked out from the turn.
@@ -409,7 +397,6 @@
     const p = clamp(q / TOSS, 0, 1), xp = 1 - Math.pow(1 - p, 3);
     return { m: { x: lerp(T1.x, endX, xp), y: restMid(r) - Math.max(0, hop) }, r };
   }
-  const tiltOld = t => { if (t < B.drop) return 0; const t1 = fallDone(), t2 = landed(); return t <= t1 ? -4 * eOut3(seg(t, B.drop, t1)) : -4 * (1 - eIO3(seg(t, t1, t2))); };
 
   // the name's ring after the stamp: four jolts, a damped wobble each, a little harder each time, each with a small downward thump
   const JOLTS = [0, 0.33, 0.65, 0.96], JAMP = [0.55, 0.7, 0.85, 1];

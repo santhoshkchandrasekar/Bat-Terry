@@ -567,7 +567,6 @@
     }
 
     const MOODC = { calm: T.spare, busy: T.have, strained: T.short };
-    function refreshHead() {}
     function setZ(b, n, w) { const v = String(n); if (b.dataset.v === v) return; b.dataset.v = v; b.innerHTML = `<em>${v}</em><span>${w}</span>`; if (b.parentNode && !reduced()) { b.parentNode.classList.remove("pulse"); void b.parentNode.offsetWidth; b.parentNode.classList.add("pulse"); } }
     function writeText(infos) {
       const i = infos[0].i, dt = new Date(Date.UTC(2025, 0, 1 + i)), label = `${WD[dt.getUTCDay()]} ${dt.getUTCDate()} ${MONS[dt.getUTCMonth()]}`;

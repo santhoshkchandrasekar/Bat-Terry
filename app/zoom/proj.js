@@ -280,7 +280,6 @@
       if (bat.mode() !== "hang") { bat.setBranch(x, y); bat.hangNow(); }   // a slow GPU never leaves him mid-air
     }
     // Terry's home: hovering in flight just to the right of the goal box (or of the pill once the goal is set)
-    const BAT_HALF = 150 * BAT_SCALE;   // half his wingspan at the one size; at rest he flies beside the goal box, on its right (spec 5)
     const homePt = () => { const el = (!goalform.hidden && goalform.style.visibility !== "hidden") ? goalform : (addBtn && !addBtn.hidden ? addBtn : goalform), r = rel(el);
       // his wings reach about 300 px left of this point and 110 px right (wings up, the widest pose); he never covers the box or its Chase it button
       const pw = page.clientWidth - ((parseFloat(page.style.getPropertyValue("--ov-r")) || 0) > 0 ? 300 : 0), RL = 300 * BAT_SCALE, RR = 110 * BAT_SCALE, xr = r.x + r.w + 16 + RL;
@@ -462,7 +461,6 @@
     const t0s = [];
     function stepStart(i) { const li = stepEl(i); li.className = "act"; t0s[i] = performance.now(); $("#stepn").textContent = `Step ${i + 1} of ${STEPS.length}`; }
     function stepDone(i, note) { const li = stepEl(i); li.className = "done"; li.querySelector(".st").innerHTML = ic("check"); li.querySelector(".tm").textContent = note || ((performance.now() - (t0s[i] || performance.now())) / 1000).toFixed(1) + " s"; }
-    const monText = ms => { const a = (ms || []).slice().sort((x, y) => x - y).map(m => MON[m - 1].slice(0, 3)); if (a.length > 2) { const c = ms.slice().sort((x, y) => x - y); if (c[c.length - 1] - c[0] === c.length - 1) return `${a[0]} to ${a[a.length - 1]}`; } return a.join(", "); };
     function parsePred(p) {
       const d = p.evidence.detail || "", v = p.evidence.verdict; let num = "", unit = "", m;
       if ((m = d.match(/\((\d+)% vs (\d+)% for the department\)/))) { num = m[1] + "%"; unit = `late vs ${m[2]}% dept`; }
@@ -999,14 +997,6 @@
       lockBox(false); running = false; ringsShow(true); SK.on = false; bus("proj:idle", { reason: "chase" });   // no "That is one flyway" note any more (owner 22:07)
       if (late) landAnswer(); answered = false;
       if (GM === "rm" && root.TerryGuide) root.TerryGuide.chaseRM();
-    }
-    // Terry speaks once, after the first Roost, and never again
-    function terrySays() {
-      try { if (localStorage.getItem("terry.seen2") === "1") return; localStorage.setItem("terry.seen2", "1"); } catch (e) {}
-      const b = h("div"); b.id = "tsays"; b.setAttribute("role", "status");
-      b.innerHTML = `<b>That is one flyway.</b><span>Ping me a what-if below, hear what Boston is reporting on the right, or tick two plans on the left to compare.</span><button type="button" aria-label="Dismiss">${ic("x")}</button>`;
-      document.body.appendChild(b); requestAnimationFrame(() => b.classList.add("on"));
-      const gone = () => { b.classList.remove("on"); setTimeout(() => b.remove(), 300); }; b.querySelector("button").addEventListener("click", gone); setTimeout(gone, 5000);
     }
 
 

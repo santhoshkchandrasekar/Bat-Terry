@@ -18,9 +18,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=Caveat+Brush&family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="opening.css?v=48">
-<link rel="stylesheet" href="landing.css?v=84">
+<link rel="stylesheet" href="landing.css?v=85">
 <link rel="stylesheet" href="tabs.css?v=5">
-<script src="opening.js?v=48"></script>
+<script src="opening.js?v=49"></script>
 <script src="narrow.js?v=5"></script>
 <style>
 /* Terry visual system v2. Day is the default theme; Night is a toggle. The projector screen is a warm bulb in both themes:
@@ -78,7 +78,7 @@
 html { background: var(--bg); caret-color: var(--hire); accent-color: var(--hire); scrollbar-color: var(--line2) transparent; }
 ::selection { background: color-mix(in srgb, var(--hire) 22%, transparent); color: var(--ink); }
 a { text-underline-offset: 3px; text-decoration-thickness: 1px; }
-.disp, .kv b, .diff td, #ontime, .ec-fig { font-variant-numeric: tabular-nums; }
+.disp, .kv b, .diff td, #ontime { font-variant-numeric: tabular-nums; }
 body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink); font: 400 13.5px/1.4 var(--ui); font-feature-settings: "tnum" 1; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 button, input { font-family: inherit; }
 button:focus-visible, input:focus-visible, [tabindex]:focus-visible, a:focus-visible, :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
@@ -140,10 +140,6 @@ svg.i .w { fill: var(--wheel); }
 .seg button { height: 28px; padding: 0 12px; display: inline-flex; align-items: center; gap: 6px; border: 0; border-radius: 7px; background: transparent; color: #E8E6F0; font: 500 13px var(--ui); cursor: pointer; }
 .seg button svg.i { width: 16px; height: 16px; }
 .seg button[aria-pressed="true"] { background: #fff; color: #14171C; box-shadow: 0 1px 2px rgba(0,0,0,.2); }
-.ghostbtn { height: 36px; padding: 0 14px 0 12px; display: inline-flex; align-items: center; gap: 8px; border-radius: 10px; border: 1px solid rgba(255,255,255,.3); background: rgba(10,8,16,.42); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); color: #fff; font: 500 13px var(--ui); cursor: pointer; }
-.ghostbtn:hover { background: rgba(10,8,16,.6); }
-.ghostbtn[aria-expanded="true"] { background: #fff; color: #14171C; }
-.ghostbtn svg.i { width: 18px; height: 18px; }
 #ask-slot { display: inline-flex; }
 
 .hero-copy { position: absolute; left: 0; right: 0; top: 84px; z-index: 6; display: flex; flex-direction: column; align-items: center; text-align: center; color: #fff; transition: opacity .5s var(--ease), transform .5s var(--ease); }
@@ -248,7 +244,7 @@ html #skipbtn.skipping::before { border-top-color: #F2B66B; }
 #slatref { position: absolute; width: 2px; height: 2px; }
 #fab { position: absolute; z-index: 3; overflow: hidden; pointer-events: auto; padding: 0 16px; }
 #streetsbtn { display: none !important; } #tablebtn { display: none !important; } #crumbs .sub { display: none; }
-#bar .ib, #bar .tgl, #bar .back, .sc-btn { height: 30px; } #plantgl { height: 34px; } #plantgl button { height: 28px; padding: 0 12px; font-size: 13px; } #plspeed button, .sc-speed button { height: 24px; padding: 0 9px; min-width: 0; font-size: 12px; }
+#bar .ib, #bar .back, .sc-btn { height: 30px; } #plantgl { height: 34px; } #plantgl button { height: 28px; padding: 0 12px; font-size: 13px; } #plspeed button, .sc-speed button { height: 24px; padding: 0 9px; min-width: 0; font-size: 12px; }
 .hero-copy .gchips { margin-top: 12px; }
 .goal:not(.hastext) kbd { display: none; }
 .gchips { gap: 8px; } .gchip { height: 30px; }
@@ -296,15 +292,10 @@ html #skipbtn.skipping::before { border-top-color: #F2B66B; }
 @media (prefers-reduced-motion: reduce) { #fctip { transition: none !important; } }
 #crumbs .sub { margin-left: 8px; font: 400 13px var(--ui); color: var(--ink2); white-space: nowrap; }
 .ctrls { display: flex; align-items: center; gap: 8px; margin-left: auto; flex-wrap: nowrap; }
-.ib, .tgl, .back, .sc-btn { height: 36px; min-width: 36px; border-radius: 10px; border: 1px solid var(--line); background: var(--raised); color: var(--ink); font: 500 13px var(--ui); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 12px; }
+.ib, .back, .sc-btn { height: 36px; min-width: 36px; border-radius: 10px; border: 1px solid var(--line); background: var(--raised); color: var(--ink); font: 500 13px var(--ui); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 12px; }
 .ib { padding: 0; width: 36px; } .ib svg.i { width: 18px; height: 18px; }
-.ib:hover:not(:disabled), .tgl:hover, .back:hover { border-color: var(--line2); }
+.ib:hover:not(:disabled), .back:hover { border-color: var(--line2); }
 .ib[aria-expanded="true"] { background: var(--sunken); }
-.tgl { border: 0; background: transparent; padding: 0 4px; font-weight: 500; }
-.tgl .trk { width: 34px; height: 20px; border-radius: 10px; background: var(--line2); position: relative; flex: none; transition: background .15s; }
-.tgl .trk i { position: absolute; left: 2px; top: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.3); transition: transform .15s var(--ease); }
-.tgl[aria-checked="true"] .trk { background: var(--ink); }
-.tgl[aria-checked="true"] .trk i { transform: translateX(14px); }
 .back svg.i { width: 15px; height: 15px; transform: scaleX(-1); }
 .sc-ctl { display: inline-flex; align-items: center; gap: 8px; }
 .sc-btn { min-width: 36px; }
@@ -337,7 +328,6 @@ html #skipbtn.skipping::before { border-top-color: #F2B66B; }
 #chart .t-num { font-size: 12px; fill: var(--ink); text-anchor: middle; }
 #chart .t-num.in { fill: var(--ink); font-weight: 600; }
 #chart .t-gap { font-size: 12px; font-weight: 700; text-anchor: middle; fill: var(--ink); }
-#chart .t-gap.out-short { fill: var(--short); }
 #chart .t-hire { font-size: 12px; font-weight: 700; text-anchor: middle; fill: var(--hire); }
 #chart .t-hire.new { fill: #fff; }
 #chart .t-end { text-anchor: end; } #chart .t-small { font-size: 12px; fill: var(--ink3); }
@@ -354,13 +344,9 @@ html #skipbtn.skipping::before { border-top-color: #F2B66B; }
 .dot { fill: #fff; stroke: var(--ink); stroke-width: 1.7px; }
 .floor-over { stroke: none; } .floor-grid { stroke: var(--line); stroke-opacity: .9; stroke-width: 1px; }
 .ground { stroke: var(--line2); stroke-width: 1px; }
-.bolt-i { fill: var(--hire); stroke: none; }
-.step-tick { stroke: none; }
-.conn { display: none; }
 .dusk { stroke: var(--dusk); stroke-width: 1px; stroke-opacity: .55; }
 .train, .train-o { fill: url(#hatchH); stroke: var(--hire); stroke-width: 1.2px; transition: fill .5s, stroke .5s; }
 .train-o.working { fill: var(--work); fill-opacity: .85; stroke: var(--work); }
-.ribbon-grace { fill: #FBF3E2; stroke: var(--behind); stroke-width: 1px; }
 .wk-shade { fill: var(--ink); fill-opacity: .045; }
 .a-arr { fill: var(--ink3); fill-opacity: .7; } .a-clo { fill: var(--planned); }
 .b-area { fill: var(--ink2); fill-opacity: .1; } .b-line { fill: none; stroke: var(--ink); stroke-width: 2px; stroke-linejoin: round; }
@@ -370,7 +356,6 @@ html #skipbtn.skipping::before { border-top-color: #F2B66B; }
 @keyframes idle { from { opacity: .5; } to { opacity: 1; } }
 .late-sq { fill: var(--short); }
 .rule { stroke: var(--ink3); stroke-width: 1px; stroke-opacity: .5; }
-.col-hi { fill: var(--ink3); fill-opacity: .12; }
 .hit { fill: transparent; cursor: pointer; }
 .hit:focus-visible { stroke: var(--focus); stroke-width: 2px; fill: rgba(43,90,134,.08); }
 .hit.col:hover { fill: rgba(60,40,10,.05); } .hit.row:hover { fill: rgba(60,40,10,.03); }
@@ -442,8 +427,6 @@ html.spot #legend { visibility: hidden; }
 .lg-line { height: 2px !important; border-radius: 0 !important; background: var(--ink); position: relative; width: 22px !important; } .lg-line::after { content: ""; position: absolute; left: 7px; top: -4px; width: 8px; height: 8px; border-radius: 50%; background: #fff; border: 1.7px solid var(--ink); }
 .lg-train { background: repeating-linear-gradient(45deg, var(--hire) 0 1.5px, #FBF3E2 1.5px 4px); border: 1px solid var(--hire); }
 .lg-band { background: var(--ink); opacity: .14; width: 18px !important; } .lg-arr { background: var(--ink3); opacity: .7; } .lg-hollow { border: 1.5px solid var(--planned); } .lg-late { background: var(--short); height: 6px !important; }
-.lg-bolt { background: var(--raised); border: 1.5px solid var(--hire); border-radius: 6px !important; width: 18px !important; height: 11px !important; }
-.lg-dusk { background: var(--dusk); width: 2px !important; opacity: .7; border-radius: 0 !important; }
 .fade.off { opacity: 0; pointer-events: none; }
 #tablewrap { position: absolute; left: 0; right: 0; z-index: 9; max-height: 480px; background: var(--raised); border: 1px solid var(--line); border-radius: 14px; overflow: auto; padding: 8px 14px; }
 #tablewrap table { border-collapse: collapse; width: 100%; font-size: 13px; }
@@ -501,10 +484,10 @@ html.spot #legend { visibility: hidden; }
 }
 </style>
 <link rel="stylesheet" href="screen.css?v=81">
-<link rel="stylesheet" href="roost.css?v=94">
+<link rel="stylesheet" href="roost.css?v=95">
 <link rel="stylesheet" href="ledger.css?v=2">
 <link rel="stylesheet" href="almanac.css?v=3">
-<link rel="stylesheet" href="budgeterry.css">
+<link rel="stylesheet" href="budgeterry.css?v=2">
 
 <script src="landing.js?v=93"></script>
 <script src="tabs.js?v=5"></script>
@@ -578,7 +561,6 @@ html.spot #legend { visibility: hidden; }
   <div id="tlayer" aria-hidden="true"></div>
   <svg id="pterry" aria-hidden="true"></svg>
     <button type="button" id="terryhit" aria-label="Ask Terry" hidden></button>
-  <canvas id="bgmap" hidden></canvas>
 </div>
 <button type="button" id="skipbtn" hidden>Skip</button>
 <script src="bus.js"></script>
@@ -590,7 +572,7 @@ html.spot #legend { visibility: hidden; }
 <script>document.body.insertAdjacentHTML("afterbegin", TerryArt.sprite());</script>
 <script src="terry-bat.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="terry-bat3d.js?v=5"></script>
+<script src="terry-bat3d.js?v=6"></script>
 <script src="terry.js"></script>
 <script src="stream.js"></script>
 <script src="flyover.js?v=2"></script>
@@ -599,26 +581,26 @@ html.spot #legend { visibility: hidden; }
 <script src="session.js"></script>
 <script src="ask.js"></script>
 <script src="intake.js?v=2"></script>
-<script src="scene.js"></script>
+<script src="scene.js?v=2"></script>
 <script src="plates.js?v=4"></script>
 <script src="compare.js"></script>
-<script src="proj.js?v=81"></script>
-<script src="app.js?v=74"></script>
-<link rel="stylesheet" href="shell.css?v=93">
+<script src="proj.js?v=82"></script>
+<script src="app.js?v=75"></script>
+<link rel="stylesheet" href="shell.css?v=94">
 <link rel="stylesheet" href="rail.css?v=7">
 <aside id="leaf-left"></aside><aside id="leaf-right"></aside><div id="dock"></div>
-<script src="shell.js?v=3"></script>
-<script src="territory.js?v=2"></script>
+<script src="shell.js?v=4"></script>
+<script src="territory.js?v=3"></script>
 <script src="ticket.js"></script>
 <script src="quiet.js?v=69"></script>
 <script src="plan2025.js"></script>
 <script src="ledger.js?v=66"></script>
 <script src="terms.js"></script>
 <script src="ping.js?v=6"></script>
-<script src="pull.js"></script>
+<script src="pull.js?v=2"></script>
 <script src="budget.js"></script>
 <script src="budgeterry.js"></script>
 <script src="almanac.js?v=2"></script>
 <script src="nav.js"></script>
-<script src="guide.js?v=63"></script>
+<script src="guide.js?v=64"></script>
 <script src="rail.js?v=6"></script>

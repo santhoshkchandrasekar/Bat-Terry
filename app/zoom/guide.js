@@ -87,7 +87,7 @@
   const hush = () => {};
 
   // ---------------------------------------------------------------- placement in free space (page coordinates), above the dock
-  // Terry's drawn box around the point he hovers at, measured (guide-probe.cjs: alpha bbox of the 3D layer): his wings reach about
+  // Terry's drawn box around the point he hovers at, measured (the alpha bounding box of the 3D layer): his wings reach about
   // 190 px left and 45 px right of it, 55 px above and 100 px below (wings down). TW is the half width used for room checks.
   const TL = 152, TR = 36, TU = 44, TD = 80, TW = (TL + TR) / 2, GAP = 16;   // Terry at 0.8 of his old size
   const hit = (a, b) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;

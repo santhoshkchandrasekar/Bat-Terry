@@ -34,9 +34,6 @@ html.ld-on #page { opacity: 0; }
 /* the image's exact cover rect, in pure CSS so it follows every resize of the window (or of the frame the page sits in) */
 #landing .ld-photo img { position: absolute; --iw: max(100vw, calc(100vh * 1916 / 821)); --ih: max(100vh, calc(100vw * 821 / 1916));
   width: var(--iw); height: var(--ih); left: calc((100vw - var(--iw)) * .5); top: calc((100vh - var(--ih)) * .66); transition: opacity .8s var(--ease); }
-/* its lower edge melts into the dusk under it: a plain gradient riding with the photo (a mask would cost an extra pass every frame) */
-#landing .ld-photo .ld-fade { position: absolute; background: linear-gradient(transparent 72%, #34201c 100%); }
-:root[data-theme="night"] #landing .ld-photo .ld-fade { background: linear-gradient(transparent 72%, #1B120E 100%); }
 /* a host page's reset (img { max-width: 100%; height: auto }) must not shrink the photographs: they are wider than the window on purpose */
 #landing img { max-width: none !important; max-height: none !important; }
 #landing .ld-photo .night { opacity: 0; }
@@ -185,7 +182,7 @@ html.op-run .ld-terry-top { opacity: 0; }
 /* arrival: after the opening hands over (or at once on a return visit), the rest comes up in order */
 #landing .ld-a { opacity: 0; transform: translateY(8px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
 #landing.ld-in .ld-a { opacity: 1; transform: none; }
-#landing.ld-in .ld-a2 { transition-delay: .12s; } #landing.ld-in .ld-a3 { transition-delay: .3s; } #landing.ld-in .ld-a4 { transition-delay: .45s; }
+#landing.ld-in .ld-a2 { transition-delay: .12s; } #landing.ld-in .ld-a3 { transition-delay: .3s; }
 html.op-run:not(.op-land) #landing .ld-brand { opacity: 0; }
 /* while the opening plays, the page under it stays dark */
 html.op-run #landing .ld-terry { opacity: 0; }

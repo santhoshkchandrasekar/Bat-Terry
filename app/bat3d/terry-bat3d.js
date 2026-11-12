@@ -391,7 +391,6 @@
     return out;
   }
   const HANG_POSE = [-92, -24, 88, 8, -112, -6, -118, -14, -124, -22, -132, -30, -4, -4, -4, -4, 110, -10];
-  const OPEN_GLIDE = flightPose(8, 1, 6, 0, new Array(POSE_N));
 
   /* ---------------------------------------------------------------- create */
   function create(container, opts = {}) {
@@ -731,7 +730,6 @@
       w.claw.position.copy(j.Th); w.claw.quaternion.setFromUnitVectors(tmpD.set(0, 1, 0), tmpC.subVectors(j.Th, j.W).normalize().add(tmpA.set(0, -0.5, 0.2)).normalize());
     }
 
-    const earRest = [0.0, 0.0];
     function update(dt) {
       st.t += dt; sh.uTime.value = st.t;
       const tsec = st.t;

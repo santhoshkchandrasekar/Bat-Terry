@@ -54,7 +54,6 @@
   background: var(--board-edge); box-shadow: 0 1px 0 rgba(255, 255, 255, .45); }
 #almanac .bud-label::before { left: 2.5px; } #almanac .bud-label::after { right: 2.5px; }
 #almanac .bud-label .tw { font: inherit; font-style: normal; letter-spacing: inherit; text-decoration-color: currentColor; }
-#almanac .bud-ab { font-weight: 700; margin-left: 3px; }
 /* the Flyway's cell on the machine's head */
 #almanac .bud-cell { display: none; margin-left: auto; font: 600 12.5px/1 var(--ui); color: var(--alm-dim); white-space: nowrap; font-variant-numeric: tabular-nums; }
 #almanac .bud-cell.on { display: inline; }

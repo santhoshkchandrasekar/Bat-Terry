@@ -77,7 +77,6 @@
     for (const d of DEPTS) { w = Math.max(w, textW(deptStatus(d).t, `600 12px ${ff}`)); w = Math.max(w, textW(`Peak 99 crews`, `400 12px ${ff}`)); }
     return Math.min(Math.round(W * 0.34), Math.ceil(26 + w + 16));
   }
-  const root_cmp = () => !!(window.TerryState && window.TerryState.compare);
   function computeG() {
     const bar = $("#bar"), W = Math.max(320, stage.clientWidth), phone = W < 480, pho = W >= 480 && W < 900;   // pho: the photographic projector fabric
     const maxi = document.documentElement.classList.contains("mx-open"), cloth = stage.parentElement, F = !maxi && cloth && cloth.clientHeight > 120 ? cloth.clientHeight : 0;   // F: the cloth's real height; the chart is laid out inside it
@@ -597,18 +596,6 @@
   function say(text, x, y, opt) {
     const b = document.createElement("div"); b.className = "say " + (opt && opt.tail || "tail-l"); b.textContent = text; b.style.left = x + "px"; b.style.top = y + "px"; bubEl.appendChild(b); return b;
   }
-  function z1Bubbles(d) {
-    const I = info[d], gaps = I.months.map(gapC), out = [];
-    let hi = 0; gaps.forEach((g, i) => { if (g > gaps[hi]) hi = i; });
-    if (gaps[hi] >= 2 && kindOf(I.months[hi]) === "spare") out.push({ m: hi, text: "Plenty of crews here. Fine." });
-    const neg = I.months.findIndex(mo => kindOf(mo) !== "spare");
-    if (neg >= 0) out.push({ m: neg, text: kindOf(I.months[neg]) === "grace" ? "Behind here, but not late." : `Short by ${-gaps[neg]} here. I would watch it.` });
-    else { let lo = -1; gaps.forEach((g, i) => { if (i !== hi && (lo < 0 || g < gaps[lo])) lo = i; }); if (lo >= 0) out.push({ m: lo, text: `This is the tight month. ${gaps[lo]} crew${gaps[lo] === 1 ? "" : "s"} of slack.` }); }
-    const hs = hires(d); if (hs.length) { const big = hs.reduce((a, b) => (b.crews > a.crews ? b : a)), sm = signMonth(big);
-      out.push({ m: big.month, text: `I would sign these ${WORDS[big.crews] || big.crews} before the end of ${MON[sm < 0 ? 11 : sm]}.` }); }
-    return out.slice(0, 3);
-  }
-  let bubT = 0;
   function showBubbles() { clearBubbles(); }
   function hideBubblesQuiet() { for (const b of bubEl.querySelectorAll(".say")) b.classList.add("out"); }
 
@@ -859,50 +846,6 @@
   document.addEventListener("click", e => { if (!infoPop.hidden && !infoPop.contains(e.target)) closeInfo(); });
   document.addEventListener("keydown", e => { if (e.key === "Escape" && !infoPop.hidden) { closeInfo(); infoBtn.focus(); } });
 
-  // ---------------------------------------------------------------- fall backdrop: faint maple and oak leaves plus paper grain, a few drifting
-  const bg = $("#bgmap");
-  const LEAF = (() => {
-    const maple = new Path2D(), oak = new Path2D();
-    for (let i = 0; i <= 120; i++) { const t = i / 120 * Math.PI * 2, lobe = Math.pow(Math.abs(Math.cos(2.5 * (t - Math.PI / 2))), 0.7), r = 0.35 + 0.65 * lobe * (1 - 0.35 * Math.max(0, Math.cos(t + Math.PI / 2))); const x = Math.cos(t) * r, y = Math.sin(t) * r; i ? maple.lineTo(x, y) : maple.moveTo(x, y); }
-    maple.closePath();
-    for (let i = 0; i <= 120; i++) { const t = i / 120 * Math.PI * 2, r = 1 + 0.16 * Math.sin(t * 8); const x = Math.cos(t) * r * 0.55, y = Math.sin(t) * r; i ? oak.lineTo(x, y) : oak.moveTo(x, y); }
-    oak.closePath();
-    return { maple, oak };
-  })();
-  const LEAFCOL = ["#7a2230", "#a8431f", "#c9741f", "#d9a23a", "#6f7a2a", "#8c3a22"];
-  let bgFrame = 0, bgLeaves = [], bgStatic = null, bgW = 0, bgH = 0, bgDpr = 1, bgLast = 0;
-  function leafAt(ctx, l) {
-    ctx.save(); ctx.translate(l.x, l.y); ctx.rotate(l.rot); ctx.scale(l.s, l.s); ctx.globalAlpha = l.a; ctx.fillStyle = l.c;
-    ctx.fill(l.k === 0 ? LEAF.maple : LEAF.oak);
-    ctx.globalAlpha = l.a * 0.8; ctx.strokeStyle = "#231510"; ctx.lineWidth = 0.05; ctx.beginPath(); ctx.moveTo(0, -0.9); ctx.lineTo(0, 1.25); ctx.stroke();
-    ctx.restore();
-  }
-  function drawBg() {
-    if (!data) return; cancelAnimationFrame(bgFrame);
-    bgDpr = Math.min(2, window.devicePixelRatio || 1); bgW = innerWidth; bgH = innerHeight;
-    bg.width = bgW * bgDpr; bg.height = bgH * bgDpr;
-    let sd = 11; const rnd = () => ((sd = (sd * 1664525 + 1013904223) >>> 0) / 4294967296);
-    const n = bgW < 640 ? 22 : 44; bgLeaves = [];
-    for (let i = 0; i < n; i++) bgLeaves.push({ x: rnd() * bgW, y: rnd() * bgH, rot: rnd() * 6.28, s: 14 + rnd() * 26, a: 0.02 + rnd() * 0.025, c: LEAFCOL[(rnd() * LEAFCOL.length) | 0], k: rnd() < 0.55 ? 0 : 1, vx: 0, vy: 0, ph: rnd() * 6.28 });
-    // a handful drift: slightly stronger, they stay on the live layer
-    const drift = bgLeaves.splice(0, reduced() ? 0 : bgW < 640 ? 5 : 9); drift.forEach(l => { l.a = 0.035 + rnd() * 0.03; l.vy = 6 + rnd() * 8; l.vx = -3 - rnd() * 6; });
-    const off = document.createElement("canvas"); off.width = bg.width; off.height = bg.height; const o = off.getContext("2d"); o.setTransform(bgDpr, 0, 0, bgDpr, 0, 0);
-    bgLeaves.forEach(l => leafAt(o, l));
-    const g = document.createElement("canvas"); g.width = g.height = 120; const gc = g.getContext("2d"), im = gc.createImageData(120, 120);
-    for (let i = 0; i < im.data.length; i += 4) { const v = rnd() < 0.5 ? 255 : 0; im.data[i] = v; im.data[i + 1] = v * 0.85; im.data[i + 2] = v * 0.7; im.data[i + 3] = rnd() * 9; }
-    gc.putImageData(im, 0, 0); o.fillStyle = o.createPattern(g, "repeat"); o.fillRect(0, 0, bgW, bgH);
-    // faint brick courses along the bottom edge
-    o.globalAlpha = 0.03; o.strokeStyle = "#a8431f"; o.lineWidth = 1; for (let y = bgH - 90, r = 0; y < bgH; y += 18, r++) { o.beginPath(); o.moveTo(0, y); o.lineTo(bgW, y); for (let x = (r % 2) * 24; x < bgW; x += 48) { o.moveTo(x, y); o.lineTo(x, y + 18); } o.stroke(); }
-    bgStatic = off; const ctx = bg.getContext("2d");
-    const paint = (t) => {
-      ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, bg.width, bg.height); ctx.drawImage(bgStatic, 0, 0);
-      ctx.setTransform(bgDpr, 0, 0, bgDpr, 0, 0);
-      const dt = Math.min(0.05, (t - bgLast) / 1000 || 0); bgLast = t;
-      for (const l of drift) { l.x += (l.vx + Math.sin(t / 1800 + l.ph) * 6) * dt; l.y += l.vy * dt; l.rot += Math.sin(t / 2300 + l.ph) * dt * 0.6; if (l.y > bgH + 40) { l.y = -40; l.x = Math.random() * (bgW + 80); } if (l.x < -50) l.x = bgW + 40; leafAt(ctx, l); }
-    };
-    paint(0);
-    if (!reduced() && drift.length) { const tick = (t) => { if (!document.hidden) paint(t); bgFrame = requestAnimationFrame(tick); }; bgFrame = requestAnimationFrame(tick); }
-  }
   const drawMap = () => {}, stars = () => {};
 
   // ---------------------------------------------------------------- level changes
@@ -919,7 +862,7 @@
     const prev = S, rd = reduced();
     S = { lvl: next.lvl, d: next.lvl ? next.d : null, m: next.lvl ? (next.m === undefined ? tightest(next.d) : next.m) : null };
     sizeStage(); renderCrumbs(next.lvl > prev.lvl); $("#zout").disabled = true;
-    const tcp = stage.getBoundingClientRect(); const p = perchPos(); const tmove = terryMove(p);
+    const p = perchPos(); const tmove = terryMove(p);
     swapText();
     const kind = rd ? "snap" : (prev.lvl === 0 && S.lvl === 1) || (prev.lvl === 1 && S.lvl === 0) ? "morph" : prev.lvl === 1 && S.lvl === 2 ? "zin" : prev.lvl === 2 && S.lvl === 1 && prev.d === S.d ? "zout" : "cross";
     const nav = ++navId;

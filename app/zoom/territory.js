@@ -14,7 +14,6 @@
   const ACC = { PWDx: "var(--behind)", BTDT: "var(--hire)", PARK: "var(--work)", ISD: "var(--pred)" };
   const DEPTS = ["PWDx", "BTDT", "PARK", "ISD"];
   const MONTHS = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
-  const ALERT_EX = "Winter storm warning: 12 to 18 inches expected November 22";
   const sleep = ms => new Promise(r => setTimeout(r, ms));
   const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   // a leaf never prints an ellipsis: keep whole sentences, or cut at a word and close it with a period
